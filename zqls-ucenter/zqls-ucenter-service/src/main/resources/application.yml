@@ -1,0 +1,58 @@
+# 服务端口
+server:
+  port: 8080
+
+publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
+
+# 配置dubbo
+spring:
+  dubbo:
+    application: ucenter-service    # dubbo的服务名称
+    registry:
+      address: 39.106.154.120:2181    # zookeeper注册中心地址
+      protocol: zookeeper    # zookeeper的通讯协议名称
+    protocol:
+      name: dubbo   # dubbo通讯协议名称
+    base-package: com.duanxin.zqls     #dubbo服务的扫描路径
+    consumer:
+      timeout: 2000
+  # 配置数据库
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/zqls
+      username: root
+      password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
+      filters: config,stat,wall
+      connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+
+
+
+
+# 配置mapper
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml    # mapper.xml文件所在路径
+  type-aliases-package: com.duanxin.zqls.ucenter.model    # 与数据库对应的bean所在路径
+  type-handlers-package: com.duanxin.zqls.common.handler   # handler所在路径
+  configuration:
+    map-underscore-to-camel-case: true    # 开启驼峰配置
+
+# 配置日志
+logging:
+  level:
+    com:
+      duanxin:
+        zqls:
+          ucenter: debug

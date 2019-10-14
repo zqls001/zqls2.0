@@ -1,0 +1,22 @@
+# 设置端口
+server:
+  port: 8070
+
+# 配置dubbo
+spring:
+  dubbo:
+    application: ucenter-web    # dubbo的服务名称
+    registry:
+      address: 39.106.154.120:2181    # zookeeper注册中心地址
+      protocol: zookeeper    # zookeeper的通讯协议名称
+    protocol:
+      name: dubbo   # dubbo通讯协议名称
+    base-package: com.duanxin.zqls     #dubbo服务的扫描路径
+
+# 配置日志
+logging:
+  level:
+    com:
+      duanxin:
+        zqls:
+          ucenter: debug
