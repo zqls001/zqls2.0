@@ -8,5 +8,6 @@ package com.duanxin.zqls.base;
  */
 public class BaseConstants {
 
+    /** 状态正常标识 */
     public final static String STATUS_CONSTANT = "0";
 }

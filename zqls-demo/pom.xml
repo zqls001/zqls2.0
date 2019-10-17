@@ -11,6 +11,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>zqls-demo</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>dubbo-demo</module>
+    </modules>
 
 
 </project>

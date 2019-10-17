@@ -6,16 +6,6 @@ publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh
 
 # 配置dubbo
 spring:
-  dubbo:
-    application: ucenter-service    # dubbo的服务名称
-    registry:
-      address: 39.106.154.120:2181    # zookeeper注册中心地址
-      protocol: zookeeper    # zookeeper的通讯协议名称
-    protocol:
-      name: dubbo   # dubbo通讯协议名称
-    base-package: com.duanxin.zqls     #dubbo服务的扫描路径
-    consumer:
-      timeout: 2000
   # 配置数据库
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -37,15 +27,29 @@ spring:
       test-on-return: false
       max-pool-prepared-statement-per-connection-size: 20
       use-global-data-source-stat: true
+  # redis缓存配置
+  redis:
+    host: 39.106.154.120
+    port: 8887
+  # 消息中间件RabbitMQ配置
+  rabbitmq:
+    host: 39.106.154.120
 
 
+# 配置阿里云短信服务
+aliyun:
+  sms:
+    accessKeyId: LTAI4FkZJ7i8PzgzUpx54xrZ   #创建的accesskey中的AccessKey ID
+    accessKeySecret: fZuwZ3iRjNRiNgaiIFSTnW1shJ67hS      #创建的accesskey中的Access Key Secret
+    template_code: SMS_175571377      #模板管理中的模板CODE
+    sign_name: 智取乐食       #签名管理中的签名
 
 
 # 配置mapper
 mybatis:
   mapper-locations: classpath*:/mapper/*.xml    # mapper.xml文件所在路径
   type-aliases-package: com.duanxin.zqls.ucenter.model    # 与数据库对应的bean所在路径
-  type-handlers-package: com.duanxin.zqls.common.handler   # handler所在路径
+  type-handlers-package: com.duanxin.zqls.handler   # handler所在路径
   configuration:
     map-underscore-to-camel-case: true    # 开启驼峰配置
 
@@ -56,3 +60,22 @@ logging:
       duanxin:
         zqls:
           ucenter: debug
+
+# 配置dubbo
+dubbo:
+  application:
+    name: ucenter-service
+    id: ucenter-servicee
+  registry:
+    address: zookeeper://39.106.154.120:2181
+  provider:
+    threads: 10
+    threadpool: fixed
+    loadbalance: roundrobin
+  consumer:
+    check: false
+    loadbalance: roundrobin
+  protocol:
+    name: dubbo
+  scan:
+    base-packages: com.duanxin.zqls.*.service

@@ -23,10 +23,11 @@
 
         <!-- 项目版本管理 -->
         <fastjson.version>1.2.60</fastjson.version>
-        <dubbo-starter.version>1.1.2</dubbo-starter.version>
+        <dubbo-starter.version>2.7.3</dubbo-starter.version>
         <!--<dubbo-start.version>2.0.0</dubbo-start.version>-->
-        <dubbo.version>2.6.6</dubbo.version>
-        <zkclient.version>0.11</zkclient.version>
+        <dubbo.version>2.7.3</dubbo.version>
+        <zookeeper.version>3.4.11</zookeeper.version>
+        <curator.version>4.2.0</curator.version>
         <mybatis.version>2.1.0</mybatis.version>
         <nekohtml.version>1.9.22</nekohtml.version>
         <xml-apis.version>1.4.01</xml-apis.version>
@@ -40,7 +41,6 @@
         <jna.version>5.3.1</jna.version>
         <beanUtils.version>1.9.3</beanUtils.version>
         <druid.version>1.1.18</druid.version>
-        <netty.all.version>	4.1.38.Final</netty.all.version>
         <guava.version>28.0-jre</guava.version>
         <redisson.version>3.11.1</redisson.version>
         <fastdfs.version>1.27-SNAPSHOT</fastdfs.version>
@@ -49,12 +49,29 @@
         <joda-money.version>LATEST</joda-money.version>
         <fluent-validator.version>1.0.9</fluent-validator.version>
         <tk-mapper.version>2.1.5</tk-mapper.version>
+        <aliyun-java-sdk-core.version>4.4.6</aliyun-java-sdk-core.version>
+        <aliyun-java-sdk-dysmsapi.version>1.1.0</aliyun-java-sdk-dysmsapi.version>
     </properties>
 
     <!-- 引入依赖 -->
     <dependencyManagement>
 
         <dependencies>
+            <!-- 阿里云短信验证 -->
+            <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun-java-sdk-core.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>${aliyun-java-sdk-dysmsapi.version}</version>
+            </dependency>
+
+
             <dependency>
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-spring-boot-starter</artifactId>
@@ -129,16 +146,37 @@
 
             <!-- 分布式服务 -->
             <dependency>
-                <groupId>com.alibaba</groupId>
+                <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-spring-boot-starter -->
             <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-starter.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>servlet-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+            <!--<dependency>
                 <groupId>com.gitee.reger</groupId>
                 <artifactId>spring-boot-starter-dubbo</artifactId>
                 <version>${dubbo-starter.version}</version>
-            </dependency>
+            </dependency>-->
             <!-- https://mvnrepository.com/artifact/com.alibaba.spring.boot/dubbo-spring-boot-starter -->
             <!--<dependency>
                 <groupId>com.alibaba.spring.boot</groupId>
@@ -147,18 +185,34 @@
             </dependency>-->
 
             <!-- Zookeeper之开源客户端 -->
+            <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
             <dependency>
-                <groupId>com.101tec</groupId>
-                <artifactId>zkclient</artifactId>
-                <version>${zkclient.version}</version>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
-            <!-- netty -->
-            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
             <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-all</artifactId>
-                <version>${netty.all.version}</version>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.zookeeper</groupId>
+                        <artifactId>zookeeper</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
             </dependency>
 
             <!-- mybatis -->
