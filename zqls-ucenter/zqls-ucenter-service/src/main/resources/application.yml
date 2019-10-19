@@ -34,6 +34,16 @@ spring:
   # 消息中间件RabbitMQ配置
   rabbitmq:
     host: 39.106.154.120
+    username: root
+    password: root
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
 
 
 # 配置阿里云短信服务

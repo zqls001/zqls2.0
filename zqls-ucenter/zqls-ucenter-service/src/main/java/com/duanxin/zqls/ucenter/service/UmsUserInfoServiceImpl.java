@@ -69,6 +69,6 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
         map.put("checkCode", checkCode);
-        rabbitTemplate.convertAndSend("sms", map);
+        rabbitTemplate.convertAndSend("sms.queue", map);
     }
 }

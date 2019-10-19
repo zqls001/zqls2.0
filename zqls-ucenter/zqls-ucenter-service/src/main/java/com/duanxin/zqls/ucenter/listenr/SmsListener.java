@@ -19,7 +19,7 @@ import java.util.Map;
  * @date 2019/10/17 10:55
  */
 @Component
-@RabbitListener(queues = "sms")
+@RabbitListener(queues = "sms.queue")
 @PropertySource("classpath:application.yml")
 public class SmsListener {
 

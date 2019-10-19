@@ -30,3 +30,9 @@ dubbo:
     timeout: 3000
   application:
     name: ucenter-web
+# 配置RabbitMQ
+spring:
+  rabbitmq:
+    host: 39.106.154.120
+    username: root
+    password: root

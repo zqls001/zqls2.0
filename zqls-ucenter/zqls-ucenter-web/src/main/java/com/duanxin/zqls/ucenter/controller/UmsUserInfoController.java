@@ -14,7 +14,6 @@ import com.duanxin.zqls.util.GsonUtil;
 import com.duanxin.zqls.util.MD5Util;
 import com.duanxin.zqls.validator.LengthValidator;
 import com.duanxin.zqls.validator.NotNullValidator;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
