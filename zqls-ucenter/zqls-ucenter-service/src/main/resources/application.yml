@@ -1,6 +1,6 @@
 # 服务端口
 server:
-  port: 8080
+  port: 8090
 
 publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
 
@@ -65,17 +65,17 @@ logging:
 dubbo:
   application:
     name: ucenter-service
-    id: ucenter-servicee
   registry:
     address: zookeeper://39.106.154.120:2181
   provider:
-    threads: 10
+    threads: 100
     threadpool: fixed
-    loadbalance: roundrobin
   consumer:
     check: false
-    loadbalance: roundrobin
+    timeout: 3000
   protocol:
     name: dubbo
+    serialization: kryo
+    optimizer: com.duanxin.zqls.ucenter.utils.SerializationOptimizerImpl
   scan:
     base-packages: com.duanxin.zqls.*.service

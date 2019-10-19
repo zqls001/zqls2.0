@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/10/15 10:13
  */
-@Service
+@Service(version = "0.0.1")
 public class UmsUserAccountInfoServiceImpl implements UmsUserAccountInfoService {
 
     @Resource
@@ -24,6 +24,7 @@ public class UmsUserAccountInfoServiceImpl implements UmsUserAccountInfoService 
 
     @Override
     public List<UmsUserAccountInfo> selectByAid(String aid) {
+
         Example example = new Example(UmsUserAccountInfo.class);
         example.createCriteria().andEqualTo("aid", aid);
         List<UmsUserAccountInfo> umsUserAccountInfos =

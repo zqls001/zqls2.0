@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @date 2019/10/14 15:42
  */
-@Service
+@Service(version = "0.0.1")
 public class UmsUserInfoServiceImpl implements UmsUserInfoService {
 
     @Resource

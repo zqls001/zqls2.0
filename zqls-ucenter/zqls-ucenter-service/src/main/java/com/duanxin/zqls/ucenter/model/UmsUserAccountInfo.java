@@ -20,7 +20,6 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@Table(name = "ums_user_account_info")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UmsUserAccountInfo implements Serializable {

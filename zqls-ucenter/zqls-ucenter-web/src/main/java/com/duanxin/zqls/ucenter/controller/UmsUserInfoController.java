@@ -1,6 +1,5 @@
 package com.duanxin.zqls.ucenter.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
@@ -11,9 +10,11 @@ import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
 import com.duanxin.zqls.ucenter.model.UmsUserAccountInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
+import com.duanxin.zqls.util.GsonUtil;
 import com.duanxin.zqls.util.MD5Util;
 import com.duanxin.zqls.validator.LengthValidator;
 import com.duanxin.zqls.validator.NotNullValidator;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +31,9 @@ import java.util.List;
 @RequestMapping("/UmsUser")
 public class UmsUserInfoController extends BaseController {
 
-    @Reference
+    @Reference(version = "0.0.1")
     private UmsUserInfoService umsUserInfoService;
-    @Reference
+    @Reference(version = "0.0.1")
     private UmsUserAccountInfoService umsUserAccountInfoService;
 
     @GetMapping("/{id}")
@@ -54,9 +55,6 @@ public class UmsUserInfoController extends BaseController {
         return BaseResult.success("删除成功", id);
     }
 
-    /**
-     * todo: 出现异常，待处理
-    */
     @PostMapping("/login")
     public BaseResult login(@RequestParam("jobNumber") String jobNumber,
                             @RequestParam("password") String password) {
@@ -69,7 +67,7 @@ public class UmsUserInfoController extends BaseController {
                 .result(ResultCollectors.toSimple());
         // 校验失败，返回错误信息
         if (!result.isSuccess()) {
-            return BaseResult.validateFailed(JSON.toJSONString(result.getErrors()));
+            return BaseResult.validateFailed(GsonUtil.objectToString(result.getErrors()));
         }
         // 校验成功，查询用户信息
         UmsUserInfo umsUserInfo = umsUserInfoService.selectByJobNumber(jobNumber);

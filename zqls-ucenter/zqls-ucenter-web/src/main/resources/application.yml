@@ -27,5 +27,6 @@ dubbo:
   consumer:
     check: false
     loadbalance: roundrobin
+    timeout: 3000
   application:
     name: ucenter-web
