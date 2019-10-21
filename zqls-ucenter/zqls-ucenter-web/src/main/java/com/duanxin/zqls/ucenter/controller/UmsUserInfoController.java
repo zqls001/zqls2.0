@@ -30,7 +30,7 @@ import java.util.List;
 @RequestMapping("/UmsUser")
 public class UmsUserInfoController extends BaseController {
 
-    @Reference(version = "0.0.1")
+    @Reference(version = "0.0.1", protocol = "dubbo", mock = "return null")
     private UmsUserInfoService umsUserInfoService;
     @Reference(version = "0.0.1")
     private UmsUserAccountInfoService umsUserAccountInfoService;
@@ -90,5 +90,37 @@ public class UmsUserInfoController extends BaseController {
     public BaseResult sendSms(@PathVariable("phone") String phone) {
         umsUserInfoService.sendSms(phone);
         return BaseResult.success("发送成功", phone);
+    }
+
+    @PostMapping("/checkCode")
+    public BaseResult checkCode(@RequestParam("jobNumber") String jobNumber,
+                                @RequestParam("phone") String phone,
+                                @RequestParam("code") String code) {
+
+        // 校验数据
+        Result result = FluentValidator.checkAll()
+                .on(jobNumber, new NotNullValidator("学工号"))
+                .on(phone, new NotNullValidator("手机号"))
+                .on(code, new NotNullValidator("验证码"))
+                .on(jobNumber, new LengthValidator(9, 11, "学工号"))
+                .on(phone, new LengthValidator(10, 12, "手机号"))
+                .on(code, new LengthValidator(5, 7, "验证码"))
+                .doValidate()
+                .result(ResultCollectors.toSimple());
+        if (!result.isSuccess()) {
+            return BaseResult.validateFailed(GsonUtil.objectToString(result.getErrors()));
+        }
+
+        UmsUserInfo umsUserInfo = umsUserInfoService.checkCode(jobNumber, phone, code);
+        // 校验该用户是否合法
+        if (!StringUtils.equals(umsUserInfo.getStatus() + "",
+                BaseConstants.STATUS_CONSTANT)) {
+            return BaseResult.failed("该用户不存在");
+        }
+        // 检查是否验证成功
+        if (null == umsUserInfo) {
+            return BaseResult.failed("验证失败");
+        }
+        return BaseResult.success("绑定成功", phone);
     }
 }

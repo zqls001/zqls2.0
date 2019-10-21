@@ -6,16 +6,22 @@
         <artifactId>zqls-parent</artifactId>
         <groupId>com.duanxin.zqls</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../zqls-api/zqls-parent/pom.xml</relativePath>
+        <relativePath>../../zqls-api/zqls-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>zqls-demo</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>dubbo-demo</module>
-        <module>redis-demo</module>
-    </modules>
+    <artifactId>redis-demo</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

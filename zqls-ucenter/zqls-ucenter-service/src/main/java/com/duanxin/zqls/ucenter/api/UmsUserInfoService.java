@@ -38,4 +38,14 @@ public interface UmsUserInfoService {
      * @date 2019/10/17 9:36
      **/
     void sendSms(String phone);
+
+    /**
+     * 校验验证码并进行手机号绑定
+     * @param jobNumber 学工号
+     * @param phone 手机号
+     * @param code 验证码
+     * @date 2019/10/19 10:22
+     * @return com.duanxin.zqls.ucenter.model.UmsUserInfo
+     **/
+    UmsUserInfo checkCode(String jobNumber, String phone, String code);
 }

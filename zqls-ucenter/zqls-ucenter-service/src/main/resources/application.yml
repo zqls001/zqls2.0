@@ -74,18 +74,18 @@ logging:
 # 配置dubbo
 dubbo:
   application:
-    name: ucenter-service
+    name: ucenter-service   # 指定当前工程名称
   registry:
-    address: zookeeper://39.106.154.120:2181
+    address: zookeeper://39.106.154.120:2181    # 指明注册中心zookeeper
   provider:
-    threads: 100
+    threads: 100    # 指定提供者线程池大小
     threadpool: fixed
-  consumer:
-    check: false
-    timeout: 3000
   protocol:
-    name: dubbo
-    serialization: kryo
-    optimizer: com.duanxin.zqls.ucenter.utils.SerializationOptimizerImpl
+    name: dubbo   # 声明提供者暴露协议
+    serialization: kryo   # 声明使用的序列化技术
+    optimizer: com.duanxin.zqls.ucenter.utils.SerializationOptimizerImpl    # 声明序列化器
   scan:
-    base-packages: com.duanxin.zqls.*.service
+    base-packages: com.duanxin.zqls.*.service   # 声明扫描的提供服务所在包
+
+redisson:
+  address: redis://39.106.154.120:8887

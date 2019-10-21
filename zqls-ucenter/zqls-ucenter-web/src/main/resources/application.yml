@@ -21,13 +21,13 @@ logging:
 # 配置dubbo
 dubbo:
   protocol:
-    name: dubbo
+    name: dubbo   # 指定当前工程名称
   registry:
-    address: zookeeper://39.106.154.120:2181
+    address: zookeeper://39.106.154.120:2181    # 指明注册中心zookeeper
   consumer:
-    check: false
-    loadbalance: roundrobin
-    timeout: 3000
+    check: false    # 指定不进行检查服务提供者是否存在
+    loadbalance: roundrobin   # 指定负载均衡算法（轮询算法）
+    timeout: 3000   # 指定超时时间
   application:
     name: ucenter-web
 # 配置RabbitMQ
@@ -36,3 +36,6 @@ spring:
     host: 39.106.154.120
     username: root
     password: root
+
+redisson:
+  address: redis://39.106.154.120:8887
