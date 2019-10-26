@@ -136,11 +136,4 @@ public class UmsUserInfo implements Serializable {
      */
     @Column
     private String operator;
-
-    /**
-     * 用户账户
-     * */
-    @Transient
-    private List<UmsUserAccountInfo> umsUserAccountInfoList;
-
 }

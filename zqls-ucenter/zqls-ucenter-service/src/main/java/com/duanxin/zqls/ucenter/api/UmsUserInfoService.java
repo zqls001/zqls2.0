@@ -1,5 +1,6 @@
 package com.duanxin.zqls.ucenter.api;
 
+import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 
 /**
@@ -22,7 +23,7 @@ public interface UmsUserInfoService {
      * @param id 主键
      * @date 2019/10/15 8:43
      **/
-    void deleteUserInfoByPrimaryKey(Integer id);
+    int deleteUserInfoByPrimaryKey(Integer id);
 
     /**
      * 根据学工号获取记录
@@ -37,7 +38,7 @@ public interface UmsUserInfoService {
      * @param phone 手机号码
      * @date 2019/10/17 9:36
      **/
-    void sendSms(String phone);
+    int sendSms(String phone);
 
     /**
      * 校验验证码并进行手机号绑定
@@ -47,5 +48,23 @@ public interface UmsUserInfoService {
      * @date 2019/10/19 10:22
      * @return com.duanxin.zqls.ucenter.model.UmsUserInfo
      **/
-    UmsUserInfo checkCode(String jobNumber, String phone, String code);
+    UmsUserInfoAo checkCode(String jobNumber, String phone, String code);
+
+    /**
+     * 发送邮件
+     * @param to 接收者
+     * @date 2019/10/22 16:45
+     * @return int
+     **/
+    int sendMail(String to);
+
+    /**
+     * 校验邮箱验证码并进行绑定
+     * @param jobNumber 学工号
+     * @param mail 邮箱
+     * @param code 验证码
+     * @date 2019/10/26 10:02
+     * @return com.duanxin.zqls.ucenter.model.UmsUserInfo
+     **/
+    UmsUserInfoAo checkMailCode(String jobNumber, String mail, String code);
 }

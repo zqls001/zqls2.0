@@ -13,6 +13,7 @@
     <modules>
         <module>zqls-ucenter-service</module>
         <module>zqls-ucenter-web</module>
+        <module>zqls-mail-service</module>
     </modules>
 
     <artifactId>zqls-ucenter</artifactId>

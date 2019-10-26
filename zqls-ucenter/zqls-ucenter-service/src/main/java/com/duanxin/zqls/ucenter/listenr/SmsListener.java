@@ -1,15 +1,17 @@
 package com.duanxin.zqls.ucenter.listenr;
 
 import com.aliyuncs.exceptions.ClientException;
+import com.duanxin.zqls.ucenter.config.MQConfig;
 import com.duanxin.zqls.ucenter.utils.SmsUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -19,8 +21,9 @@ import java.util.Map;
  * @date 2019/10/17 10:55
  */
 @Component
-@RabbitListener(queues = "sms.queue")
+@RabbitListener(queues = MQConfig.SMS_QUEUE)
 @PropertySource("classpath:application.yml")
+@Slf4j
 public class SmsListener {
 
     @Resource
@@ -38,7 +41,8 @@ public class SmsListener {
         try {
             smsUtil.sendSms(phone, templateCode, signName, "{\"code\":\""+checkCode+"\"}");
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error(">>>>发送失败，时间:{}，接收者:{}，原因:{}<<<<",
+                    new Date(), phone, e.getMessage());
         }
     }
 

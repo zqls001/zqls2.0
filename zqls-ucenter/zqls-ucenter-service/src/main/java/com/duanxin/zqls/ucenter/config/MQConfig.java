@@ -15,8 +15,15 @@ public class MQConfig {
 
     public static final String SMS_QUEUE = "sms.queue";
 
+    public static final String MAIL_QUEUE = "mail.queue";
+
     @Bean
-    public Queue SmsQueue() {
+    public Queue smsQueue() {
         return new Queue(SMS_QUEUE, true);
+    }
+
+    @Bean
+    public Queue mailQueue() {
+        return new Queue(MAIL_QUEUE, true);
     }
 }

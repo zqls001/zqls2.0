@@ -1,0 +1,38 @@
+# 服务端口
+server:
+  port: 9000
+
+spring:
+  # 邮件配置
+  mail:
+    host: smtp.163.com
+    username: 18870735026@163.com
+    #password: 7l5SjDZS7IFTNmdrQV+57A==
+    password: weiming19990304
+    properties:
+      mail:
+        stmp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+# 配置日志
+logging:
+  level:
+    com:
+      duanxin:
+        zqls:
+          ucenter: debug
+
+# 配置dubbo
+dubbo:
+  application:
+    name: mail-service
+  registry:
+    address: zookeeper://39.106.154.120:2181
+  protocol:
+    name: dubbo
+    port: 20881
+  scan:
+    base-packages: com.duanxin.zqls.mail.service
