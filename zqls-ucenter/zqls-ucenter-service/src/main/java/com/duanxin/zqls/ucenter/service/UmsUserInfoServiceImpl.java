@@ -1,19 +1,17 @@
 package com.duanxin.zqls.ucenter.service;
 
-import com.duanxin.zqls.exception.CheckException;
-import com.duanxin.zqls.mail.api.MailService;
+import com.duanxin.zqls.common.exception.CheckException;
+import com.duanxin.zqls.common.util.MD5Util;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
 import com.duanxin.zqls.ucenter.config.MQConfig;
 import com.duanxin.zqls.ucenter.mapper.UmsUserInfoMapper;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
-import com.duanxin.zqls.util.RandomStringUtils;
+import com.duanxin.zqls.common.util.RandomStringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
-import org.redisson.misc.Hash;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,7 +83,7 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     }
 
     /**
-     * todo: 无法发送成功，消息队列无法监听到，密码无法加密
+     * todo: 发送成功，依然一次性发送三份邮件给用户
      * */
     @Override
     public int sendMail(String to) {
@@ -102,7 +100,7 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         map.put("to", to);
         map.put("subject", subject);
         map.put("content", content);
-        rabbitTemplate.convertAndSend(map);
+        rabbitTemplate.convertAndSend(MQConfig.MAIL_QUEUE, map);
         return 1;
     }
 
@@ -122,6 +120,20 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         umsUserInfo.setEmail(mail);
         umsUserInfo.setOperateTime(new Date());
         umsUserInfoMapper.updateByPrimaryKeySelective(umsUserInfo);
+        return umsUserInfoAo;
+    }
+
+    @Override
+    public UmsUserInfoAo updatePassword(String jobNumber, String password) {
+        UmsUserInfoAo umsUserInfoAo = new UmsUserInfoAo();
+        UmsUserInfo umsUserInfo = selectByJobNumber(jobNumber);
+        umsUserInfoAo.setUmsUserInfo(umsUserInfo);
+        if (null != umsUserInfo) {
+            // 进行更新操作
+            umsUserInfo.setPassword(MD5Util.md5(password));
+            umsUserInfo.setOperateTime(new Date());
+            umsUserInfoMapper.updateByPrimaryKeySelective(umsUserInfo);
+        }
         return umsUserInfoAo;
     }
 

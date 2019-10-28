@@ -1,5 +1,4 @@
 package com.duanxin.zqls.ucenter.listenr;
-import	java.net.ProtocolException;
 import java.util.Date;
 import java.util.Map;
 
@@ -35,6 +34,7 @@ public class MailListener {
 
         try {
             mailService.send(to, subject, content);
+            log.info(">>>>发送中，时间：{}<<<<", new Date());
         } catch (Exception e) {
             log.error(">>>>发送失败，时间:{}，接收者:{}，原因:{}<<<<",
                     new Date(), to, e.getMessage());

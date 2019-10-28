@@ -67,4 +67,13 @@ public interface UmsUserInfoService {
      * @return com.duanxin.zqls.ucenter.model.UmsUserInfo
      **/
     UmsUserInfoAo checkMailCode(String jobNumber, String mail, String code);
+
+    /**
+     * 更新密码
+     * @param jobNumber 学工号
+     * @param password 更新后密码
+     * @date 2019/10/28 9:20
+     * @return com.duanxin.zqls.ucenter.ao.UmsUserInfoAo
+     **/
+    UmsUserInfoAo updatePassword(String jobNumber, String password);
 }

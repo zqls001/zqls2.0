@@ -58,7 +58,7 @@ aliyun:
 mybatis:
   mapper-locations: classpath*:/mapper/*.xml    # mapper.xml文件所在路径
   type-aliases-package: com.duanxin.zqls.ucenter.model    # 与数据库对应的bean所在路径
-  type-handlers-package: com.duanxin.zqls.handler   # handler所在路径
+  type-handlers-package: com.duanxin.zqls.common.handler   # handler所在路径
   configuration:
     map-underscore-to-camel-case: true    # 开启驼峰配置
 

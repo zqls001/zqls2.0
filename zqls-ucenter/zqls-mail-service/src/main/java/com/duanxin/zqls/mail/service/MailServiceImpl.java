@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * 邮件服务工具类
+ * 邮件服务实现类类
  * @author duanxin
  * @version 1.0
  * @date 2019/10/22 9:35

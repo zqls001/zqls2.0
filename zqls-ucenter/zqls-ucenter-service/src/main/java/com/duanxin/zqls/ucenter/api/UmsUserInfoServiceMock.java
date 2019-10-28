@@ -45,4 +45,9 @@ public class UmsUserInfoServiceMock implements UmsUserInfoService {
     public UmsUserInfoAo checkMailCode(String jobNumber, String mail, String code) {
         return null;
     }
+
+    @Override
+    public UmsUserInfoAo updatePassword(String jobNumber, String password) {
+        return null;
+    }
 }

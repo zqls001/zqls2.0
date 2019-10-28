@@ -3,19 +3,19 @@ package com.duanxin.zqls.ucenter.controller;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
-import com.duanxin.zqls.base.BaseConstants;
-import com.duanxin.zqls.base.BaseController;
-import com.duanxin.zqls.base.BaseResult;
+import com.duanxin.zqls.common.base.BaseConstants;
+import com.duanxin.zqls.common.base.BaseController;
+import com.duanxin.zqls.common.base.BaseResult;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
 import com.duanxin.zqls.ucenter.model.UmsUserAccountInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
-import com.duanxin.zqls.util.GsonUtil;
-import com.duanxin.zqls.util.MD5Util;
-import com.duanxin.zqls.validator.LengthValidator;
-import com.duanxin.zqls.validator.NotNullValidator;
+import com.duanxin.zqls.common.util.GsonUtil;
+import com.duanxin.zqls.common.util.MD5Util;
+import com.duanxin.zqls.common.validator.LengthValidator;
+import com.duanxin.zqls.common.validator.NotNullValidator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
@@ -157,15 +157,43 @@ public class UmsUserInfoController extends BaseController {
         }
         UmsUserInfoAo umsUserInfoAo = umsUserInfoService.checkMailCode(jobNumber, mail, code);
         UmsUserInfo umsUserInfo = umsUserInfoAo.getUmsUserInfo();
+        // 校验是否验证成功
+        if (0 == umsUserInfoAo.getCheckCode()) {
+            return BaseResult.validateFailed("验证失败");
+        }
         // 校验用户合法性
         if (null == umsUserInfo || !StringUtils.equals(umsUserInfo.getStatus() + "",
                 BaseConstants.STATUS_CONSTANT)) {
             return BaseResult.failed("用户不存在");
         }
-        // 校验是否验证成功
-        if (0 == umsUserInfoAo.getCheckCode()) {
-            return BaseResult.validateFailed("验证失败");
-        }
         return BaseResult.success("绑定成功", mail);
+    }
+
+    @PostMapping("/updatePassword")
+    public BaseResult updatePassword(@RequestParam("jobNumber") String jobNumber,
+                                     @RequestParam("password") String password) {
+        // 进行参数校验
+        Result result = FluentValidator.checkAll()
+                .on(jobNumber, new NotNullValidator("学工号"))
+                .on(password, new NotNullValidator("密码"))
+                .on(jobNumber, new LengthValidator(9, 11, "学工号"))
+                .on(password, new LengthValidator(5, 105, "密码"))
+                .doValidate()
+                .result(ResultCollectors.toSimple());
+        if (!result.isSuccess()) {
+            return BaseResult.validateFailed(GsonUtil.objectToString(result.getErrors()));
+        }
+        // 进行密码更新
+        UmsUserInfoAo umsUserInfoAo = umsUserInfoService.updatePassword(jobNumber, password);
+        // 服务降级判断
+        if (null == umsUserInfoAo) {
+            return BaseResult.failed("服务维修中，请耐心等待");
+        }
+        UmsUserInfo umsUserInfo = umsUserInfoAo.getUmsUserInfo();
+        if (null == umsUserInfo || !StringUtils.equals(umsUserInfo.getStatus() + "",
+                BaseConstants.STATUS_CONSTANT)) {
+            return BaseResult.failed("用户不存在");
+        }
+        return BaseResult.success("更新密码成功", jobNumber);
     }
 }

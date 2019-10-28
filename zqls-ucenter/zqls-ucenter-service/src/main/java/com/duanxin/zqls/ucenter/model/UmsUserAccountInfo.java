@@ -1,6 +1,6 @@
 package com.duanxin.zqls.ucenter.model;
 
-import com.duanxin.zqls.handler.MoneyTypeHandler;
+import com.duanxin.zqls.common.handler.MoneyTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
