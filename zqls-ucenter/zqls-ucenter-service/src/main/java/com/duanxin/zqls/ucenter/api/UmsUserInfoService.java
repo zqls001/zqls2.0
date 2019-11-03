@@ -2,6 +2,7 @@ package com.duanxin.zqls.ucenter.api;
 
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 用户信息Service层接口
@@ -76,4 +77,21 @@ public interface UmsUserInfoService {
      * @return com.duanxin.zqls.ucenter.ao.UmsUserInfoAo
      **/
     UmsUserInfoAo updatePassword(String jobNumber, String password);
+
+    /**
+     * 更新用户信息
+     * @param umsUserInfo 用户更新数据
+     * @date 2019/11/3 8:32
+     * @return com.duanxin.zqls.ucenter.ao.UmsUserInfoAo
+     **/
+    UmsUserInfoAo updateUmsUserInfo(UmsUserInfo umsUserInfo);
+
+    /**
+     * 分页查询用户信息
+     * @param currentPage 当前页
+     * @param pageSize 页面大小
+     * @date 2019/11/3 9:10
+     * @return com.github.pagehelper.Page<com.duanxin.zqls.ucenter.model.UmsUserInfo>
+     **/
+    PageInfo<UmsUserInfo> selectAll(int currentPage, int pageSize);
 }

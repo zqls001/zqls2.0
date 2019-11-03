@@ -1,5 +1,6 @@
 package com.duanxin.zqls.ucenter.service;
 
+import com.duanxin.zqls.common.base.BaseConstants;
 import com.duanxin.zqls.common.exception.CheckException;
 import com.duanxin.zqls.common.util.MD5Util;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
@@ -8,6 +9,8 @@ import com.duanxin.zqls.ucenter.config.MQConfig;
 import com.duanxin.zqls.ucenter.mapper.UmsUserInfoMapper;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import com.duanxin.zqls.common.util.RandomStringUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -138,8 +141,32 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     }
 
     @Override
-    public UmsUserInfoAo checkCode(String jobNumber, String phone, String code) {
+    public UmsUserInfoAo updateUmsUserInfo(UmsUserInfo umsUserInfo) {
+        UmsUserInfo umsUserInfo1 = selectByPrimaryKey(umsUserInfo.getId());
+        UmsUserInfoAo umsUserInfoAo = new UmsUserInfoAo();
+        // 用户不存在或状态码为1，更新失败
+        if (null == umsUserInfo1 || !StringUtils.equals(umsUserInfo.getStatus() + "",
+                BaseConstants.STATUS_CONSTANT)) {
+            umsUserInfoAo.setCheckCode(0);
+            return umsUserInfoAo;
+        }
+        // 用户存在，进行更新
+        umsUserInfoAo.setCheckCode(1);
+        umsUserInfo.setOperateTime(new Date());
+        umsUserInfoMapper.updateByPrimaryKeySelective(umsUserInfo);
+        umsUserInfoAo.setUmsUserInfo(umsUserInfo);
+        return umsUserInfoAo;
+    }
 
+    @Override
+    public PageInfo<UmsUserInfo> selectAll(int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<UmsUserInfo> umsUserInfoList = umsUserInfoMapper.selectAll();
+        return new PageInfo<>(umsUserInfoList);
+    }
+
+    @Override
+    public UmsUserInfoAo checkCode(String jobNumber, String phone, String code) {
         UmsUserInfo umsUserInfo = selectByJobNumber(jobNumber);
         UmsUserInfoAo umsUserInfoAo = new UmsUserInfoAo();
         umsUserInfoAo.setUmsUserInfo(umsUserInfo);

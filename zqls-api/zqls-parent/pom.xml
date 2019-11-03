@@ -44,7 +44,7 @@
         <guava.version>28.0-jre</guava.version>
         <redisson.version>3.11.1</redisson.version>
         <fastdfs.version>1.27-SNAPSHOT</fastdfs.version>
-        <pagehelper.version>1.2.10</pagehelper.version>
+        <pagehelper.version>1.2.12</pagehelper.version>
         <lombok.version>1.18.8</lombok.version>
         <joda-money.version>LATEST</joda-money.version>
         <fluent-validator.version>1.0.9</fluent-validator.version>

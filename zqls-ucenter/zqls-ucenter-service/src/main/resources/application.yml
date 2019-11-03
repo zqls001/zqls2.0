@@ -89,3 +89,11 @@ dubbo:
 
 redisson:
   address: redis://39.106.154.120:8887
+
+# 分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countsql
+

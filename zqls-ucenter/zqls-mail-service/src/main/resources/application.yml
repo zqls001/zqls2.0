@@ -8,7 +8,6 @@ spring:
     host: smtp.163.com
     username: 18870735026@163.com
     password: 7l5SjDZS7IFTNmdrQV+57A==
-    #password: weiming19990304
     properties:
       mail:
         stmp:

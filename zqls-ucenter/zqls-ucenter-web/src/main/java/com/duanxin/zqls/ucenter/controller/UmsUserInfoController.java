@@ -16,6 +16,7 @@ import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.common.util.MD5Util;
 import com.duanxin.zqls.common.validator.LengthValidator;
 import com.duanxin.zqls.common.validator.NotNullValidator;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
@@ -195,5 +196,31 @@ public class UmsUserInfoController extends BaseController {
             return BaseResult.failed("用户不存在");
         }
         return BaseResult.success("更新密码成功", jobNumber);
+    }
+
+    @PutMapping("/update")
+    public BaseResult updateUmsUserInfo(@RequestBody UmsUserInfo umsUserInfo) {
+
+        UmsUserInfoAo umsUserInfoAo = umsUserInfoService.updateUmsUserInfo(umsUserInfo);
+        // 服务降级判断
+        if (null == umsUserInfoAo) {
+            return BaseResult.failed("服务维修中，请耐心等待");
+        }
+        int checkCode = umsUserInfoAo.getCheckCode();
+        if (0 == checkCode) {
+            return BaseResult.failed("更新失败");
+        }
+        return BaseResult.success("更新成功", umsUserInfoAo.getUmsUserInfo());
+    }
+
+    @GetMapping("/getAll")
+    public BaseResult selectAll(@RequestParam("currentPage") int currentPage,
+                                @RequestParam("pageSize") int pageSize) {
+        PageInfo<UmsUserInfo> umsUserInfos =
+                umsUserInfoService.selectAll(currentPage, pageSize);
+        if (null == umsUserInfos) {
+            return BaseResult.failed("系统维护中，请耐性等待");
+        }
+        return BaseResult.success(umsUserInfos);
     }
 }

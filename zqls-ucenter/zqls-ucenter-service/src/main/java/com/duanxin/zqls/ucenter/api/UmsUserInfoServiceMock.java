@@ -2,6 +2,7 @@ package com.duanxin.zqls.ucenter.api;
 
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 用户信息Service层服务降级
@@ -48,6 +49,16 @@ public class UmsUserInfoServiceMock implements UmsUserInfoService {
 
     @Override
     public UmsUserInfoAo updatePassword(String jobNumber, String password) {
+        return null;
+    }
+
+    @Override
+    public UmsUserInfoAo updateUmsUserInfo(UmsUserInfo umsUserInfo) {
+        return null;
+    }
+
+    @Override
+    public PageInfo<UmsUserInfo> selectAll(int currentPage, int pageSize) {
         return null;
     }
 }
