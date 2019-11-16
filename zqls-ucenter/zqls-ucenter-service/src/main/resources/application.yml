@@ -73,7 +73,7 @@ logging:
 # 配置dubbo
 dubbo:
   application:
-    name: ucenter-service   # 指定当前工程名称
+    name: zqls-ucenter-service   # 指定当前工程名称
   registry:
     address: zookeeper://39.106.154.120:2181    # 指明注册中心zookeeper
   provider:

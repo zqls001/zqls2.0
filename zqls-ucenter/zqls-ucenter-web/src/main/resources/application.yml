@@ -21,7 +21,7 @@ logging:
 # 配置dubbo
 dubbo:
   protocol:
-    name: dubbo   # 指定当前工程名称
+    name: dubbo   # 指定消费者端通信协议
   registry:
     address: zookeeper://39.106.154.120:2181    # 指明注册中心zookeeper
   consumer:
@@ -29,7 +29,7 @@ dubbo:
     loadbalance: roundrobin   # 指定负载均衡算法（轮询算法）
     timeout: 3000   # 指定超时时间
   application:
-    name: ucenter-web
+    name: zqls-ucenter-web    # 指定当前工程名称
 # 配置RabbitMQ
 spring:
   rabbitmq:

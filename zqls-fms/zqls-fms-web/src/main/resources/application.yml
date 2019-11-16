@@ -1,0 +1,14 @@
+server:
+  port: 8071
+
+# dubbo configuration
+dubbo:
+  application:
+    name: zqls-fms-web
+  protocol:
+    name: dubbo
+  registry:
+    address: zookeeper://39.106.154.120:2181
+  consumer:
+    check: false
+

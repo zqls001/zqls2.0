@@ -9,25 +9,15 @@
         <relativePath>../zqls-api/zqls-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>zqls-fms</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>zqls-ucenter-service</module>
-        <module>zqls-ucenter-web</module>
-        <module>zqls-mail-service</module>
-        <module>zqls-ucenter-api</module>
-        <module>zqls-ucenter-dao</module>
+        <module>zqls-fms-service</module>
+        <module>zqls-fms-web</module>
+        <module>zqls-fms-api</module>
+        <module>zqls-fms-dao</module>
     </modules>
-
-    <artifactId>zqls-ucenter</artifactId>
-
-    <dependencies>
-        <!-- 引入公共模块 -->
-        <dependency>
-            <groupId>com.duanxin.zqls</groupId>
-            <artifactId>zqls-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
 
 </project>

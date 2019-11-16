@@ -1,0 +1,56 @@
+server:
+  port: 8091
+
+publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
+
+spring:
+  # database configuration
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/zqls
+      username: root
+      password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
+      filters: config,stat,wall
+      connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+# dubbo configuration
+dubbo:
+  application:
+    name: zqls-fms-service
+  registry:
+    address: zookeeper://39.106.154.120:2181
+  protocol:
+    name: dubbo
+    serialization: kryo
+    optimizer: com.duanxin.zqls.ucenter.utils.SerializationOptimizerImpl    # 声明序列化器
+    port: 20880
+  scan:
+    base-packages: com.duanxin.zqls.fms.service
+
+# logging configuration
+logging:
+  level:
+    com:
+      duanxin:
+        zqls:
+          fms: debug
+
+# mybatis configuration
+mybatis:
+  type-aliases-package: com.duanxin.zqls.fms.model
+  mapper-locations: classpath*:/mapper/*.xml
+  type-handlers-package: com.duanxin.zqls.common.handler
+  configuration:
+    map-underscore-to-camel-case: true
