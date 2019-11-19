@@ -19,5 +19,13 @@
         <module>zqls-fms-dao</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.duanxin.zqls</groupId>
+            <artifactId>zqls-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

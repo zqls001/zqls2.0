@@ -11,5 +11,17 @@
 
     <artifactId>zqls-fms-dao</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.duanxin.zqls</groupId>
+            <artifactId>zqls-fms</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+            <version>4.1.5</version>
+        </dependency>
+    </dependencies>
 
 </project>

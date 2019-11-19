@@ -1,5 +1,6 @@
 package com.duanxin.zqls;
 
+import com.duanxin.zqls.common.config.RedissonAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -12,7 +13,8 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
  */
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
-        ThymeleafAutoConfiguration.class
+        ThymeleafAutoConfiguration.class,
+        RedissonAutoConfiguration.class
 })
 public class ZqlsFmsWebApplication {
     public static void main(String[] args) {

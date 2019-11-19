@@ -4,7 +4,6 @@ server:
 
 publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
 
-# 配置dubbo
 spring:
   # 配置数据库
   datasource:

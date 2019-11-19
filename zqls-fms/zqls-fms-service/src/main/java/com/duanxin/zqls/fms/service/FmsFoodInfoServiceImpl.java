@@ -1,7 +1,18 @@
 package com.duanxin.zqls.fms.service;
 
+import com.duanxin.zqls.common.util.DateTimeUtil;
 import com.duanxin.zqls.fms.api.FmsFoodInfoService;
+import com.duanxin.zqls.fms.mapper.FmsFoodConsumeMapper;
+import com.duanxin.zqls.fms.mapper.FmsFoodInfoMapper;
+import com.duanxin.zqls.fms.model.FmsFoodConsume;
+import com.duanxin.zqls.fms.model.FmsFoodInfo;
+import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
 import org.apache.dubbo.config.annotation.Service;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 食物信息Service层实现
@@ -11,4 +22,27 @@ import org.apache.dubbo.config.annotation.Service;
  */
 @Service(version = "0.0.1")
 public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
+
+    @Resource
+    private FmsFoodConsumeMapper fmsFoodConsumeMapper;
+    @Resource
+    private FmsFoodInfoMapper fmsFoodInfoMapper;
+
+    @Override
+    public FmsFoodInfoVo getHotFmsFoodInfos() {
+        // get now and last datetime
+        LocalDateTime now = DateTimeUtil.getCurrentLocalDateTime();
+        LocalDateTime lastThreeDays = DateTimeUtil.minusDays(now, -3);
+        // get hot food id
+        List<FmsFoodConsume> fmsFoodConsumes =
+                fmsFoodConsumeMapper.getHotFmsFoodInfos(now, lastThreeDays);
+        // get hot food info
+        List<FmsFoodInfo> fmsFoodInfos = new ArrayList<>();
+        fmsFoodConsumes.forEach(f ->
+                fmsFoodInfos.add(fmsFoodInfoMapper.selectByPrimaryKey(f.getFid())));
+        // return data
+        FmsFoodInfoVo fmsFoodInfoVo = new FmsFoodInfoVo();
+        fmsFoodInfoVo.setFmsFoodInfos(fmsFoodInfos);
+        return fmsFoodInfoVo;
+    }
 }

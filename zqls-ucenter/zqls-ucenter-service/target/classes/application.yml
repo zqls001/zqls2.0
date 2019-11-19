@@ -1,0 +1,99 @@
+# 服务端口
+server:
+  port: 8090
+
+publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
+
+# 配置dubbo
+spring:
+  # 配置数据库
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/zqls
+      username: root
+      password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
+      filters: config,stat,wall
+      connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+  # redis缓存配置
+  redis:
+    host: 39.106.154.120
+    port: 8887
+  # 消息中间件RabbitMQ配置
+  rabbitmq:
+    host: 39.106.154.120
+    username: root
+    password: root
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
+
+# 配置阿里云短信服务
+aliyun:
+  sms:
+    accessKeyId: LTAI4FkZJ7i8PzgzUpx54xrZ   #创建的accesskey中的AccessKey ID
+    accessKeySecret: fZuwZ3iRjNRiNgaiIFSTnW1shJ67hS      #创建的accesskey中的Access Key Secret
+    template_code: SMS_175571377      #模板管理中的模板CODE
+    sign_name: 智取乐食       #签名管理中的签名
+
+
+# 配置mapper
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml    # mapper.xml文件所在路径
+  type-aliases-package: com.duanxin.zqls.ucenter.model    # 与数据库对应的bean所在路径
+  type-handlers-package: com.duanxin.zqls.common.handler   # handler所在路径
+  configuration:
+    map-underscore-to-camel-case: true    # 开启驼峰配置
+
+# 配置日志
+logging:
+  level:
+    com:
+      duanxin:
+        zqls:
+          ucenter: debug
+
+# 配置dubbo
+dubbo:
+  application:
+    name: zqls-ucenter-service   # 指定当前工程名称
+  registry:
+    address: zookeeper://39.106.154.120:2181    # 指明注册中心zookeeper
+  provider:
+    threads: 100    # 指定提供者线程池大小
+    threadpool: fixed
+  protocol:
+    name: dubbo   # 声明提供者暴露协议
+    serialization: kryo   # 声明使用的序列化技术
+    optimizer: com.duanxin.zqls.ucenter.utils.SerializationOptimizerImpl    # 声明序列化器
+    port: 20880
+  scan:
+    base-packages: com.duanxin.zqls.ucenter.service   # 声明扫描的提供服务所在包
+
+redisson:
+  address: redis://39.106.154.120:8887
+
+# 分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countsql
+

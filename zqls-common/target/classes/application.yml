@@ -1,0 +1,3 @@
+# 配置redis
+redisson:
+  address: redis://39.106.154.120:8887
