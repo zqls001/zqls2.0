@@ -72,5 +72,12 @@
     id, fid, uid, food_quality, type, create_time, renew_time
   </sql>
 
+  <select id="getHotFmsFoodInfos" resultMap="BaseResultMap" parameterType="map">
+    select fid
+    from zqls.fms_food_consume
+    where create_time between #{last} and #{now}
+    group by fid
+    order by sum(food_quality) desc limit 10;
+  </select>
 
 </mapper>

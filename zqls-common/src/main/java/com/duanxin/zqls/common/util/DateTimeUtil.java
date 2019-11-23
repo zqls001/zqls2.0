@@ -321,7 +321,7 @@ public class DateTimeUtil {
     /**
      * 某个时间的天数间隔
      * @param dateTime 时间日期
-     * @param days 间隔天数，负为往前推，正为往后推
+     * @param days 间隔天数，正为在该时间之前，负为在该时间之后
      * @date 2019/11/16 11:30
      * @return java.time.LocalDateTime
      **/

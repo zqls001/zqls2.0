@@ -1,6 +1,8 @@
 package com.duanxin.zqls.fms.api;
 
+import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 食物信息Service层接口
@@ -16,4 +18,21 @@ public interface FmsFoodInfoService {
      * @return com.duanxin.zqls.fms.vo.FmsFoodInfoVo
      **/
     FmsFoodInfoVo getHotFmsFoodInfos();
+
+    /**
+     * 根据id主键查询记录
+     * @param id 主键
+     * @date 2019/11/23 8:26
+     * @return com.duanxin.zqls.fms.model.FmsFoodInfo
+     **/
+    FmsFoodInfo getFoodInfoByPrimaryId(Integer id);
+
+    /**
+     * 分页查询食物信息
+     * @param currentPage 当前页
+     * @param pageSize 每页页数
+     * @date 2019/11/23 9:46
+     * @return com.github.pagehelper.PageInfo<com.duanxin.zqls.fms.model.FmsFoodInfo>
+     **/
+    PageInfo<FmsFoodInfo> selectAll(Integer currentPage, Integer pageSize);
 }

@@ -15,6 +15,7 @@
     <modules>
         <module>dubbo-demo</module>
         <module>redis-demo</module>
+        <module>fms-demo</module>
     </modules>
 
 

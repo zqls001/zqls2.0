@@ -1,6 +1,8 @@
 package com.duanxin.zqls.fms.api;
 
+import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
+import com.github.pagehelper.PageInfo;
 
 /**
  * food info service mock
@@ -11,6 +13,16 @@ import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
 public class FmsFoodInfoServiceMock implements FmsFoodInfoService {
     @Override
     public FmsFoodInfoVo getHotFmsFoodInfos() {
+        return null;
+    }
+
+    @Override
+    public FmsFoodInfo getFoodInfoByPrimaryId(Integer id) {
+        return null;
+    }
+
+    @Override
+    public PageInfo<FmsFoodInfo> selectAll(Integer currentPage, Integer pageSize) {
         return null;
     }
 }
