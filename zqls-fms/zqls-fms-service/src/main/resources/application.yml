@@ -35,9 +35,7 @@ dubbo:
     name: dubbo
     serialization: kryo
     optimizer: com.duanxin.zqls.fms.utils.SerializationOptimizerImpl    # 声明序列化器
-    port: 20880
-  scan:
-    base-packages: com.duanxin.zqls.fms.service
+    port: 20881
 
 # logging configuration
 logging:

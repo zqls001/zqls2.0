@@ -16,6 +16,8 @@
         <module>dubbo-demo</module>
         <module>redis-demo</module>
         <module>fms-demo</module>
+        <module>dubbo-test</module>
+        <module>excle-demo</module>
     </modules>
 
 

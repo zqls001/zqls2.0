@@ -1,7 +1,14 @@
 package com.duanxin.zqls.fms.controller;
 
+import com.baidu.unbiz.fluentvalidator.FluentValidator;
+import com.baidu.unbiz.fluentvalidator.Result;
+import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.duanxin.zqls.common.base.BaseResult;
+import com.duanxin.zqls.common.util.GsonUtil;
+import com.duanxin.zqls.common.validator.LengthValidator;
+import com.duanxin.zqls.common.validator.NotNullValidator;
 import com.duanxin.zqls.fms.api.FmsFoodInfoService;
+import com.duanxin.zqls.fms.dto.FoodInfoAndUserInfoDto;
 import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
 import com.github.pagehelper.PageInfo;
@@ -52,5 +59,29 @@ public class FmsFoodInfoController {
             return BaseResult.failed("系统维护中，请耐性等待。。。");
         }
         return BaseResult.success(fmsFoodInfos);
+    }
+
+    @GetMapping("/getInfos")
+    public BaseResult selectFmsInfoAndUmsInfoById(@RequestParam("fid") Integer fid,
+                                                  @RequestParam("jobNumber") String jobNumber) {
+        // validate params
+        Result result = FluentValidator.checkAll().
+                on(jobNumber, new NotNullValidator("学工号")).
+                on(jobNumber, new LengthValidator(9, 11, "学工号")).
+                result(ResultCollectors.toSimple());
+        if (!result.isSuccess()) {
+            return BaseResult.validateFailed(GsonUtil.objectToString(result.getErrors()));
+        }
+        // select
+        FoodInfoAndUserInfoDto foodInfoAndUserInfoDto =
+                fmsFoodInfoService.selectFmsInfoAndUmsInfoById(fid, jobNumber);
+        // judgment mock
+        if (null == foodInfoAndUserInfoDto) {
+            return BaseResult.failed("系统维护中，请耐性等待。。。");
+        }
+        if (null == foodInfoAndUserInfoDto.getUmsUserAccountInfo()) {
+            return BaseResult.failed("用户不存在");
+        }
+        return BaseResult.success(foodInfoAndUserInfoDto);
     }
 }

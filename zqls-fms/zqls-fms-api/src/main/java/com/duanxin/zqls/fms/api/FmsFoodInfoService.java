@@ -1,5 +1,6 @@
 package com.duanxin.zqls.fms.api;
 
+import com.duanxin.zqls.fms.dto.FoodInfoAndUserInfoDto;
 import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
 import com.github.pagehelper.PageInfo;
@@ -35,4 +36,13 @@ public interface FmsFoodInfoService {
      * @return com.github.pagehelper.PageInfo<com.duanxin.zqls.fms.model.FmsFoodInfo>
      **/
     PageInfo<FmsFoodInfo> selectAll(Integer currentPage, Integer pageSize);
+
+    /**
+     * 根据硬件系统传过来的食物id查询食物信息，学工号查询账户信息
+     * @param fid 食物id
+     * @param jobNumber 学工号
+     * @date 2019/11/23 11:23
+     * @return com.duanxin.zqls.fms.dto.FoodInfoAndUserInfoDto
+     **/
+    FoodInfoAndUserInfoDto selectFmsInfoAndUmsInfoById(Integer fid, String jobNumber);
 }

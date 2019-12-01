@@ -2,29 +2,31 @@ package com.duanxin.zqls.ucenter.model;
 
 import com.duanxin.zqls.common.handler.MoneyTypeHandler;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.JdbcType;
 import org.joda.money.Money;
 import tk.mybatis.mapper.annotation.ColumnType;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户账户表
  * ums_user_account_info
  * @author duanxin
- * @date 2019-09-21
+ * @date 2019-11-23
  */
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UmsUserAccountInfo implements Serializable {
 
-    private static final long serialVersionUID = -5865704025538221172L;
+    private static final long serialVersionUID = 9055613626306508799L;
     /**
      * 用户账户id
      * id
@@ -38,17 +40,14 @@ public class UmsUserAccountInfo implements Serializable {
      * aid
      */
     @Column
-    private String aid;
+    private Integer aid;
 
     /**
      * 账户余额
      * balance
      */
     @Column
-    @ColumnType(
-            jdbcType = JdbcType.BIGINT,
-            typeHandler = MoneyTypeHandler.class
-    )
+    @ColumnType(jdbcType = JdbcType.BIGINT, typeHandler = MoneyTypeHandler.class)
     private Money balance;
 
     /**
@@ -64,4 +63,20 @@ public class UmsUserAccountInfo implements Serializable {
      */
     @Column
     private Integer flowId;
+
+    /**
+     * 创建时间
+     * create_time
+     */
+    @Column
+    private Date createTime;
+
+    /**
+     * 更新时间
+
+     * renew_time
+     */
+    @Column
+    private Date renewTime;
+
 }

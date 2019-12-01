@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duanxin.excle.mapper.UmsUserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.duanxin.excle.model.UmsUserInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="job_number" jdbcType="CHAR" property="jobNumber" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="head_pic" jdbcType="VARCHAR" property="headPic" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, aid, job_number, user_name, password, gender, head_pic, phone, email, remark, 
+    status, type, create_time, operate_time, operate_ip, operator
+  </sql>
+
+  <select id="selectWithId" resultType="int">
+    select id
+    from ums_user_info;
+  </select>
+
+
+  <!--<insert id="insert" parameterType="list">-->
+    <!--insert into `ums_user_info`(`aid`, `job_number`, `user_name`, `password`, `gender`, `phone`, `email`, `operate_ip`, `operator`) values-->
+    <!--<foreach collection="list" item="user" separator="," index="index">-->
+      <!--(-->
+       <!--#{user.aid},-->
+       <!--#{user.jobNumber},-->
+       <!--#{user.userName},-->
+       <!--#{user.password},-->
+       <!--#{user.gender},-->
+       <!--#{user.phone},-->
+       <!--#{user.email},-->
+       <!--#{user.operateIp},-->
+       <!--#{user.operator}-->
+       <!--)-->
+    <!--</foreach>-->
+  <!--</insert>-->
+
+  <!--<insert id="insertSelective" parameterType="com.duanxin.excle.model.UmsUserInfo">-->
+    <!--&lt;!&ndash;<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">&ndash;&gt;-->
+      <!--&lt;!&ndash;CALL IDENTITY()&ndash;&gt;-->
+    <!--&lt;!&ndash;</selectKey>&ndash;&gt;-->
+    <!--insert into ums_user_info-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+      <!--<if test="user.aid != null">-->
+        <!--aid,-->
+      <!--</if>-->
+      <!--<if test="user.jobNumber != null">-->
+        <!--job_number,-->
+      <!--</if>-->
+      <!--<if test="user.userName != null">-->
+        <!--user_name,-->
+      <!--</if>-->
+      <!--<if test="user.password != null">-->
+        <!--password,-->
+      <!--</if>-->
+      <!--<if test="user.gender != null">-->
+        <!--gender,-->
+      <!--</if>-->
+      <!--<if test="user.headPic != null">-->
+        <!--head_pic,-->
+      <!--</if>-->
+      <!--<if test="user.phone != null">-->
+        <!--phone,-->
+      <!--</if>-->
+      <!--<if test="user.email != null">-->
+        <!--email,-->
+      <!--</if>-->
+      <!--<if test="user.remark != null">-->
+        <!--remark,-->
+      <!--</if>-->
+      <!--<if test="user.status != null">-->
+        <!--status,-->
+      <!--</if>-->
+      <!--<if test="user.type != null">-->
+        <!--type,-->
+      <!--</if>-->
+      <!--<if test="user.createTime != null">-->
+        <!--create_time,-->
+      <!--</if>-->
+      <!--<if test="user.operateTime != null">-->
+        <!--operate_time,-->
+      <!--</if>-->
+      <!--<if test="user.operateIp != null">-->
+        <!--operate_ip,-->
+      <!--</if>-->
+      <!--<if test="user.operator != null">-->
+        <!--operator,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+      <!--<if test="user.aid != null">-->
+        <!--#{user.aid,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="user.jobNumber != null">-->
+        <!--#{user.jobNumber,jdbcType=CHAR},-->
+      <!--</if>-->
+      <!--<if test="user.userName != null">-->
+        <!--#{user.userName,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="user.password != null">-->
+        <!--#{user.password,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="user.gender != null">-->
+        <!--#{user.gender,jdbcType=CHAR},-->
+      <!--</if>-->
+      <!--<if test="user.headPic != null">-->
+        <!--#{user.headPic,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="user.phone != null">-->
+        <!--#{user.phone,jdbcType=CHAR},-->
+      <!--</if>-->
+      <!--<if test="user.email != null">-->
+        <!--#{user.email,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="user.remark != null">-->
+        <!--#{user.remark,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="user.status != null">-->
+        <!--#{user.status,jdbcType=TINYINT},-->
+      <!--</if>-->
+      <!--<if test="user.type != null">-->
+        <!--#{user.type,jdbcType=CHAR},-->
+      <!--</if>-->
+      <!--<if test="user.createTime != null">-->
+        <!--#{user.createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="user.operateTime != null">-->
+        <!--#{user.operateTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="user.operateIp != null">-->
+        <!--#{user.operateIp,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="user.operator != null">-->
+        <!--#{user.operator,jdbcType=VARCHAR},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+</mapper>

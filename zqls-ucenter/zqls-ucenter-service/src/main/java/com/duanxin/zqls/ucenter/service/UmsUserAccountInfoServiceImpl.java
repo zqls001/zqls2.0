@@ -34,4 +34,9 @@ public class UmsUserAccountInfoServiceImpl implements UmsUserAccountInfoService 
         }
         return umsUserAccountInfos;
     }
+
+    @Override
+    public UmsUserAccountInfo selectByJobNumber(String jobNumber) {
+        return umsUserAccountInfoMapper.selectByJobNumber(jobNumber);
+    }
 }

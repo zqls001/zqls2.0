@@ -15,4 +15,9 @@ public class UmsUserAccountInfoServiceMock implements UmsUserAccountInfoService 
     public List<UmsUserAccountInfo> selectByAid(String aid) {
         return null;
     }
+
+    @Override
+    public UmsUserAccountInfo selectByJobNumber(String jobNumber) {
+        return null;
+    }
 }

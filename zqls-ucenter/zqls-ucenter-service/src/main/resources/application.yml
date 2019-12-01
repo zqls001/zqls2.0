@@ -83,8 +83,6 @@ dubbo:
     serialization: kryo   # 声明使用的序列化技术
     optimizer: com.duanxin.zqls.ucenter.utils.SerializationOptimizerImpl    # 声明序列化器
     port: 20880
-  scan:
-    base-packages: com.duanxin.zqls.ucenter.service   # 声明扫描的提供服务所在包
 
 redisson:
   address: redis://39.106.154.120:8887

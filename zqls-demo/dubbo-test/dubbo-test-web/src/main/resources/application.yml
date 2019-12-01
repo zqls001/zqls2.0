@@ -1,0 +1,7 @@
+server:
+  port: 7000
+dubbo:
+  application:
+    name: dubbo-test-web
+  registry:
+    address: zookeeper://39.106.154.120:2181

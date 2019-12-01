@@ -20,7 +20,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2019/9/20 9:27
  */
-@Configuration
+@Configuration(value = "fmsDruidConfig")
 public class DruidConfig {
 
     @ConfigurationProperties(prefix = "spring.datasource.druid")

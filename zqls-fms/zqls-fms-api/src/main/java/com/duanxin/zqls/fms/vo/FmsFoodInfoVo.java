@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,7 +17,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FmsFoodInfoVo {
+public class FmsFoodInfoVo implements Serializable {
 
+    private static final long serialVersionUID = -5736695422026046402L;
     private List<FmsFoodInfo> fmsFoodInfos;
 }

@@ -1,0 +1,27 @@
+server:
+  port: 7001
+
+publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/zqls
+      username: root
+      password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
+      filters: config
+      connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
+mybatis:
+  type-aliases-package: com.duanxin.test.model
+  configuration:
+    map-underscore-to-camel-case: true
+
+dubbo:
+  application:
+    name: dubbo-test-service
+  registry:
+    address: zookeeper://39.106.154.120:2181
+  protocol:
+    serialization: kryo
+    optimizer: com.duanxin.test.utils.SerializationOptimizerImpl
