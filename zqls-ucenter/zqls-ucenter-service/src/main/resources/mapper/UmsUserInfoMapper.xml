@@ -3,7 +3,7 @@
 <mapper namespace="com.duanxin.zqls.ucenter.mapper.UmsUserInfoMapper">
   <resultMap id="BaseResultMap" type="com.duanxin.zqls.ucenter.model.UmsUserInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="aid" jdbcType="CHAR" property="aid" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
     <result column="job_number" jdbcType="CHAR" property="jobNumber" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -81,4 +81,6 @@
     id, aid, job_number, user_name, password, gender, head_pic, phone, email, remark, 
     status, type, create_time, operate_time, operate_ip, operator
   </sql>
+
+
 </mapper>

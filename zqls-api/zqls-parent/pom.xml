@@ -51,12 +51,25 @@
         <tk-mapper.version>2.1.5</tk-mapper.version>
         <aliyun-java-sdk-core.version>4.4.6</aliyun-java-sdk-core.version>
         <aliyun-java-sdk-dysmsapi.version>1.1.0</aliyun-java-sdk-dysmsapi.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <!-- 引入依赖 -->
     <dependencyManagement>
 
         <dependencies>
+            <!--swagger2-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
             <!-- 阿里云短信验证 -->
             <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->
             <dependency>

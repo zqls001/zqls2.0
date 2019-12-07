@@ -1,0 +1,25 @@
+package com.duanxin.swagger.controller;
+
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * @author duanxin
+ * @version 1.0
+ * @date 2019/12/5 16:13
+ */
+@Controller
+public class SwaggerController {
+
+    @GetMapping("/hello")
+    @ResponseBody
+    @ApiOperation(value = "接口的功能介绍", notes = "提示接口使用者注意事项", httpMethod = "GET", response = String.class)
+    @ApiImplicitParam(dataType = "string", name = "name", value = "姓名", required = true)
+    public String hello(String name) {
+        return "swagger" + name;
+    }
+
+}

@@ -2,6 +2,7 @@ package com.duanxin.zqls.fms.dto;
 
 import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserAccountInfo;
+import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,4 +32,9 @@ public class FoodInfoAndUserInfoDto implements Serializable {
      * 用户个人账户信息
      * */
     private UmsUserAccountInfo umsUserAccountInfo;
+
+    /**
+     * 用户个人基本信息
+     * */
+    private UmsUserInfo umsUserInfo;
 }

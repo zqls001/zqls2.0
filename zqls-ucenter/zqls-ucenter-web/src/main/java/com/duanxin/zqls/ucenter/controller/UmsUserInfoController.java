@@ -6,17 +6,21 @@ import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.duanxin.zqls.common.base.BaseConstants;
 import com.duanxin.zqls.common.base.BaseController;
 import com.duanxin.zqls.common.base.BaseResult;
+import com.duanxin.zqls.common.util.GsonUtil;
+import com.duanxin.zqls.common.util.MD5Util;
+import com.duanxin.zqls.common.validator.LengthValidator;
+import com.duanxin.zqls.common.validator.NotNullValidator;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
 import com.duanxin.zqls.ucenter.model.UmsUserAccountInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
-import com.duanxin.zqls.common.util.GsonUtil;
-import com.duanxin.zqls.common.util.MD5Util;
-import com.duanxin.zqls.common.validator.LengthValidator;
-import com.duanxin.zqls.common.validator.NotNullValidator;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +35,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/UmsUser")
+@Api(value = "用户模块业务的接口", tags = {"用户基本信息业务的Controller"})
 public class UmsUserInfoController extends BaseController {
 
     @Reference(version = "0.0.1", protocol = "dubbo", mock = "true", check = false)
@@ -39,6 +44,9 @@ public class UmsUserInfoController extends BaseController {
     private UmsUserAccountInfoService umsUserAccountInfoService;
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "获取用户基本信息", notes = "该接口根据用户的主键查询并获取用户的基本信息",
+            httpMethod = "GET", response = BaseResult.class)
+    @ApiImplicitParam(dataType = "int", name = "id", value = "用户主键id", required = true)
     public BaseResult getUmsUserInfoByPrimaryKey(@PathVariable("id") Integer id) {
         UmsUserInfo umsUserInfo = umsUserInfoService.selectByPrimaryKey(id);
         if (null != umsUserInfo) {
@@ -51,6 +59,9 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除用户", notes = "根据用户主键id删除用户",
+            httpMethod = "DELETE", response = BaseResult.class)
+    @ApiImplicitParam(name = "id", value = "用户主键id", required = true, dataType = "int")
     public BaseResult deleteUmsUserByPrimaryKey(@PathVariable("id") Integer id) {
 
         umsUserInfoService.deleteUserInfoByPrimaryKey(id);
@@ -58,12 +69,20 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @PostMapping("/login")
+    @ApiOperation(value = "登入", notes = "用户提供学工号和密码进行登入",
+            httpMethod = "POST", response = BaseResult.class)
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "jobNumber", value = "用户学工号",
+                    required = true, dataType = "String", example = "10200001"),
+            @ApiImplicitParam(name = "password", value = "用户密码",
+                    required = true, dataType = "String", example = "123456")
+    })
     public BaseResult login(@RequestParam("jobNumber") String jobNumber,
                             @RequestParam("password") String password) {
         Result result = FluentValidator.checkAll()
                 .on(jobNumber, new NotNullValidator("学工号"))
                 .on(password, new NotNullValidator("密码"))
-                .on(jobNumber, new LengthValidator(9, 11, "学工号"))
+                .on(jobNumber, new LengthValidator(7, 9, "学工号"))
                 .on(password, new LengthValidator(5, 101, "密码"))
                 .doValidate()
                 .result(ResultCollectors.toSimple());
@@ -90,6 +109,10 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @PostMapping("/sendSms/{phone}")
+    @ApiOperation(value = "发送短信", notes = "用户绑定手机号码时进行验证码发送",
+            httpMethod = "POST", response = BaseResult.class)
+    @ApiImplicitParam(name = "phone", value = "用户手机号码",
+            required = true, dataType = "String", example = "18820198888")
     public BaseResult sendSms(@PathVariable("phone") String phone) {
         int result = umsUserInfoService.sendSms(phone);
         if (1 == result) {
@@ -99,6 +122,16 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @PostMapping("/checkSmsCode")
+    @ApiOperation(value = "号码绑定验证信息", notes = "用户填写验证码之后和系统进行校验",
+            httpMethod = "POST", response = BaseResult.class)
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "jobNumber", value = "学工号",
+                    dataType = "String", required = true, example = "10200001"),
+            @ApiImplicitParam(name = "phone", value = "手机号码",
+                    dataType = "String", required = true, example = "18820198888"),
+            @ApiImplicitParam(name = "code", value = "验证码",
+                    dataType = "String", required = true, example = "182374")
+    })
     public BaseResult checkSmsCode(@RequestParam("jobNumber") String jobNumber,
                                 @RequestParam("phone") String phone,
                                 @RequestParam("code") String code) {
@@ -108,7 +141,7 @@ public class UmsUserInfoController extends BaseController {
                 .on(jobNumber, new NotNullValidator("学工号"))
                 .on(phone, new NotNullValidator("手机号"))
                 .on(code, new NotNullValidator("验证码"))
-                .on(jobNumber, new LengthValidator(9, 11, "学工号"))
+                .on(jobNumber, new LengthValidator(7, 9, "学工号"))
                 .on(phone, new LengthValidator(10, 12, "手机号"))
                 .on(code, new LengthValidator(5, 7, "验证码"))
                 .doValidate()
@@ -132,6 +165,10 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @PostMapping("/sendMail")
+    @ApiOperation(value = "发送邮件", notes = "当用户需要绑定邮箱时，该功能给用户邮箱发送验证码邮件进行绑定",
+            httpMethod = "POST", response = BaseResult.class)
+    @ApiImplicitParam(name = "to", value = "用户邮箱地址",
+            dataType = "String", required = true, example = "18820198888@163.com")
     public BaseResult sendMail(@RequestParam("to") String to) {
         if (StringUtils.isBlank(to)) {
             return BaseResult.failed("邮箱地址不存在");
@@ -141,6 +178,16 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @PostMapping("/checkMailCode")
+    @ApiOperation(value = "邮箱绑定验证信息", notes = "用户填写验证码之后和系统进行校验，校验成功绑定成功",
+            httpMethod = "POST", response = BaseResult.class)
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "jobNumber", value = "学工号",
+                    dataType = "String", required = true, example = "10200001"),
+            @ApiImplicitParam(name = "to", value = "用户邮箱地址",
+                    dataType = "String", required = true, example = "18820198888@163.com"),
+            @ApiImplicitParam(name = "code", value = "验证码",
+                    dataType = "String", required = true, example = "182374")
+    })
     public BaseResult checkMailCode(@RequestParam("jobNumber") String jobNumber,
                                     @RequestParam("mail") String mail,
                                     @RequestParam("code") String code) {
@@ -149,7 +196,7 @@ public class UmsUserInfoController extends BaseController {
                 .on(jobNumber, new NotNullValidator("学工号"))
                 .on(mail, new NotNullValidator("邮箱"))
                 .on(code, new NotNullValidator("验证码"))
-                .on(jobNumber, new LengthValidator(9, 11, "学工号"))
+                .on(jobNumber, new LengthValidator(7, 9, "学工号"))
                 .on(code, new LengthValidator(5, 7, "验证码"))
                 .doValidate()
                 .result(ResultCollectors.toSimple());
@@ -171,13 +218,20 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @PostMapping("/updatePassword")
+    @ApiOperation(value = "更新密码", notes = "用户填写新密码进行改密码操作",
+            httpMethod = "POST", response = BaseResult.class)
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "jobNumber", value = "用户学工号",
+                    dataType = "String", required = true, example = "10200001"),
+            @ApiImplicitParam(name = "password", value = "用户新密码", dataType = "String", required = true, example = "654321")
+    })
     public BaseResult updatePassword(@RequestParam("jobNumber") String jobNumber,
                                      @RequestParam("password") String password) {
         // 进行参数校验
         Result result = FluentValidator.checkAll()
                 .on(jobNumber, new NotNullValidator("学工号"))
                 .on(password, new NotNullValidator("密码"))
-                .on(jobNumber, new LengthValidator(9, 11, "学工号"))
+                .on(jobNumber, new LengthValidator(7, 9, "学工号"))
                 .on(password, new LengthValidator(5, 105, "密码"))
                 .doValidate()
                 .result(ResultCollectors.toSimple());
@@ -199,6 +253,9 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @PutMapping("/update")
+    @ApiOperation(value = "更新用户信息", notes = "用户更改自己信息",
+            httpMethod = "PUT", response = BaseResult.class)
+    @ApiImplicitParam(name = "umsUserInfo", value = "待更新的信息", dataTypeClass = UmsUserInfo.class)
     public BaseResult updateUmsUserInfo(@RequestBody UmsUserInfo umsUserInfo) {
 
         UmsUserInfoAo umsUserInfoAo = umsUserInfoService.updateUmsUserInfo(umsUserInfo);
@@ -214,6 +271,14 @@ public class UmsUserInfoController extends BaseController {
     }
 
     @GetMapping("/getAll")
+    @ApiOperation(value = "查询多个用户信息", notes = "管理员用户分页查询用户信息",
+            httpMethod = "GET", response = BaseResult.class)
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "currentPage", value = "当前所在页数，从0开始",
+                    dataType = "int", required = true, example = "1"),
+            @ApiImplicitParam(name = "pageSize", value = "每页所展示的用户数",
+                    dataType = "int", required = true, example = "10")
+    })
     public BaseResult selectAll(@RequestParam("currentPage") int currentPage,
                                 @RequestParam("pageSize") int pageSize) {
         PageInfo<UmsUserInfo> umsUserInfos =

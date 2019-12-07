@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="com.duanxin.zqls.fms.model.FmsMealRecommendationParameters">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="renew_time" jdbcType="TIMESTAMP" property="renewTime" />
   </resultMap>
@@ -66,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, uid, create_time, renew_time
+    id, uid, height, weight, create_time, renew_time
   </sql>
 
 </mapper>

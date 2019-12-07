@@ -1,12 +1,9 @@
 package com.duanxin.test.model;
 
-import com.duanxin.zqls.common.handler.MoneyTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.type.JdbcType;
 import org.joda.money.Money;
-import tk.mybatis.mapper.annotation.ColumnType;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -47,7 +44,6 @@ public class UmsUserAccountInfo implements Serializable {
      * balance
      */
     @Column
-    @ColumnType(jdbcType = JdbcType.BIGINT, typeHandler = MoneyTypeHandler.class)
     private Money balance;
 
     /**

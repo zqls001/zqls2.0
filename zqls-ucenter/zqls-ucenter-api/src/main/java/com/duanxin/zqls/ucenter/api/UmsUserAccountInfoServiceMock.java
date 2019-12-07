@@ -1,7 +1,10 @@
 package com.duanxin.zqls.ucenter.api;
 
+import com.duanxin.zqls.ucenter.model.UmsUserAccountConsume;
 import com.duanxin.zqls.ucenter.model.UmsUserAccountInfo;
+import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -12,12 +15,22 @@ import java.util.List;
  */
 public class UmsUserAccountInfoServiceMock implements UmsUserAccountInfoService {
     @Override
-    public List<UmsUserAccountInfo> selectByAid(String aid) {
+    public List<UmsUserAccountInfo> selectByAid(Integer aid) {
         return null;
     }
 
     @Override
     public UmsUserAccountInfo selectByJobNumber(String jobNumber) {
+        return null;
+    }
+
+    @Override
+    public int insertUserAccountConsume(UmsUserAccountConsume umsUserAccountConsume) {
+        return 0;
+    }
+
+    @Override
+    public UmsUserInfoVo deductionBalance(String uid, BigDecimal pay, Integer flowId) {
         return null;
     }
 }

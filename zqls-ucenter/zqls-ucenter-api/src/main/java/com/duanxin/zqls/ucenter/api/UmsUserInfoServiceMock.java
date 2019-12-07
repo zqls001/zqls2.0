@@ -2,7 +2,10 @@ package com.duanxin.zqls.ucenter.api;
 
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
+import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageInfo;
+
+import java.math.BigDecimal;
 
 /**
  * 用户信息Service层服务降级
@@ -11,6 +14,11 @@ import com.github.pagehelper.PageInfo;
  * @date 2019/10/22 8:57
  */
 public class UmsUserInfoServiceMock implements UmsUserInfoService {
+
+    @Override
+    public Integer selectAidByJobNumber(String jobNumber) {
+        return null;
+    }
 
     @Override
     public UmsUserInfo selectByPrimaryKey(Integer id) {
@@ -59,6 +67,11 @@ public class UmsUserInfoServiceMock implements UmsUserInfoService {
 
     @Override
     public PageInfo<UmsUserInfo> selectAll(int currentPage, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public UmsUserInfoVo settleAccounts(String uid, String place, BigDecimal pay) {
         return null;
     }
 }

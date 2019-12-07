@@ -5,12 +5,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="nation" jdbcType="TINYINT" property="nation" />
-    <result column="area" jdbcType="TINYINT" property="area" />
-    <result column="taste_type" jdbcType="TINYINT" property="tasteType" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="taste_type1" jdbcType="TINYINT" property="tasteType1" />
+    <result column="taste_type2" jdbcType="TINYINT" property="tasteType2" />
+    <result column="favorite_dishes1" jdbcType="TINYINT" property="favoriteDishes1" />
+    <result column="favorite_dishes2" jdbcType="TINYINT" property="favoriteDishes2" />
     <result column="diet" jdbcType="TINYINT" property="diet" />
-    <result column="favorite_dishes" jdbcType="TINYINT" property="favoriteDishes" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="renew_time" jdbcType="TIMESTAMP" property="renewTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,6 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, uid, nation, area, taste_type, diet, favorite_dishes, create_time, renew_time
+    id, uid, nation, area, taste_type1, taste_type2, favorite_dishes1, favorite_dishes2, 
+    diet, renew_time, create_time
   </sql>
 </mapper>

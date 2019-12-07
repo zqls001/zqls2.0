@@ -29,7 +29,7 @@ spring:
   # redis缓存配置
   redis:
     host: 39.106.154.120
-    port: 8887
+    port: 6379
   # 消息中间件RabbitMQ配置
   rabbitmq:
     host: 39.106.154.120
@@ -57,7 +57,6 @@ aliyun:
 mybatis:
   mapper-locations: classpath*:/mapper/*.xml    # mapper.xml文件所在路径
   type-aliases-package: com.duanxin.zqls.ucenter.model    # 与数据库对应的bean所在路径
-  type-handlers-package: com.duanxin.zqls.common.handler   # handler所在路径
   configuration:
     map-underscore-to-camel-case: true    # 开启驼峰配置
 
@@ -80,12 +79,10 @@ dubbo:
     threadpool: fixed
   protocol:
     name: dubbo   # 声明提供者暴露协议
-    serialization: kryo   # 声明使用的序列化技术
-    optimizer: com.duanxin.zqls.ucenter.utils.SerializationOptimizerImpl    # 声明序列化器
     port: 20880
 
 redisson:
-  address: redis://39.106.154.120:8887
+  address: redis://39.106.154.120:6379
 
 # 分页插件配置
 pagehelper:

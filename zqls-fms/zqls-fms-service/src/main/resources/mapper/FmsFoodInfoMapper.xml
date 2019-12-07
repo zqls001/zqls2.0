@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.duanxin.zqls.fms.model.FmsFoodInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="price" jdbcType="BIGINT" property="price" typeHandler="com.duanxin.zqls.common.handler.MoneyTypeHandler" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="taste_type" jdbcType="TINYINT" property="tasteType" />
     <result column="basic_features" jdbcType="TINYINT" property="basicFeatures" />
@@ -41,25 +41,6 @@
                 </when>
               </choose>
             </foreach>
-            <foreach collection="criteria.priceCriteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler} and #{criterion.secondValue,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
           </trim>
         </if>
       </foreach>
@@ -89,25 +70,6 @@
                 </when>
               </choose>
             </foreach>
-            <foreach collection="criteria.priceCriteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler} and #{criterion.secondValue,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem,typeHandler=com.duanxin.zqls.dao.handler.MoneyTypeHandler}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
           </trim>
         </if>
       </foreach>
@@ -117,4 +79,9 @@
     id, name, price, remark, taste_type, basic_features, status, pic_url, place, type, 
     create_time, operate_time, operate_ip, operator
   </sql>
+
+  <select id="getFoodPlace" resultType="java.lang.String">
+    select distinct f.place
+    from zqls.fms_food_info f
+  </select>
 </mapper>

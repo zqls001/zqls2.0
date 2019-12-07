@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.duanxin.zqls.ucenter.model.UmsUserAccountInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="aid" jdbcType="INTEGER" property="aid" />
-    <result column="balance" jdbcType="BIGINT" property="balance" typeHandler="com.duanxin.zqls.common.handler.MoneyTypeHandler" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
     <result column="type" jdbcType="CHAR" property="type" />
     <result column="flow_id" jdbcType="INTEGER" property="flowId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -30,25 +30,6 @@
                   and ${criterion.condition}
                   <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-            <foreach collection="criteria.balanceCriteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler} and #{criterion.secondValue,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler}
                   </foreach>
                 </when>
               </choose>
@@ -82,25 +63,6 @@
                 </when>
               </choose>
             </foreach>
-            <foreach collection="criteria.balanceCriteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler} and #{criterion.secondValue,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem,typeHandler=com.duanxin.zqls.common.handler.MoneyTypeHandler}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
           </trim>
         </if>
       </foreach>
@@ -110,10 +72,11 @@
     id, aid, balance, type, flow_id, create_time, renew_time
   </sql>
 
-  <select id="selectByJobNumber" parameterType="string" resultMap="BaseResultMap">
-    select u1.<include refid="Base_Column_List"/>
-    from zqls.ums_user_account_info u1, zqls.ums_user_info u2
-    where u1.aid = u2.aid and u2.job_number = #{jobNumber}
-    order by u1.create_time desc limit 1;
+  <select id="selectByJobNumber" resultMap="BaseResultMap" parameterType="string">
+    select <include refid="Base_Column_List"/>
+    from zqls.ums_user_account_info
+    where aid = (select aid from zqls.ums_user_info where job_number = #{jobNumber})
+    order by create_time desc limit 1;
   </select>
+
 </mapper>

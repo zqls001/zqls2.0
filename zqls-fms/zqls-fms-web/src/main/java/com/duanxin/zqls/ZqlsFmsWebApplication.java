@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author duanxin
@@ -18,6 +19,7 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
         RedissonAutoConfiguration.class
 })
 @EnableDubbo(scanBasePackages = "com.duanxin.zqls.fms.service")
+@EnableSwagger2
 public class ZqlsFmsWebApplication {
     public static void main(String[] args) {
         SpringApplication.run(ZqlsFmsWebApplication.class, args);

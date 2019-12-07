@@ -3,7 +3,10 @@ package com.duanxin.zqls.ucenter.api;
 
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
+import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageInfo;
+
+import java.math.BigDecimal;
 
 /**
  * 用户信息Service层接口
@@ -12,6 +15,9 @@ import com.github.pagehelper.PageInfo;
  * @date 2019/10/14 15:38
  */
 public interface UmsUserInfoService {
+
+    Integer selectAidByJobNumber(String jobNumber);
+
     /**
      * 根据用户id获取记录
      * @param id 主键
@@ -95,4 +101,14 @@ public interface UmsUserInfoService {
      * @return com.github.pagehelper.Page<com.duanxin.zqls.ucenter.model.UmsUserInfo>
      **/
     PageInfo<UmsUserInfo> selectAll(int currentPage, int pageSize);
+
+    /**
+     * 进行交易
+     * @param uid 用户学工号
+     * @param place 交易地点
+     * @param pay 本次交易金额
+     * @date 2019/12/5 10:38
+     * @return com.duanxin.zqls.ucenter.vo.UmsUserInfoVo
+     **/
+    UmsUserInfoVo settleAccounts(String uid, String place, BigDecimal pay);
 }

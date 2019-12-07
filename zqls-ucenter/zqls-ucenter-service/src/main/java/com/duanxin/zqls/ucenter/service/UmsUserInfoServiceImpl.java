@@ -5,21 +5,26 @@ import com.duanxin.zqls.common.exception.CheckException;
 import com.duanxin.zqls.common.util.MD5Util;
 import com.duanxin.zqls.common.util.RandomStringUtils;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
+import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
 import com.duanxin.zqls.ucenter.config.MQConfig;
 import com.duanxin.zqls.ucenter.mapper.UmsUserInfoMapper;
+import com.duanxin.zqls.ucenter.model.UmsUserAccountConsume;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
+import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +46,13 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     private RabbitTemplate rabbitTemplate;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Reference(version = "0.0.1", check = false, mock = "true", protocol = "dubbo")
+    private UmsUserAccountInfoService umsUserAccountInfoService;
+
+    @Override
+    public Integer selectAidByJobNumber(String jobNumber) {
+        return umsUserInfoMapper.selectOne(UmsUserInfo.builder().jobNumber(jobNumber).build()).getAid();
+    }
 
     @Override
     public UmsUserInfo selectByPrimaryKey(Integer id) {
@@ -163,6 +175,17 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         PageHelper.startPage(currentPage, pageSize);
         List<UmsUserInfo> umsUserInfoList = umsUserInfoMapper.selectAll();
         return new PageInfo<>(umsUserInfoList);
+    }
+
+    @Override
+    public UmsUserInfoVo settleAccounts(String uid, String place, BigDecimal pay) {
+        // 存储交易信息
+        UmsUserAccountConsume umsUserAccountConsume =
+                UmsUserAccountConsume.builder().place(place).price(pay).build();
+        int id = umsUserAccountInfoService.insertUserAccountConsume(umsUserAccountConsume);
+        // 账户余额扣减
+        // 返回账户信息
+        return umsUserAccountInfoService.deductionBalance(uid, pay, id);
     }
 
     @Override

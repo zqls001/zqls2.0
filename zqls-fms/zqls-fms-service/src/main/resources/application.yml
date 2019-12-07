@@ -25,6 +25,10 @@ spring:
       test-on-return: false
       max-pool-prepared-statement-per-connection-size: 20
       use-global-data-source-stat: true
+  # 配置redis
+  redis:
+    host: 39.106.154.120
+    port: 6379
 # dubbo configuration
 dubbo:
   application:
@@ -33,8 +37,6 @@ dubbo:
     address: zookeeper://39.106.154.120:2181
   protocol:
     name: dubbo
-    serialization: kryo
-    optimizer: com.duanxin.zqls.fms.utils.SerializationOptimizerImpl    # 声明序列化器
     port: 20881
 
 # logging configuration
@@ -49,6 +51,7 @@ logging:
 mybatis:
   type-aliases-package: com.duanxin.zqls.fms.model
   mapper-locations: classpath*:/mapper/*.xml
-  type-handlers-package: com.duanxin.zqls.common.handler
   configuration:
     map-underscore-to-camel-case: true
+
+

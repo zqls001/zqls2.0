@@ -18,6 +18,7 @@
         <module>fms-demo</module>
         <module>dubbo-test</module>
         <module>excle-demo</module>
+        <module>swagger-demo</module>
     </modules>
 
 

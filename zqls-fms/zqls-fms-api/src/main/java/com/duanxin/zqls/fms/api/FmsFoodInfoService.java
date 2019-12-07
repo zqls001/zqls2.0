@@ -1,8 +1,10 @@
 package com.duanxin.zqls.fms.api;
 
 import com.duanxin.zqls.fms.dto.FoodInfoAndUserInfoDto;
+import com.duanxin.zqls.fms.model.FmsFoodConsume;
 import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
+import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -45,4 +47,12 @@ public interface FmsFoodInfoService {
      * @return com.duanxin.zqls.fms.dto.FoodInfoAndUserInfoDto
      **/
     FoodInfoAndUserInfoDto selectFmsInfoAndUmsInfoById(Integer fid, String jobNumber);
+
+    /**
+     * 根据硬件端传来用户交易情况进行完成交易
+     * @param fmsFoodConsume 食物消耗实体类
+     * @date 2019/12/5 8:45
+     * @return UmsUserInfoVo
+     **/
+    UmsUserInfoVo settleAccounts(FmsFoodConsume fmsFoodConsume);
 }
