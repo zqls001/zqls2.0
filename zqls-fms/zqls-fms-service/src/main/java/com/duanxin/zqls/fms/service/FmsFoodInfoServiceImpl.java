@@ -57,7 +57,7 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
         foodPlaceList.forEach(f -> keys.add("hots::" + f));
         // get value from redis
         List<Set<String>> fids = Lists.newArrayList();
-        keys.forEach(k -> fids.add(stringRedisTemplate.opsForZSet().range(k, 0, 5)));
+        keys.forEach(k -> fids.add(stringRedisTemplate.opsForZSet().reverseRange(k, 0, 5)));
         // get fms food info from database with fid
         List<List<FmsFoodInfo>> fmsFoodInfos = Lists.newArrayList();
         fids.stream().filter(zfid -> zfid.size() != 0).forEach(f -> {
