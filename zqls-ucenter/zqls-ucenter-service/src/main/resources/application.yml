@@ -46,6 +46,11 @@ spring:
         prefetch: 1
         auto-startup: true
         default-requeue-rejected: true
+  # 设置上传文件大小最大值
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 # 配置阿里云短信服务
 aliyun:
@@ -93,4 +98,5 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: countsql
+
 

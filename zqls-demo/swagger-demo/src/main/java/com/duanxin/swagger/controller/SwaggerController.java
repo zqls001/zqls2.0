@@ -4,7 +4,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author duanxin
@@ -22,4 +25,11 @@ public class SwaggerController {
         return "swagger" + name;
     }
 
+    @PostMapping("/test")
+    @ResponseBody
+    @ApiOperation(value = "接口的功能介绍", notes = "提示接口使用者注意事项", httpMethod = "POST", response = String.class)
+    public String test(@RequestParam("file") MultipartFile file) {
+        System.out.println(file.getSize());
+        return "test";
+    }
 }

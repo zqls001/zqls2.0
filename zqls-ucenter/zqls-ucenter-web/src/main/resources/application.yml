@@ -36,6 +36,11 @@ spring:
     host: 39.106.154.120
     username: root
     password: root
+  # 上传文件的限制
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 redisson:
   address: redis://39.106.154.120:6379
