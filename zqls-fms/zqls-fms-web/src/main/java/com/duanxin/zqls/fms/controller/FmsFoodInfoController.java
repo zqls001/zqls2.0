@@ -10,6 +10,7 @@ import com.duanxin.zqls.fms.model.FmsFoodConsume;
 import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
 import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
+import com.duanxin.zqls.web.annotation.LoginRequired;
 import com.duanxin.zqls.web.base.BaseResult;
 import com.duanxin.zqls.web.validate.LengthValidator;
 import com.duanxin.zqls.web.validate.NotNullValidator;
@@ -43,6 +44,7 @@ public class FmsFoodInfoController {
     @GetMapping("/hots")
     @ApiOperation(value = "获取热点食物基本信息", notes = "该功能是获取三天内最受欢迎食物信息",
             httpMethod = "GET", response = BaseResult.class)
+    @LoginRequired
     public BaseResult getHotFmsFoodInfos() {
         FmsFoodInfoVo fmsFoodInfoVo = fmsFoodInfoService.getHotFmsFoodInfos();
         if (null == fmsFoodInfoVo) {
@@ -56,6 +58,7 @@ public class FmsFoodInfoController {
             httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(name = "id", value = "食物主键id",
             dataType = "int", required = true, example = "1")
+    @LoginRequired
     public BaseResult getFoodInfoByPrimaryId(@PathVariable("id") Integer id) {
         FmsFoodInfo fmsFoodInfo = fmsFoodInfoService.getFoodInfoByPrimaryId(id);
         if (null == fmsFoodInfo) {
@@ -73,6 +76,7 @@ public class FmsFoodInfoController {
             @ApiImplicitParam(name = "pageSize", value = "每页所展示的用户数",
                     dataType = "int", required = true, example = "10")
     })
+    @LoginRequired
     public BaseResult getAll(@RequestParam("currentPage") Integer currentPage,
                                 @RequestParam("pageSize") Integer pageSize) {
         PageInfo<FmsFoodInfo> fmsFoodInfos = fmsFoodInfoService.selectAll(currentPage, pageSize);

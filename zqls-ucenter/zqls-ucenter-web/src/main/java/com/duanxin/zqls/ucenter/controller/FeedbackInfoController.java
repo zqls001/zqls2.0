@@ -8,6 +8,7 @@ import com.duanxin.zqls.ucenter.ao.FeedbackInfoAo;
 import com.duanxin.zqls.ucenter.api.FeedbackInfoService;
 import com.duanxin.zqls.ucenter.constants.CommonConstant;
 import com.duanxin.zqls.ucenter.model.FeedbackInfo;
+import com.duanxin.zqls.web.annotation.LoginRequired;
 import com.duanxin.zqls.web.base.BaseResult;
 import com.duanxin.zqls.web.util.FastdfsUtil;
 import com.duanxin.zqls.web.validate.LengthValidator;
@@ -42,6 +43,7 @@ public class FeedbackInfoController {
             response = BaseResult.class)
     @ApiImplicitParam(name = "feedBackInfo", value = "用户反馈信息实体",
             dataTypeClass = FeedbackInfo.class, required = true)
+    @LoginRequired
     public BaseResult saveFeedbackInfo(@RequestBody FeedbackInfo feedbackInfo) {
         // validate
         Result results = FluentValidator.
@@ -63,6 +65,7 @@ public class FeedbackInfoController {
     @PostMapping(value = "/uploadFile", headers = "content-type=multipart/form-data")
     @ApiOperation(value = "上传文件", notes = "用户上传反馈信息图片接口",
             httpMethod = "POST", response = BaseResult.class)
+    @LoginRequired
     public BaseResult uploadFile(@ApiParam(name = "file", value = "文件实体") @RequestParam("file") MultipartFile file) {
         StringBuilder sb = new StringBuilder(CommonConstant.PIC_URL_PRE);
         try {
@@ -82,6 +85,7 @@ public class FeedbackInfoController {
             httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(name = "id", value = "反馈主键id", dataType = "int",
             required = true, example = "1")
+    @LoginRequired
     public BaseResult getFeedbackById(@PathVariable("id") Integer id) {
         FeedbackInfoAo feedbackInfoAo = feedbackInfoService.getFeedbackById(id);
         if (feedbackInfoAo == null) {
@@ -103,6 +107,7 @@ public class FeedbackInfoController {
             @ApiImplicitParam(name = "pageSize", value = "每页所展示的用户数",
                     dataType = "int", required = true, example = "10")
     })
+    @LoginRequired
     public BaseResult getFeedbackByJobNumberWithPages(@RequestParam("jobNumber") String jobNumber,
                                                       @RequestParam("currentPage") int currentPage,
                                                       @RequestParam("pageSize") int pageSize) {
@@ -134,6 +139,7 @@ public class FeedbackInfoController {
             @ApiImplicitParam(name = "pageSize", value = "每页所展示的用户数",
                     dataType = "int", required = true, example = "10")
     })
+    @LoginRequired
     public BaseResult getAll(@RequestParam("currentPage") int currentPage,
                              @RequestParam("pageSize") int pageSize) {
         PageInfo<FeedbackInfo> feedbackInfoPageInfo =
@@ -148,6 +154,7 @@ public class FeedbackInfoController {
     @ApiOperation(value = "反馈信息更新操作", httpMethod = "PUT", response = BaseResult.class)
     @ApiImplicitParam(name = "feedbackInfo", value = "更新后的反馈信息实体",
             dataTypeClass = FeedbackInfo.class)
+    @LoginRequired
     public BaseResult updateFeedbackInfo(@RequestBody FeedbackInfo feedbackInfo) {
         FeedbackInfo info = feedbackInfoService.updateFeedbackInfo(feedbackInfo);
         if (info == null) {
@@ -161,6 +168,7 @@ public class FeedbackInfoController {
             response = BaseResult.class)
     @ApiImplicitParam(name = "id", value = "反馈信息主键id",
             dataType = "int", required = true, example = "1")
+    @LoginRequired
     public BaseResult deleteFeedbackInfo(@PathVariable("id") Integer id) {
         int result = feedbackInfoService.deleteFeedbackInfo(id);
         if (result == 0) {

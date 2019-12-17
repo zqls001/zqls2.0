@@ -58,6 +58,7 @@ public class UmsUserInfoController {
     @ApiOperation(value = "删除用户", notes = "根据用户主键id删除用户",
             httpMethod = "DELETE", response = BaseResult.class)
     @ApiImplicitParam(name = "id", value = "用户主键id", required = true, dataType = "int")
+    @LoginRequired
     public BaseResult deleteUmsUserByPrimaryKey(@PathVariable("id") Integer id) {
 
         umsUserInfoService.deleteUserInfoByPrimaryKey(id);
@@ -69,6 +70,7 @@ public class UmsUserInfoController {
             httpMethod = "POST", response = BaseResult.class)
     @ApiImplicitParam(name = "phone", value = "用户手机号码",
             required = true, dataType = "String", example = "18820198888")
+    @LoginRequired
     public BaseResult sendSms(@PathVariable("phone") String phone) {
         int result = umsUserInfoService.sendSms(phone);
         if (1 == result) {
@@ -88,6 +90,7 @@ public class UmsUserInfoController {
             @ApiImplicitParam(name = "code", value = "验证码",
                     dataType = "String", required = true, example = "182374")
     })
+    @LoginRequired
     public BaseResult checkSmsCode(@RequestParam("jobNumber") String jobNumber,
                                 @RequestParam("phone") String phone,
                                 @RequestParam("code") String code) {
@@ -125,6 +128,7 @@ public class UmsUserInfoController {
             httpMethod = "POST", response = BaseResult.class)
     @ApiImplicitParam(name = "to", value = "用户邮箱地址",
             dataType = "String", required = true, example = "18820198888@163.com")
+    @LoginRequired
     public BaseResult sendMail(@RequestParam("to") String to) {
         if (StringUtils.isBlank(to)) {
             return BaseResult.failed("邮箱地址不存在");
@@ -144,6 +148,7 @@ public class UmsUserInfoController {
             @ApiImplicitParam(name = "code", value = "验证码",
                     dataType = "String", required = true, example = "182374")
     })
+    @LoginRequired
     public BaseResult checkMailCode(@RequestParam("jobNumber") String jobNumber,
                                     @RequestParam("mail") String mail,
                                     @RequestParam("code") String code) {
@@ -181,6 +186,7 @@ public class UmsUserInfoController {
                     dataType = "String", required = true, example = "10200001"),
             @ApiImplicitParam(name = "password", value = "用户新密码", dataType = "String", required = true, example = "654321")
     })
+    @LoginRequired
     public BaseResult updatePassword(@RequestParam("jobNumber") String jobNumber,
                                      @RequestParam("password") String password) {
         // 进行参数校验
@@ -212,6 +218,7 @@ public class UmsUserInfoController {
     @ApiOperation(value = "更新用户信息", notes = "用户更改自己信息",
             httpMethod = "PUT", response = BaseResult.class)
     @ApiImplicitParam(name = "umsUserInfo", value = "待更新的信息", dataTypeClass = UmsUserInfo.class)
+    @LoginRequired
     public BaseResult updateUmsUserInfo(@RequestBody UmsUserInfo umsUserInfo) {
 
         UmsUserInfoAo umsUserInfoAo = umsUserInfoService.updateUmsUserInfo(umsUserInfo);
@@ -235,6 +242,7 @@ public class UmsUserInfoController {
             @ApiImplicitParam(name = "pageSize", value = "每页所展示的用户数",
                     dataType = "int", required = true, example = "10")
     })
+    @LoginRequired
     public BaseResult selectAll(@RequestParam("currentPage") int currentPage,
                                 @RequestParam("pageSize") int pageSize) {
         PageInfo<UmsUserInfo> umsUserInfos =

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="demo-test-api" target="1.8" />
+      <module name="dubbo-demo" target="1.8" />
+      <module name="dubbo-test" target="1.8" />
+      <module name="dubbo-test-dao" target="1.8" />
+      <module name="dubbo-test-service" target="1.8" />
+      <module name="dubbo-test-web" target="1.8" />
+      <module name="excle-demo" target="1.8" />
+      <module name="redis-demo" target="1.8" />
+      <module name="swagger-demo" target="1.8" />
+      <module name="zqls-api" target="1.8" />
+      <module name="zqls-common-api" target="1.8" />
+      <module name="zqls-common-util" target="1.8" />
+      <module name="zqls-data" target="1.8" />
+      <module name="zqls-demo" target="1.8" />
+      <module name="zqls-fms" target="1.8" />
+      <module name="zqls-fms-api" target="1.8" />
+      <module name="zqls-fms-dao" target="1.8" />
+      <module name="zqls-fms-service" target="1.8" />
+      <module name="zqls-fms-web" target="1.8" />
+      <module name="zqls-mail-service" target="1.8" />
+      <module name="zqls-parent" target="1.8" />
+      <module name="zqls-passport-web" target="1.8" />
+      <module name="zqls-service-api" target="1.8" />
+      <module name="zqls-service-util" target="1.8" />
+      <module name="zqls-ucenter" target="1.8" />
+      <module name="zqls-ucenter-api" target="1.8" />
+      <module name="zqls-ucenter-dao" target="1.8" />
+      <module name="zqls-ucenter-service" target="1.8" />
+      <module name="zqls-ucenter-web" target="1.8" />
+      <module name="zqls-util" target="1.8" />
+      <module name="zqls-web-api" target="1.8" />
+      <module name="zqls-web-util" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

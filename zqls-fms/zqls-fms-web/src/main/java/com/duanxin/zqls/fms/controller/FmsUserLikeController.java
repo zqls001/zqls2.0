@@ -7,6 +7,7 @@ import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.fms.ao.FmsUserLikeAo;
 import com.duanxin.zqls.fms.api.FmsUserLikeService;
 import com.duanxin.zqls.fms.model.FmsUserLike;
+import com.duanxin.zqls.web.annotation.LoginRequired;
 import com.duanxin.zqls.web.base.BaseResult;
 import com.duanxin.zqls.web.validate.LengthValidator;
 import com.duanxin.zqls.web.validate.NotNullValidator;
@@ -35,6 +36,7 @@ public class FmsUserLikeController {
             httpMethod = "POST", response = BaseResult.class)
     @ApiImplicitParam(name = "fmsUserLike", value = "用户设置喜好实体类",
             dataTypeClass = FmsUserLike.class, required = true)
+    @LoginRequired
     public BaseResult saveUserLike(@RequestBody FmsUserLike fmsUserLike) {
         int result = fmsUserLikeService.saveUserLike(fmsUserLike);
         if (result == 0) {
@@ -47,6 +49,7 @@ public class FmsUserLikeController {
     @ApiOperation(value = "获取用户喜好", notes = "根据用户主键id获取用户喜好设置",
             httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(name = "id", value = "用户主键id", dataType = "int", required = true, example = "1")
+    @LoginRequired
     public BaseResult getUserLike(@PathVariable("id") Integer id) {
         FmsUserLikeAo fmsUserLikeAo = fmsUserLikeService.getUserLikeByUid(id);
         if (null == fmsUserLikeAo) {
@@ -62,6 +65,7 @@ public class FmsUserLikeController {
     @ApiOperation(value = "更改用户喜好", notes = "用户可以通过该功能进行喜好更改",
             httpMethod = "PUT", response = BaseResult.class)
     @ApiImplicitParam(name = "fmsUserLike", value = "用户更改后的数据信息", dataTypeClass = FmsUserLike.class, required = true, example = "{\"fmsUserLike\":{\"tasteType1\":3, \"favoriteDishes1\": 4}}")
+    @LoginRequired
     public BaseResult updateUserLike(@RequestBody FmsUserLike fmsUserLike) {
         FmsUserLikeAo fmsUserLikeAo = fmsUserLikeService.updateUserLike(fmsUserLike);
         if (null == fmsUserLikeAo) {
@@ -79,6 +83,7 @@ public class FmsUserLikeController {
             httpMethod = "DELETE", response = BaseResult.class)
     @ApiImplicitParam(name = "jobNumber", value = "用户学工号",
             dataType = "String", required = true, example = "10200001")
+    @LoginRequired
     public BaseResult deleteByJobNumber(@PathVariable("jobNumber") String jobNumber) {
         Result result1 = FluentValidator.
                 checkAll().
