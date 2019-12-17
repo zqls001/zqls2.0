@@ -1,4 +1,4 @@
-package com.duanxin.zqls.fms.config;
+package com.duanxin.zqls.service.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

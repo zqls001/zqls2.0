@@ -86,7 +86,7 @@ public class PassportController {
     }
 
     @GetMapping("/logout")
-    @ApiOperation(value = "推出登入", httpMethod = "GET", response = BaseResult.class)
+    @ApiOperation(value = "退出登入", httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(name = "token", value = "客户端待校验数据",
             dataType = "String", required = true)
     public BaseResult logout(@RequestParam("token") String token) {

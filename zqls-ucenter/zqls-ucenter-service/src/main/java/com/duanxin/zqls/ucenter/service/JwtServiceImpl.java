@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Jwt Service层实现
@@ -64,7 +65,7 @@ public class JwtServiceImpl implements JwtService {
         String secret = UUID.randomUUID().toString().replaceAll("-", "");
         String token = JwtUtil.encode(secret, param, expireTime);
         // 存入redis中, 该种方式的token存值存在很大的不稳定性
-        stringRedisTemplate.opsForValue().set(token, secret, expireTime);
+        stringRedisTemplate.opsForValue().set(token, secret, expireTime, TimeUnit.MINUTES);
         return token;
     }
 
