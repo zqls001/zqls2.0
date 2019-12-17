@@ -1,6 +1,7 @@
 package com.duanxin.zqls.fms.controller;
 
-import com.duanxin.zqls.common.base.BaseResult;
+
+import com.duanxin.zqls.web.base.BaseResult;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,11 +1,17 @@
 package com.duanxin.zqls.ucenter.controller;
 
-import com.duanxin.zqls.common.base.BaseResult;
-import com.duanxin.zqls.common.util.FastdfsUtil;
+import com.baidu.unbiz.fluentvalidator.FluentValidator;
+import com.baidu.unbiz.fluentvalidator.Result;
+import com.baidu.unbiz.fluentvalidator.ResultCollectors;
+import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.ucenter.ao.FeedbackInfoAo;
 import com.duanxin.zqls.ucenter.api.FeedbackInfoService;
 import com.duanxin.zqls.ucenter.constants.CommonConstant;
 import com.duanxin.zqls.ucenter.model.FeedbackInfo;
+import com.duanxin.zqls.web.base.BaseResult;
+import com.duanxin.zqls.web.util.FastdfsUtil;
+import com.duanxin.zqls.web.validate.LengthValidator;
+import com.duanxin.zqls.web.validate.NotNullValidator;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +43,16 @@ public class FeedbackInfoController {
     @ApiImplicitParam(name = "feedBackInfo", value = "用户反馈信息实体",
             dataTypeClass = FeedbackInfo.class, required = true)
     public BaseResult saveFeedbackInfo(@RequestBody FeedbackInfo feedbackInfo) {
+        // validate
+        Result results = FluentValidator.
+                checkAll().
+                on(feedbackInfo.getUid(), new LengthValidator(7, 9, "学工号")).
+                on(feedbackInfo.getUid(), new NotNullValidator("学工号")).
+                doValidate().
+                result(ResultCollectors.toSimple());
+        if (!results.isSuccess()) {
+            return BaseResult.validateFailed(GsonUtil.objectToString(results.getErrors()));
+        }
         int result = feedbackInfoService.saveFeedbackInfo(feedbackInfo);
         if (0 == result) {
             return BaseResult.failed("系统维护中，请耐心等待。。。");
@@ -90,6 +106,17 @@ public class FeedbackInfoController {
     public BaseResult getFeedbackByJobNumberWithPages(@RequestParam("jobNumber") String jobNumber,
                                                       @RequestParam("currentPage") int currentPage,
                                                       @RequestParam("pageSize") int pageSize) {
+        // validate
+        Result result = FluentValidator.
+                checkAll().
+                on(jobNumber, new NotNullValidator("学工号")).
+                on(jobNumber, new LengthValidator(7, 9, "学工号")).
+                doValidate().
+                result(ResultCollectors.toSimple());
+        if (!result.isSuccess()) {
+            return BaseResult.validateFailed(GsonUtil.objectToString(result.getErrors()));
+        }
+
         PageInfo<FeedbackInfo> feedbackInfoPageInfo =
                 feedbackInfoService.getFeedbackByJobNumberWithPages(jobNumber, currentPage, pageSize);
         if (null == feedbackInfoPageInfo) {

@@ -4,18 +4,15 @@ import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.duanxin.zqls.common.base.BaseConstants;
-import com.duanxin.zqls.common.base.BaseController;
-import com.duanxin.zqls.common.base.BaseResult;
 import com.duanxin.zqls.common.util.GsonUtil;
-import com.duanxin.zqls.common.util.MD5Util;
-import com.duanxin.zqls.common.validator.LengthValidator;
-import com.duanxin.zqls.common.validator.NotNullValidator;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
-import com.duanxin.zqls.ucenter.model.UmsUserAccountInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
-import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
+import com.duanxin.zqls.web.annotation.LoginRequired;
+import com.duanxin.zqls.web.base.BaseResult;
+import com.duanxin.zqls.web.validate.LengthValidator;
+import com.duanxin.zqls.web.validate.NotNullValidator;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -24,8 +21,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 用户信息Controller层实现
@@ -36,7 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/UmsUser")
 @Api(value = "用户模块业务的接口", tags = {"用户基本信息业务的Controller"})
-public class UmsUserInfoController extends BaseController {
+public class UmsUserInfoController {
 
     @Reference(version = "0.0.1", protocol = "dubbo", mock = "true", check = false)
     private UmsUserInfoService umsUserInfoService;
@@ -47,6 +42,7 @@ public class UmsUserInfoController extends BaseController {
     @ApiOperation(value = "获取用户基本信息", notes = "该接口根据用户的主键查询并获取用户的基本信息",
             httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(dataType = "int", name = "id", value = "用户主键id", required = true)
+    @LoginRequired
     public BaseResult getUmsUserInfoByPrimaryKey(@PathVariable("id") Integer id) {
         UmsUserInfo umsUserInfo = umsUserInfoService.selectByPrimaryKey(id);
         if (null != umsUserInfo) {
@@ -66,46 +62,6 @@ public class UmsUserInfoController extends BaseController {
 
         umsUserInfoService.deleteUserInfoByPrimaryKey(id);
         return BaseResult.success("删除成功", id);
-    }
-
-    @PostMapping("/login")
-    @ApiOperation(value = "登入", notes = "用户提供学工号和密码进行登入",
-            httpMethod = "POST", response = BaseResult.class)
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "jobNumber", value = "用户学工号",
-                    required = true, dataType = "String", example = "10200001"),
-            @ApiImplicitParam(name = "password", value = "用户密码",
-                    required = true, dataType = "String", example = "123456")
-    })
-    public BaseResult login(@RequestParam("jobNumber") String jobNumber,
-                            @RequestParam("password") String password) {
-        Result result = FluentValidator.checkAll()
-                .on(jobNumber, new NotNullValidator("学工号"))
-                .on(password, new NotNullValidator("密码"))
-                .on(jobNumber, new LengthValidator(7, 9, "学工号"))
-                .on(password, new LengthValidator(5, 101, "密码"))
-                .doValidate()
-                .result(ResultCollectors.toSimple());
-        // 校验失败，返回错误信息
-        if (!result.isSuccess()) {
-            return BaseResult.validateFailed(GsonUtil.objectToString(result.getErrors()));
-        }
-        // 校验成功，查询用户信息
-        UmsUserInfo umsUserInfo = umsUserInfoService.selectByJobNumber(jobNumber);
-        // 校验用户是否存在
-        if (null == umsUserInfo) {
-            return BaseResult.failed("用户不存在");
-        }
-        // 进行密码校验
-        if (!MD5Util.md5(password).equals(umsUserInfo.getPassword())) {
-            return BaseResult.failed("用户密码错误");
-        }
-        // 所有校验都成功
-        // 查询账户信息
-        List<UmsUserAccountInfo> umsUserAccountInfos =
-                umsUserAccountInfoService.selectByAid(umsUserInfo.getAid());
-        UmsUserInfoVo umsUserInfoVo = new UmsUserInfoVo(umsUserAccountInfos, umsUserInfo);
-        return BaseResult.success(umsUserInfoVo);
     }
 
     @PostMapping("/sendSms/{phone}")

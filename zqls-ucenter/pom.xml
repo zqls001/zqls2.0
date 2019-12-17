@@ -16,6 +16,7 @@
         <module>zqls-mail-service</module>
         <module>zqls-ucenter-api</module>
         <module>zqls-ucenter-dao</module>
+        <module>zqls-passport-web</module>
     </modules>
 
     <artifactId>zqls-ucenter</artifactId>

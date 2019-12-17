@@ -1,3 +1,0 @@
-# 配置redis
-redisson:
-  address: redis://39.106.154.120:6379

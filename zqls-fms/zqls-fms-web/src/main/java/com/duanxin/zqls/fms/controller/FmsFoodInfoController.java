@@ -3,16 +3,16 @@ package com.duanxin.zqls.fms.controller;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
-import com.duanxin.zqls.common.base.BaseResult;
 import com.duanxin.zqls.common.util.GsonUtil;
-import com.duanxin.zqls.common.validator.LengthValidator;
-import com.duanxin.zqls.common.validator.NotNullValidator;
 import com.duanxin.zqls.fms.api.FmsFoodInfoService;
 import com.duanxin.zqls.fms.dto.FoodInfoAndUserInfoDto;
 import com.duanxin.zqls.fms.model.FmsFoodConsume;
 import com.duanxin.zqls.fms.model.FmsFoodInfo;
 import com.duanxin.zqls.fms.vo.FmsFoodInfoVo;
 import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
+import com.duanxin.zqls.web.base.BaseResult;
+import com.duanxin.zqls.web.validate.LengthValidator;
+import com.duanxin.zqls.web.validate.NotNullValidator;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -120,6 +120,17 @@ public class FmsFoodInfoController {
     @ApiImplicitParam(name = "fmsFoodConsume", value = "用户食物消耗信息",
             dataTypeClass = FmsFoodConsume.class, required = true)
     public BaseResult settleAccounts(@RequestBody FmsFoodConsume fmsFoodConsume) {
+        // validate
+        Result result = FluentValidator.
+                checkAll().
+                on(fmsFoodConsume.getUid(), new NotNullValidator("学工号")).
+                on(fmsFoodConsume.getUid(), new LengthValidator(7, 9, "学工号")).
+                doValidate().
+                result(ResultCollectors.toSimple());
+        if (!result.isSuccess()) {
+            return BaseResult.validateFailed(GsonUtil.objectToString(result.getErrors()));
+        }
+
         UmsUserInfoVo umsUserInfoVo = fmsFoodInfoService.settleAccounts(fmsFoodConsume);
         if (null == umsUserInfoVo) {
             return BaseResult.failed("系统维护中，请耐性等待。。。。");

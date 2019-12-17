@@ -1,9 +1,15 @@
 package com.duanxin.zqls.fms.controller;
 
-import com.duanxin.zqls.common.base.BaseResult;
+import com.baidu.unbiz.fluentvalidator.FluentValidator;
+import com.baidu.unbiz.fluentvalidator.Result;
+import com.baidu.unbiz.fluentvalidator.ResultCollectors;
+import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.fms.ao.FmsUserLikeAo;
 import com.duanxin.zqls.fms.api.FmsUserLikeService;
 import com.duanxin.zqls.fms.model.FmsUserLike;
+import com.duanxin.zqls.web.base.BaseResult;
+import com.duanxin.zqls.web.validate.LengthValidator;
+import com.duanxin.zqls.web.validate.NotNullValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -74,6 +80,16 @@ public class FmsUserLikeController {
     @ApiImplicitParam(name = "jobNumber", value = "用户学工号",
             dataType = "String", required = true, example = "10200001")
     public BaseResult deleteByJobNumber(@PathVariable("jobNumber") String jobNumber) {
+        Result result1 = FluentValidator.
+                checkAll().
+                on(jobNumber, new LengthValidator(7, 9, "学工号")).
+                on(jobNumber, new NotNullValidator("学工号")).
+                doValidate().
+                result(ResultCollectors.toSimple());
+        if (!result1.isSuccess()) {
+            return BaseResult.validateFailed(GsonUtil.objectToString(result1.getErrors()));
+        }
+
         int result = fmsUserLikeService.deleteByJobNumber(jobNumber);
         if (0 == result) {
             return BaseResult.failed("系统维护中，请耐心等待。。。。");

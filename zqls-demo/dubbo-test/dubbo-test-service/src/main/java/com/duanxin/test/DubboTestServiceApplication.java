@@ -1,6 +1,5 @@
 package com.duanxin.test;
 
-import com.duanxin.zqls.common.config.RedissonAutoConfiguration;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +10,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @version 1.0
  * @date 2019/11/24 9:52
  */
-@SpringBootApplication(exclude = {
-        RedissonAutoConfiguration.class
-})
+@SpringBootApplication()
 @MapperScan("com.duanxin.test.mapper")
 @EnableDubbo(scanBasePackages = "com.duanxin.test.service")
 public class DubboTestServiceApplication {

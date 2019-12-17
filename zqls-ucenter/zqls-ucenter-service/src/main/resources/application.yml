@@ -87,7 +87,6 @@ dubbo:
     threadpool: fixed
   protocol:
     name: dubbo   # 声明提供者暴露协议
-    port: 20880
 
 redisson:
   address: redis://39.106.154.120:6379
@@ -99,4 +98,6 @@ pagehelper:
   support-methods-arguments: true
   params: countsql
 
+# 设置jwt过期时间，单位为天
+jwt_expire_time: 7
 
