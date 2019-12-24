@@ -21,14 +21,4 @@
 
     <artifactId>zqls-ucenter</artifactId>
 
-    <dependencies>
-        <!-- 引入公共模块 -->
-        <dependency>
-            <groupId>com.duanxin.zqls</groupId>
-            <artifactId>zqls-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
-
-
 </project>

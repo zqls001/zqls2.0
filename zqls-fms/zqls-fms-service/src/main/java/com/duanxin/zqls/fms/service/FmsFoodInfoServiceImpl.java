@@ -17,6 +17,7 @@ import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
  * @date 2019/11/16 9:29
  */
 @Service(version = "0.0.1", delay = -1)
+@Slf4j
 public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
 
     @Resource
@@ -75,6 +77,7 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
         return FmsFoodInfoVo.builder().fmsFoodInfos(fmsFoodInfos).build();
     }
 
+    // TODO：设置缓存
     @Override
     public FmsFoodInfo getFoodInfoByPrimaryId(Integer id) {
         return fmsFoodInfoMapper.selectByPrimaryKey(id);
@@ -109,6 +112,7 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
         return foodInfoAndUserInfoDto;
     }
 
+    // todo: 需要设置分布式锁与分布式事务保证该操作的准确性
     @Override
     public UmsUserInfoVo settleAccounts(FmsFoodConsume fmsFoodConsume) {
         // 消费记录存入数据库中
@@ -123,7 +127,7 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
         String key = "hots::" + fmsFoodInfo.getPlace();
         Double score = fmsFoodConsume.getFoodQuality().doubleValue();
         Double nowScore = null;
-        if (null == stringRedisTemplate.opsForZSet().size(key)) {
+        if (0 == stringRedisTemplate.opsForZSet().size(key)) {
             // key不存在时，存值，设置过期时间
             stringRedisTemplate.opsForZSet().add(key, String.valueOf(fmsFoodConsume.getFid()), score);
             stringRedisTemplate.expire(key, 3, TimeUnit.DAYS);

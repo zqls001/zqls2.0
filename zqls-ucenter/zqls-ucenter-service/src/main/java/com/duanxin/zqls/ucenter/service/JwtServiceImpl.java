@@ -40,7 +40,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Value("${jwt_expire_time}")
     public void setExpireTime(int expireTime) {
-        JwtServiceImpl.expireTime = expireTime * 60 * 1000 * 60 * 24;
+        JwtServiceImpl.expireTime = expireTime * 24 * 3600;
     }
 
     @Override
@@ -63,9 +63,9 @@ public class JwtServiceImpl implements JwtService {
      **/
     private String generateJwt(Map<String, String> param) {
         String secret = UUID.randomUUID().toString().replaceAll("-", "");
-        String token = JwtUtil.encode(secret, param, expireTime);
+        String token = JwtUtil.encode(secret, param, expireTime * 1000);
         // 存入redis中, 该种方式的token存值存在很大的不稳定性
-        stringRedisTemplate.opsForValue().set(token, secret, expireTime, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(token, secret, expireTime, TimeUnit.SECONDS);
         return token;
     }
 
@@ -73,7 +73,7 @@ public class JwtServiceImpl implements JwtService {
     public String refreshJwt(String jwt) {
         String secret = stringRedisTemplate.opsForValue().get(jwt);
         Map<String, Claim> decode = JwtUtil.decode(jwt, secret);
-        if (decode.get("exp").asLong() * 1000 - System.currentTimeMillis() / 1000 < 3 * 60 * 1000 * 60 * 24) {
+        if (decode.get("exp").asLong() - System.currentTimeMillis() / 1000 < 3 * 60 * 60 * 24) {
             Map<String, String> map = new HashMap<>();
             map.put("jobNumber", decode.get("jobNumber").asString());
             map.put("userName", decode.get("userName").asString());

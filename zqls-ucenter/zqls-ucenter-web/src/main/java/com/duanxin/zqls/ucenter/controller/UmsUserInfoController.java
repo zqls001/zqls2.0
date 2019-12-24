@@ -54,6 +54,23 @@ public class UmsUserInfoController {
         return BaseResult.failed("该用户不存在");
     }
 
+    @GetMapping("/jobNumber")
+    @ApiOperation(value = "获取用户基本信息", notes = "该接口根据用户的学工号查询并获取用户的基本信息",
+            httpMethod = "GET", response = BaseResult.class)
+    @ApiImplicitParam(dataType = "String", name = "jobNumber", value = "用户学工号", required = true)
+    @LoginRequired
+    public BaseResult getUmsUserInfoByJobNumber(@RequestParam("jobNumber") String jobNumber) {
+        UmsUserInfo umsUserInfo = umsUserInfoService.selectByJobNumber(jobNumber);
+        if (null == umsUserInfo) {
+            return BaseResult.failed("用户不存在");
+        }
+        String status = String.valueOf(umsUserInfo.getStatus());
+        if (StringUtils.isNotBlank(status) && !StringUtils.equals(status, BaseConstants.STATUS_CONSTANT)) {
+            return BaseResult.failed("用户不存在");
+        }
+        return BaseResult.success(umsUserInfo);
+    }
+
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除用户", notes = "根据用户主键id删除用户",
             httpMethod = "DELETE", response = BaseResult.class)
@@ -61,8 +78,11 @@ public class UmsUserInfoController {
     @LoginRequired
     public BaseResult deleteUmsUserByPrimaryKey(@PathVariable("id") Integer id) {
 
-        umsUserInfoService.deleteUserInfoByPrimaryKey(id);
-        return BaseResult.success("删除成功", id);
+        int result = umsUserInfoService.deleteUserInfoByPrimaryKey(id);
+        if (0 == result) {
+            return BaseResult.failed("系统维护中，请耐心等待。。。。");
+        }
+        return BaseResult.success("删除成功", result);
     }
 
     @PostMapping("/sendSms/{phone}")

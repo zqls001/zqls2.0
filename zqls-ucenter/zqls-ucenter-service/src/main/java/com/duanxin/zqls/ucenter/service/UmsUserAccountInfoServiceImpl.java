@@ -11,7 +11,6 @@ import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.dubbo.config.annotation.Service;
 import org.assertj.core.util.Lists;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -36,12 +35,9 @@ public class UmsUserAccountInfoServiceImpl implements UmsUserAccountInfoService 
     @Override
     public List<UmsUserAccountInfo> selectByAid(Integer aid) {
 
-        Example example = new Example(UmsUserAccountInfo.class);
-        example.createCriteria().andEqualTo("aid", aid);
-        List<UmsUserAccountInfo> umsUserAccountInfos =
-                umsUserAccountInfoMapper.selectByExample(example);
+        List<UmsUserAccountInfo> umsUserAccountInfos = umsUserAccountInfoMapper.select(UmsUserAccountInfo.builder().aid(aid).build());
         if (CollectionUtils.isEmpty(umsUserAccountInfos)) {
-            return null;
+            return Lists.newArrayList();
         }
         return umsUserAccountInfos;
     }

@@ -13,7 +13,7 @@ spring:
 #      url: jdbc:mysql://39.106.154.120:3306/zqls
       username: root
       password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
-      #password: bmm9Qmb659/MbIPSJ05TLkPpbu4U8s4QMXkZLf/egzIvAYs/+Y5rQuiLbBdrKGoA8oPj0GKqaAJNerdmOykWKg==
+#      password: bmm9Qmb659/MbIPSJ05TLkPpbu4U8s4QMXkZLf/egzIvAYs/+Y5rQuiLbBdrKGoA8oPj0GKqaAJNerdmOykWKg==
       filters: config,stat,wall
       connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
       initial-size: 5

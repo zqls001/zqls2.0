@@ -1,7 +1,7 @@
 package com.duanxin.zqls.ucenter.service;
 
-import com.duanxin.zqls.common.base.BaseConstants;
 import com.duanxin.zqls.common.exception.CheckException;
+import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.common.util.MD5Util;
 import com.duanxin.zqls.common.util.RandomStringUtils;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
@@ -15,13 +15,11 @@ import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -49,9 +47,10 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     @Reference(version = "0.0.1", check = false, mock = "true", protocol = "dubbo")
     private UmsUserAccountInfoService umsUserAccountInfoService;
 
+
     @Override
     public Integer selectAidByJobNumber(String jobNumber) {
-        return umsUserInfoMapper.selectOne(UmsUserInfo.builder().jobNumber(jobNumber).build()).getAid();
+        return selectByJobNumber(jobNumber).getAid();
     }
 
     @Override
@@ -60,7 +59,6 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public int deleteUserInfoByPrimaryKey(Integer id) {
         UmsUserInfo umsUserInfo = selectByPrimaryKey(id);
         if (null == umsUserInfo) {
@@ -68,18 +66,27 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         }
         umsUserInfo.setStatus(Byte.parseByte("1"));
         umsUserInfo.setOperateTime(new Date());
-        return umsUserInfoMapper.updateByPrimaryKeySelective(umsUserInfo);
+        UmsUserInfoAo umsUserInfoAo = updateUmsUserInfo(umsUserInfo);
+        return 1;
     }
 
     @Override
     public UmsUserInfo selectByJobNumber(String jobNumber) {
-        UmsUserInfo umsUserInfo = new UmsUserInfo();
-        umsUserInfo.setJobNumber(jobNumber);
-        List<UmsUserInfo> umsUserInfos = umsUserInfoMapper.select(umsUserInfo);
-        if (CollectionUtils.isEmpty(umsUserInfos)) {
-            return null;
+        UmsUserInfo umsUserInfo = null;
+        // 1,get data from redis cache
+        String key = "userJobNumber:" + jobNumber + ":info";
+        String value = stringRedisTemplate.opsForValue().get(key);
+        // 2,data is null?
+        if (null != value) {
+            umsUserInfo = GsonUtil.jsonToBean(value, UmsUserInfo.class);
+        } else {
+            // 3,if data is null, get data from db, and then pull data into redis cache
+            umsUserInfo =
+                    umsUserInfoMapper.selectOne(UmsUserInfo.builder().jobNumber(jobNumber).build());
+            value = GsonUtil.objectToString(umsUserInfo);
+            stringRedisTemplate.opsForValue().set(key, value, RandomStringUtils.random(7), TimeUnit.DAYS);
         }
-        return umsUserInfos.get(0);
+        return umsUserInfo;
     }
 
     @Override
@@ -142,13 +149,24 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     public UmsUserInfoAo updatePassword(String jobNumber, String password) {
         UmsUserInfoAo umsUserInfoAo = new UmsUserInfoAo();
         UmsUserInfo umsUserInfo = selectByJobNumber(jobNumber);
-        umsUserInfoAo.setUmsUserInfo(umsUserInfo);
         if (null != umsUserInfo) {
-            // 进行更新操作
+            // 1,del redis cache
+            String key = "userJobNumber:" + jobNumber + ":info";
+            stringRedisTemplate.delete(key);
+            // 2,update db
             umsUserInfo.setPassword(MD5Util.md5(password));
             umsUserInfo.setOperateTime(new Date());
             umsUserInfoMapper.updateByPrimaryKeySelective(umsUserInfo);
+            // 3,sleep 500ms
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // 4,del redis cache
+            stringRedisTemplate.delete(key);
         }
+        umsUserInfoAo.setUmsUserInfo(umsUserInfo);
         return umsUserInfoAo;
     }
 
@@ -157,16 +175,26 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         UmsUserInfo umsUserInfo1 = selectByPrimaryKey(umsUserInfo.getId());
         UmsUserInfoAo umsUserInfoAo = new UmsUserInfoAo();
         // 用户不存在或状态码为1，更新失败
-        if (null == umsUserInfo1 || !StringUtils.equals(umsUserInfo.getStatus() + "",
-                BaseConstants.STATUS_CONSTANT)) {
+        if (null == umsUserInfo1) {
             umsUserInfoAo.setCheckCode(0);
             return umsUserInfoAo;
         }
-        // 用户存在，进行更新
+        // 1,del redis cache
+        String key = "userJobNumber:" + umsUserInfo1.getJobNumber() + ":info";
+        stringRedisTemplate.delete(key);
+        // 2,update db
         umsUserInfoAo.setCheckCode(1);
         umsUserInfo.setOperateTime(new Date());
         umsUserInfoMapper.updateByPrimaryKeySelective(umsUserInfo);
-        umsUserInfoAo.setUmsUserInfo(umsUserInfo);
+        umsUserInfoAo.setUmsUserInfo(selectByJobNumber(umsUserInfo1.getJobNumber()));
+        // 3,sleep 500ms
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // 4,del redis cache
+        stringRedisTemplate.delete(key);
         return umsUserInfoAo;
     }
 

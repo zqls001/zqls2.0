@@ -27,4 +27,8 @@ public class RandomStringUtils {
         }
         return sb.toString();
     }
+
+    public static int random(int num) {
+        return RANDOM.nextInt(num) + 1;
+    }
 }

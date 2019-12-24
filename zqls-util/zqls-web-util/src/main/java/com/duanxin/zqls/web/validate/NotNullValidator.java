@@ -11,7 +11,7 @@ import com.baidu.unbiz.fluentvalidator.ValidatorHandler;
  * @version 1.0
  * @date 2019/10/14 9:20
  */
-public class NotNullValidator extends ValidatorHandler<String> implements Validator<String> {
+public class NotNullValidator extends ValidatorHandler<Object> implements Validator<Object> {
 
     private String fieldName;
 
@@ -20,8 +20,8 @@ public class NotNullValidator extends ValidatorHandler<String> implements Valida
     }
 
     @Override
-    public boolean validate(ValidatorContext context, String s) {
-        if (null == s || 0 == s.length()) {
+    public boolean validate(ValidatorContext context, Object s) {
+        if (null == s) {
             context.addError(ValidationError.create(String.format("%s不能为空", fieldName))
                     .setErrorCode(-1)
                     .setField(fieldName)
