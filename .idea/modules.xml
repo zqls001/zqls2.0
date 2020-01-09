@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/dubbo-test/demo-test-api/demo-test-api.iml" filepath="$PROJECT_DIR$/zqls-demo/dubbo-test/demo-test-api/demo-test-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/dubbo-demo/dubbo-demo.iml" filepath="$PROJECT_DIR$/zqls-demo/dubbo-demo/dubbo-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test.iml" filepath="$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-dao/dubbo-test-dao.iml" filepath="$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-dao/dubbo-test-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-service/dubbo-test-service.iml" filepath="$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-service/dubbo-test-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-web/dubbo-test-web.iml" filepath="$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-web/dubbo-test-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/excle-demo/excle-demo.iml" filepath="$PROJECT_DIR$/zqls-demo/excle-demo/excle-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/redis-demo/redis-demo.iml" filepath="$PROJECT_DIR$/zqls-demo/redis-demo/redis-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/swagger-demo/swagger-demo.iml" filepath="$PROJECT_DIR$/zqls-demo/swagger-demo/swagger-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-api/zqls-api.iml" filepath="$PROJECT_DIR$/zqls-api/zqls-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-api/zqls-common-api/zqls-common-api.iml" filepath="$PROJECT_DIR$/zqls-api/zqls-common-api/zqls-common-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-util/zqls-common-util/zqls-common-util.iml" filepath="$PROJECT_DIR$/zqls-util/zqls-common-util/zqls-common-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-data/zqls-data.iml" filepath="$PROJECT_DIR$/zqls-data/zqls-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-demo/zqls-demo.iml" filepath="$PROJECT_DIR$/zqls-demo/zqls-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-fms/zqls-fms.iml" filepath="$PROJECT_DIR$/zqls-fms/zqls-fms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-fms/zqls-fms-api/zqls-fms-api.iml" filepath="$PROJECT_DIR$/zqls-fms/zqls-fms-api/zqls-fms-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-fms/zqls-fms-dao/zqls-fms-dao.iml" filepath="$PROJECT_DIR$/zqls-fms/zqls-fms-dao/zqls-fms-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-fms/zqls-fms-service/zqls-fms-service.iml" filepath="$PROJECT_DIR$/zqls-fms/zqls-fms-service/zqls-fms-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-fms/zqls-fms-web/zqls-fms-web.iml" filepath="$PROJECT_DIR$/zqls-fms/zqls-fms-web/zqls-fms-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-ucenter/zqls-mail-service/zqls-mail-service.iml" filepath="$PROJECT_DIR$/zqls-ucenter/zqls-mail-service/zqls-mail-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-api/zqls-parent/zqls-parent.iml" filepath="$PROJECT_DIR$/zqls-api/zqls-parent/zqls-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-ucenter/zqls-passport-web/zqls-passport-web.iml" filepath="$PROJECT_DIR$/zqls-ucenter/zqls-passport-web/zqls-passport-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-api/zqls-service-api/zqls-service-api.iml" filepath="$PROJECT_DIR$/zqls-api/zqls-service-api/zqls-service-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-util/zqls-service-util/zqls-service-util.iml" filepath="$PROJECT_DIR$/zqls-util/zqls-service-util/zqls-service-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter.iml" filepath="$PROJECT_DIR$/zqls-ucenter/zqls-ucenter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-api/zqls-ucenter-api.iml" filepath="$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-api/zqls-ucenter-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-dao/zqls-ucenter-dao.iml" filepath="$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-dao/zqls-ucenter-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-service/zqls-ucenter-service.iml" filepath="$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-service/zqls-ucenter-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-web/zqls-ucenter-web.iml" filepath="$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-web/zqls-ucenter-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-umps/zqls-umps.iml" filepath="$PROJECT_DIR$/zqls-umps/zqls-umps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-umps/zqls-umps-api/zqls-umps-api.iml" filepath="$PROJECT_DIR$/zqls-umps/zqls-umps-api/zqls-umps-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-umps/zqls-umps-dao/zqls-umps-dao.iml" filepath="$PROJECT_DIR$/zqls-umps/zqls-umps-dao/zqls-umps-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-umps/zqls-umps-service/zqls-umps-service.iml" filepath="$PROJECT_DIR$/zqls-umps/zqls-umps-service/zqls-umps-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-umps/zqls-umps-web/zqls-umps-web.iml" filepath="$PROJECT_DIR$/zqls-umps/zqls-umps-web/zqls-umps-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-util/zqls-util.iml" filepath="$PROJECT_DIR$/zqls-util/zqls-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-api/zqls-web-api/zqls-web-api.iml" filepath="$PROJECT_DIR$/zqls-api/zqls-web-api/zqls-web-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zqls-util/zqls-web-util/zqls-web-util.iml" filepath="$PROJECT_DIR$/zqls-util/zqls-web-util/zqls-web-util.iml" />
+    </modules>
+  </component>
+</project>

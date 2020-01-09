@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="zqls-ucenter-dao" />
+        <module name="zqls-passport-web" />
+        <module name="zqls-service-api" />
+        <module name="zqls-fms-service" />
+        <module name="zqls-umps-service" />
+        <module name="zqls-common-api" />
+        <module name="demo-test-api" />
+        <module name="zqls-umps-dao" />
+        <module name="dubbo-test-web" />
+        <module name="zqls-mail-service" />
+        <module name="zqls-umps-api" />
+        <module name="zqls-ucenter-service" />
+        <module name="zqls-fms-api" />
+        <module name="zqls-umps-web" />
+        <module name="dubbo-test-service" />
+        <module name="dubbo-demo" />
+        <module name="zqls-data" />
+        <module name="zqls-web-api" />
+        <module name="excle-demo" />
+        <module name="zqls-web-util" />
+        <module name="zqls-fms-web" />
+        <module name="zqls-service-util" />
+        <module name="swagger-demo" />
+        <module name="dubbo-test-dao" />
+        <module name="redis-demo" />
+        <module name="zqls-common-util" />
+        <module name="zqls-ucenter-web" />
+        <module name="zqls-fms-dao" />
+        <module name="zqls-ucenter-api" />
+      </profile>
+    </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="demo-test-api" target="1.8" />
       <module name="dubbo-demo" target="1.8" />
@@ -31,9 +67,47 @@
       <module name="zqls-ucenter-dao" target="1.8" />
       <module name="zqls-ucenter-service" target="1.8" />
       <module name="zqls-ucenter-web" target="1.8" />
+      <module name="zqls-umps" target="1.8" />
+      <module name="zqls-umps-api" target="1.8" />
+      <module name="zqls-umps-dao" target="1.8" />
+      <module name="zqls-umps-service" target="1.8" />
+      <module name="zqls-umps-web" target="1.8" />
       <module name="zqls-util" target="1.8" />
       <module name="zqls-web-api" target="1.8" />
       <module name="zqls-web-util" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo-test-api" options="-parameters" />
+      <module name="dubbo-demo" options="-parameters" />
+      <module name="dubbo-test-dao" options="-parameters" />
+      <module name="dubbo-test-service" options="-parameters" />
+      <module name="dubbo-test-web" options="-parameters" />
+      <module name="excle-demo" options="-parameters" />
+      <module name="redis-demo" options="-parameters" />
+      <module name="swagger-demo" options="-parameters" />
+      <module name="zqls-common-api" options="-parameters" />
+      <module name="zqls-common-util" options="-parameters" />
+      <module name="zqls-data" options="-parameters" />
+      <module name="zqls-fms-api" options="-parameters" />
+      <module name="zqls-fms-dao" options="-parameters" />
+      <module name="zqls-fms-service" options="-parameters" />
+      <module name="zqls-fms-web" options="-parameters" />
+      <module name="zqls-mail-service" options="-parameters" />
+      <module name="zqls-passport-web" options="-parameters" />
+      <module name="zqls-service-api" options="-parameters" />
+      <module name="zqls-service-util" options="-parameters" />
+      <module name="zqls-ucenter-api" options="-parameters" />
+      <module name="zqls-ucenter-dao" options="-parameters" />
+      <module name="zqls-ucenter-service" options="-parameters" />
+      <module name="zqls-ucenter-web" options="-parameters" />
+      <module name="zqls-umps-api" options="-parameters" />
+      <module name="zqls-umps-dao" options="-parameters" />
+      <module name="zqls-umps-service" options="-parameters" />
+      <module name="zqls-umps-web" options="-parameters" />
+      <module name="zqls-web-api" options="-parameters" />
+      <module name="zqls-web-util" options="-parameters" />
+    </option>
   </component>
 </project>

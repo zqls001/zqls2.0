@@ -3,21 +3,19 @@ package com.duanxin.zqls;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author duanxin
  * @version 1.0
- * @date 2019/11/16 9:06
+ * @date 2020/1/7 8:51
  */
 @SpringBootApplication(exclude = {
-        DataSourceAutoConfiguration.class,
-        ThymeleafAutoConfiguration.class
+        DataSourceAutoConfiguration.class
 })
 @EnableSwagger2
-public class ZqlsFmsWebApplication {
+public class ZqlsUmpsWebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ZqlsFmsWebApplication.class, args);
+        SpringApplication.run(ZqlsUmpsWebApplication.class, args);
     }
 }

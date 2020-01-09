@@ -14,6 +14,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,7 @@ import java.util.Map;
 @Component
 @Aspect
 @Slf4j
+@Order(1)//多个切面的执行优先级，数值越小执行优先级越高
 public class WebLogAspect {
 
     @Pointcut("execution(public * com.duanxin.zqls.*.controller.*.*(..))")

@@ -1,0 +1,56 @@
+server:
+  port: 8092
+
+publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
+spring:
+  # datasource configuration
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/zqls
+      username: root
+      password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
+      filters: config,stat,wall
+      connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+  # redis configuration
+  redis:
+    host: 39.106.154.120
+    port: 6379
+# dubbo configuration
+dubbo:
+  application:
+    name: zqls-umps-service
+  registry:
+    address: zookeeper://39.106.154.120:2181
+  protocol:
+    name: dubbo
+    port: 20882
+  scan:
+    base-packages: com.duanxin.zqls.*.service
+
+# mybatis configuration
+mybatis:
+  base-packages: classpath*:/mapper/*.xml
+  type-aliases-package: com.duanxin.zqls.umps.model
+  configuration:
+    map-underscore-to-camel-case: true
+
+# logging configuration
+logging:
+  level:
+    com:
+      duanxin:
+        zqls:
+          umps: debug

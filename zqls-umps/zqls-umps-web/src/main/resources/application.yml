@@ -1,0 +1,22 @@
+server:
+  port: 8072
+
+# dubbo configuration
+dubbo:
+  application:
+    name: zqls-umps-web
+  protocol:
+    name: dubbo
+  registry:
+    address: zookeeper://39.106.154.120:2181
+  consumer:
+    check: false
+    loadbalance: roundrobin
+    timeout: 3000
+# logging configuration
+logging:
+  level:
+    com:
+      duanxin:
+        zqls:
+          umps: debug

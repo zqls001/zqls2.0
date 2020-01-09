@@ -1,4 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM" />
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/zqls-api/zqls-common-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-api/zqls-parent" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-api/zqls-service-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-api/zqls-service-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-api/zqls-web-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-data" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-data/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/demo-test-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/demo-test-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-dao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/dubbo-test/dubbo-test-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/excle-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/excle-demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/redis-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/redis-demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/swagger-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-demo/swagger-demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-dao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-fms/zqls-fms-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-mail-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-mail-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-passport-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-passport-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-dao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-ucenter/zqls-ucenter-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-umps/zqls-umps-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-umps/zqls-umps-dao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-umps/zqls-umps-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-umps/zqls-umps-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-util" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-util/zqls-common-util" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-util/zqls-common-util/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-util/zqls-service-util" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-util/zqls-service-util/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-util/zqls-web-util" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zqls-util/zqls-web-util/src/main/java" charset="UTF-8" />
+  </component>
 </project>
