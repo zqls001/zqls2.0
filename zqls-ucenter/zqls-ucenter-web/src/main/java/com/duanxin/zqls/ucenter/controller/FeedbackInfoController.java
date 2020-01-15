@@ -127,7 +127,7 @@ public class FeedbackInfoController {
         if (null == feedbackInfoPageInfo) {
             BaseResult.failed("系统维护中，请耐心等待。。。");
         }
-        return BaseResult.success("查询成功", feedbackInfoPageInfo);
+        return BaseResult.success("查询成功", feedbackInfoPageInfo.getList());
     }
 
     @GetMapping("/getAll")

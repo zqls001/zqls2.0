@@ -79,7 +79,7 @@ public class FmsFoodInfoController {
         if (null == fmsFoodInfos) {
             return BaseResult.failed("系统维护中，请耐性等待。。。");
         }
-        return BaseResult.success(fmsFoodInfos);
+        return BaseResult.success(fmsFoodInfos.getList());
     }
 
     @GetMapping("/getInfos")

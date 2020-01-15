@@ -270,6 +270,6 @@ public class UmsUserInfoController {
         if (null == umsUserInfos) {
             return BaseResult.failed("系统维护中，请耐性等待");
         }
-        return BaseResult.success(umsUserInfos);
+        return BaseResult.success(umsUserInfos.getList());
     }
 }

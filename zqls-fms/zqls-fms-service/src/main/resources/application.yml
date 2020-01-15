@@ -41,6 +41,8 @@ dubbo:
   protocol:
     name: dubbo
     port: 20881
+  scan:
+    base-packages: com.duanxin.zqls.*.service
 
 # logging configuration
 logging:
