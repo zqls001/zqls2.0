@@ -2,6 +2,7 @@ package com.duanxin.zqls.umps.api;
 
 import com.duanxin.zqls.umps.ao.UmsRoleAo;
 import com.duanxin.zqls.umps.model.UmsRole;
+import com.duanxin.zqls.umps.vo.UmsRoleVo;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -13,11 +14,11 @@ import com.github.pagehelper.PageInfo;
 public interface UmsRoleService {
     /**
      * 添加角色信息
-     * @param umsRole 角色实体
+     * @param umsRoleVo 角色实体
      * @date 2020/1/10 8:04
      * @return int
      **/
-    int saveUmsRole(UmsRole umsRole);
+    int saveUmsRole(UmsRoleVo umsRoleVo);
 
     /**
      * get role info by primary id

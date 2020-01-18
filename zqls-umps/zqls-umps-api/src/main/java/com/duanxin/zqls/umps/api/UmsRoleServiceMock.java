@@ -2,6 +2,7 @@ package com.duanxin.zqls.umps.api;
 
 import com.duanxin.zqls.umps.ao.UmsRoleAo;
 import com.duanxin.zqls.umps.model.UmsRole;
+import com.duanxin.zqls.umps.vo.UmsRoleVo;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -12,7 +13,7 @@ import com.github.pagehelper.PageInfo;
  */
 public class UmsRoleServiceMock implements UmsRoleService{
     @Override
-    public int saveUmsRole(UmsRole umsRole) {
+    public int saveUmsRole(UmsRoleVo umsRoleVo) {
         return 0;
     }
 

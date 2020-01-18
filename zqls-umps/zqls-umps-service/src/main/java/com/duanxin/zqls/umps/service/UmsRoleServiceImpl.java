@@ -2,9 +2,9 @@ package com.duanxin.zqls.umps.service;
 
 import com.duanxin.zqls.umps.ao.UmsRoleAo;
 import com.duanxin.zqls.umps.api.UmsRoleService;
-import com.duanxin.zqls.umps.constants.RoleConstant;
 import com.duanxin.zqls.umps.mapper.UmsRoleMapper;
 import com.duanxin.zqls.umps.model.UmsRole;
+import com.duanxin.zqls.umps.vo.UmsRoleVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -27,11 +27,16 @@ public class UmsRoleServiceImpl implements UmsRoleService{
     private UmsRoleMapper umsRoleMapper;
 
     @Override
-    public int saveUmsRole(UmsRole umsRole) {
-        umsRole.setStatus(RoleConstant.change("0"));
-        umsRole.setOperateTime(new Date());
-        umsRole.setOperator("李四");
-        umsRole.setOperateIp("0.0.0.0");
+    public int saveUmsRole(UmsRoleVo umsRoleVo) {
+        UmsRole umsRole = UmsRole.builder().
+                name(umsRoleVo.getName()).
+                remark(umsRoleVo.getRemark()).
+                status(umsRoleVo.getStatus()).
+                type(umsRoleVo.getType()).
+                operateIp("0.0.0.0").
+                operateTime(new Date()).
+                operator("李四").
+                build();
         return umsRoleMapper.insertSelective(umsRole);
     }
 

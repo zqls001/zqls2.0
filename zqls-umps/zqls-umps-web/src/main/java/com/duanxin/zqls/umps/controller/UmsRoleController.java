@@ -2,6 +2,8 @@ package com.duanxin.zqls.umps.controller;
 
 import com.duanxin.zqls.umps.ao.UmsRoleAo;
 import com.duanxin.zqls.umps.api.UmsRoleService;
+import com.duanxin.zqls.umps.dto.UmsRoleDto;
+import com.duanxin.zqls.umps.dto.UmsRolePageInfo;
 import com.duanxin.zqls.umps.model.UmsRole;
 import com.duanxin.zqls.umps.vo.UmsRoleVo;
 import com.duanxin.zqls.web.base.BaseResult;
@@ -39,8 +41,8 @@ public class UmsRoleController {
             httpMethod = "POST", response = BaseResult.class)
     @ApiImplicitParam(name = "umsRole", value = "角色", required = true,
             dataTypeClass = UmsRole.class, example = "{\"name\" : \"root\", \"type\" : 0}")
-    public BaseResult saveUmsRole(@RequestBody UmsRole umsRole) {
-        int result = umsRoleService.saveUmsRole(umsRole);
+    public BaseResult saveUmsRole(@RequestBody UmsRoleVo umsRoleVo) {
+        int result = umsRoleService.saveUmsRole(umsRoleVo);
         if (0 == result) {
             return BaseResult.failed("系统维护中，请耐心等待。。。。");
         }
@@ -61,13 +63,14 @@ public class UmsRoleController {
             return BaseResult.failed("该角色信息不存在");
         }
         UmsRole umsRole = umsRoleAo.getUmsRole();
-        UmsRoleVo umsRoleVo = UmsRoleVo.builder().
+        UmsRoleDto umsRoleDto = UmsRoleDto.builder().
+                id(umsRole.getId()).
                 name(umsRole.getName()).
                 type(umsRole.getType()).
                 remark(umsRole.getRemark()).
                 status(umsRole.getStatus()).
                 build();
-        return BaseResult.success(umsRoleVo);
+        return BaseResult.success(umsRoleDto);
     }
 
     @GetMapping("/getAll")
@@ -84,20 +87,30 @@ public class UmsRoleController {
         if (null == umsRoleAos) {
             return BaseResult.failed("系统维护中，请耐心等待。。。");
         }
-        List<UmsRoleVo> umsRoleVos = Lists.newArrayList();
+        List<UmsRoleDto> umsRoleDtos = Lists.newArrayList();
         umsRoleAos.getList().stream().filter(u -> u.getCheckCode() != 1).forEach(u -> {
             UmsRole umsRole = u.getUmsRole();
-            umsRoleVos.add(UmsRoleVo.builder().
+            umsRoleDtos.add(UmsRoleDto.builder().
+                    id(umsRole.getId()).
                     type(umsRole.getType()).
                     name(umsRole.getName()).
                     remark(umsRole.getRemark()).
                     status(umsRole.getStatus()).
                     build());
         });
-        if (umsRoleVos.size() == 0) {
+        if (umsRoleDtos.size() == 0) {
             return BaseResult.failed("查询失败，不存在有效信息");
         }
-        return BaseResult.success(umsRoleVos);
+        UmsRolePageInfo umsRolePageInfo = UmsRolePageInfo.builder().
+                umsRoleDtos(umsRoleDtos).
+                nextPage(umsRoleAos.getNextPage()).
+                pageSize(umsRoleAos.getPageSize()).
+                pageNo(umsRoleAos.getPageNum()).
+                prePage(umsRoleAos.getPrePage()).
+                totalCount(umsRoleAos.getTotal()).
+                totalPage(umsRoleAos.getPages()).
+                build();
+        return BaseResult.success(umsRolePageInfo);
     }
 
     @DeleteMapping("/{id}")

@@ -3,13 +3,13 @@ package com.duanxin.test.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.joda.money.Money;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -44,7 +44,7 @@ public class UmsUserAccountInfo implements Serializable {
      * balance
      */
     @Column
-    private Money balance;
+    private BigDecimal balance;
 
     /**
      * 流水类型：0消费流水，1充值流水
