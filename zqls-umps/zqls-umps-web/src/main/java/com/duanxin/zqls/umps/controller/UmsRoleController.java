@@ -82,7 +82,8 @@ public class UmsRoleController {
             @ApiImplicitParam(name = "pageSize", value = "每页大小", required = true,
             dataType = "int", example = "10")
     })
-    public BaseResult selectAll(Integer currentPage, Integer pageSize) {
+    public BaseResult selectAll(@RequestParam("currentPage") Integer currentPage,
+                                @RequestParam("pageSize") Integer pageSize) {
         PageInfo<UmsRoleAo> umsRoleAos = umsRoleService.selectAll(currentPage, pageSize);
         if (null == umsRoleAos) {
             return BaseResult.failed("系统维护中，请耐心等待。。。");
@@ -101,14 +102,18 @@ public class UmsRoleController {
         if (umsRoleDtos.size() == 0) {
             return BaseResult.failed("查询失败，不存在有效信息");
         }
+        com.duanxin.zqls.common.dto.PageInfo pageInfo =
+                com.duanxin.zqls.common.dto.PageInfo.builder().
+                        nextPage(umsRoleAos.getNextPage()).
+                        pageSize(umsRoleAos.getPageSize()).
+                        pageNo(umsRoleAos.getPageNum()).
+                        prePage(umsRoleAos.getPrePage()).
+                        totalCount(umsRoleAos.getTotal()).
+                        totalPage(umsRoleAos.getPages()).
+                        build();
         UmsRolePageInfo umsRolePageInfo = UmsRolePageInfo.builder().
                 umsRoleDtos(umsRoleDtos).
-                nextPage(umsRoleAos.getNextPage()).
-                pageSize(umsRoleAos.getPageSize()).
-                pageNo(umsRoleAos.getPageNum()).
-                prePage(umsRoleAos.getPrePage()).
-                totalCount(umsRoleAos.getTotal()).
-                totalPage(umsRoleAos.getPages()).
+                pageInfo(pageInfo).
                 build();
         return BaseResult.success(umsRolePageInfo);
     }
