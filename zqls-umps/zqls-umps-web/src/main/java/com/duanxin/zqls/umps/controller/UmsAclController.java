@@ -61,6 +61,7 @@ public class UmsAclController {
         UmsAcl umsAcl = umsAclAo.getUmsAcl();
         UmsAclDto umsAclDto = UmsAclDto.builder().
                 id(umsAcl.getId()).
+                code(umsAcl.getCode()).
                 name(umsAcl.getName()).
                 type(umsAcl.getType()).
                 url(umsAcl.getUrl()).

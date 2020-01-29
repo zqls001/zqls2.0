@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.duanxin.zqls.dao.mapper.UmsAclRoleMapper">
+<mapper namespace="com.duanxin.zqls.umps.mapper.UmsAclRoleMapper">
   <resultMap id="BaseResultMap" type="com.duanxin.zqls.umps.model.UmsAclRole">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="aid" jdbcType="INTEGER" property="aid" />
     <result column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+  </resultMap>
+  <resultMap id="AclResultMap" type="com.duanxin.zqls.umps.model.UmsAcl">
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="code" jdbcType="VARCHAR" property="code"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="type" jdbcType="TINYINT" property="type"/>
+    <result column="status" jdbcType="TINYINT" property="status"/>
+    <result column="remark" jdbcType="VARCHAR" property="remark"/>
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
     <result column="operator" jdbcType="VARCHAR" property="operator" />

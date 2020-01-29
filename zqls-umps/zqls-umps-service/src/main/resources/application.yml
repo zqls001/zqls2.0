@@ -42,7 +42,7 @@ dubbo:
 
 # mybatis configuration
 mybatis:
-  base-packages: classpath*:/mapper/*.xml
+  base-packages: classpath:/mapper/*.xml
   type-aliases-package: com.duanxin.zqls.umps.model
   configuration:
     map-underscore-to-camel-case: true
