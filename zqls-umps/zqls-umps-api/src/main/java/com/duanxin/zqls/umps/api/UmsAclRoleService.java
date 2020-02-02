@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.api;
 
+import com.duanxin.zqls.umps.ao.UmsAclRoleAo;
 import com.duanxin.zqls.umps.dto.UmsAclDto;
 
 import java.util.List;
@@ -19,4 +20,13 @@ public interface UmsAclRoleService {
      * @return java.util.List<com.duanxin.zqls.umps.dto.UmsAclDto>
      **/
     List<UmsAclDto> selectRoleAcls(Integer rid);
+
+    /**
+     * 更改角色权限集合
+     * @param rid 角色主键id
+     * @param aids 权限id集合
+     * @date 2020/1/30 8:51
+     * @return com.duanxin.zqls.umps.dto.UmsAclRoleDto
+     **/
+    UmsAclRoleAo changeRoleAcl(Integer rid, List<Integer> aids);
 }

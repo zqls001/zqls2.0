@@ -2,10 +2,7 @@ package com.duanxin.zqls.umps.mapper;
 
 import com.duanxin.zqls.umps.model.UmsAcl;
 import com.duanxin.zqls.umps.model.UmsAclRole;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -31,4 +28,20 @@ public interface UmsAclRoleMapper extends Mapper<UmsAclRole> {
             @Result(column = "operator" , property = "operator", jdbcType = JdbcType.VARCHAR),
     })
     List<UmsAcl> selectAclInfosByRid(@Param("rid") Integer rid);
+
+    @Select("select `aid` " +
+            "from `ums_acl_role`" +
+            "where rid = #{rid}")
+    List<Integer> selectAidsByRid(@Param("rid") Integer rid);
+
+    @Insert({
+            "<script>",
+            "insert into `ums_acl_role`(`aid`, `rid`, `operate_time`, `operate_ip`, `operator`) " ,
+            "values" ,
+            "<foreach item = 'u' collection = 'umsAclRoles' index = 'index' separator = ','>" ,
+            "(#{u.aid}, #{u.rid}, #{u.operateTime}, #{u.operateIp}, #{u.operator})" ,
+            "</foreach>",
+            "</script>"
+    })
+    void insertBatch(@Param("umsAclRoles") List<UmsAclRole> umsAclRoles);
 }

@@ -1,11 +1,16 @@
 package com.duanxin.zqls.umps.controller;
 
+import com.duanxin.zqls.umps.ao.UmsAclRoleAo;
 import com.duanxin.zqls.umps.api.UmsAclRoleService;
 import com.duanxin.zqls.umps.dto.UmsAclDto;
+import com.duanxin.zqls.umps.dto.UmsAclRoleDto;
+import com.duanxin.zqls.umps.dto.UmsRoleDto;
+import com.duanxin.zqls.umps.model.UmsRole;
+import com.duanxin.zqls.umps.vo.UmsAclRoleVo;
 import com.duanxin.zqls.web.base.BaseResult;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +34,43 @@ public class UmsAclRoleController {
     @PostMapping("/changeAcls")
     @ApiOperation(value = "给角色添加权限", notes = "给该角色添加权限集合",
             httpMethod = "POST", response = BaseResult.class)
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "rid", value = "角色主键id",
-                    dataType = "int", required = true, example = "1"),
-            @ApiImplicitParam(name = "aids", value = "权限集合id",
-                    dataTypeClass = List.class, required = true, example = "[1,2,3,4]")
-    })
-    public BaseResult changeRoleAcl(Integer rid, List<Integer> aids) {
-        return null;
+    @ApiImplicitParam(name = "umsAclRoleVo", value = "角色权限实体类",
+            required = true, dataTypeClass = UmsAclRoleVo.class, example = "{\"rid\": 2, \"aids\": [\"1\", \"2\"]}")
+    public BaseResult changeRoleAcl(@RequestBody UmsAclRoleVo umsAclRoleVo) {
+        UmsAclRoleAo umsAclRoleAo =
+                umsAclRoleService.changeRoleAcl(umsAclRoleVo.getRid(), umsAclRoleVo.getAids());
+        if (umsAclRoleAo == null) {
+            return BaseResult.failed("系统维护中，请耐心等待");
+        }
+        if (umsAclRoleAo.getCheckCode() == 1) {
+            return BaseResult.failed("更新失败");
+        }
+        UmsRole umsRole = umsAclRoleAo.getUmsRole();
+        UmsRoleDto umsRoleDto = UmsRoleDto.builder().
+                id(umsRole.getId()).
+                name(umsRole.getName()).
+                type(umsRole.getType()).
+                remark(umsRole.getRemark()).
+                status(umsRole.getStatus()).
+                build();
+        List<UmsAclDto> umsAclDtos = Lists.newArrayList();
+        umsAclRoleAo.getUmsAcls().forEach(u -> {
+            umsAclDtos.add(UmsAclDto.builder().
+                    id(u.getId()).
+                    name(u.getName()).
+                    type(u.getType()).
+                    remark(u.getRemark()).
+                    status(u.getStatus()).
+                    code(u.getCode()).
+                    url(u.getUrl()).
+                    build()
+            );
+        });
+        UmsAclRoleDto umsAclRoleDto = UmsAclRoleDto.builder().
+                umsRoleDto(umsRoleDto).
+                umsAclDtos(umsAclDtos).
+                build();
+        return BaseResult.success("更新成功", umsAclRoleDto);
     }
 
     @GetMapping("/{rid}")
