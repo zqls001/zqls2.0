@@ -5,6 +5,7 @@ import com.duanxin.zqls.umps.api.UmsAclRoleService;
 import com.duanxin.zqls.umps.dto.UmsAclDto;
 import com.duanxin.zqls.umps.dto.UmsAclRoleDto;
 import com.duanxin.zqls.umps.dto.UmsRoleDto;
+import com.duanxin.zqls.umps.model.UmsAcl;
 import com.duanxin.zqls.umps.model.UmsRole;
 import com.duanxin.zqls.umps.vo.UmsAclRoleVo;
 import com.duanxin.zqls.web.base.BaseResult;
@@ -12,6 +13,7 @@ import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.dubbo.common.utils.CollectionUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +45,10 @@ public class UmsAclRoleController {
             return BaseResult.failed("系统维护中，请耐心等待");
         }
         if (umsAclRoleAo.getCheckCode() == 1) {
-            return BaseResult.failed("更新失败");
+            return BaseResult.failed("角色信息不存在");
+        }
+        if (CollectionUtils.isEmpty(umsAclRoleAo.getUmsAcls())) {
+            return BaseResult.failed("用户信息不存在");
         }
         UmsRole umsRole = umsAclRoleAo.getUmsRole();
         UmsRoleDto umsRoleDto = UmsRoleDto.builder().
@@ -79,10 +84,22 @@ public class UmsAclRoleController {
     @ApiImplicitParam(name = "rid", value = "角色主键id",
             dataType = "int", required = true, example = "1")
     public BaseResult selectRoleAcls(@PathVariable("rid") Integer rid) {
-        List<UmsAclDto> umsAclDtos = umsAclRoleService.selectRoleAcls(rid);
-        if (umsAclDtos == null) {
+        List<UmsAcl> umsAcls = umsAclRoleService.selectRoleAcls(rid);
+        if (umsAcls == null) {
             return BaseResult.failed("系统维护中，请耐心等待。。。");
         }
+        List<UmsAclDto> umsAclDtos = Lists.newArrayList();
+        umsAcls.forEach(u -> {
+            umsAclDtos.add(UmsAclDto.builder().
+                    id(u.getId()).
+                    name(u.getName()).
+                    type(u.getType()).
+                    url(u.getUrl()).
+                    code(u.getCode()).
+                    status(u.getStatus()).
+                    build()
+            );
+        });
         return BaseResult.success("查询成功", umsAclDtos);
     }
 }

@@ -1,7 +1,7 @@
 package com.duanxin.zqls.umps.api;
 
 import com.duanxin.zqls.umps.ao.UmsAclRoleAo;
-import com.duanxin.zqls.umps.dto.UmsAclDto;
+import com.duanxin.zqls.umps.model.UmsAcl;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class UmsAclRoleServiceMock implements UmsAclRoleService {
     @Override
-    public List<UmsAclDto> selectRoleAcls(Integer rid) {
+    public List<UmsAcl> selectRoleAcls(Integer rid) {
         return null;
     }
 

@@ -136,9 +136,18 @@
     <orderEntry type="library" name="Maven: tk.mybatis:mapper:4.1.5" level="project" />
     <orderEntry type="library" name="Maven: javax.persistence:persistence-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.5.2" level="project" />
+    <orderEntry type="module" module-name="zqls-ucenter-dao" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-spring-boot-starter:2.1.5" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-core:1.1.5" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-base:1.1.5" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-weekend:1.1.5" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-spring:1.1.5" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-extra:1.1.5" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-spring-boot-autoconfigure:2.1.5" level="project" />
     <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper:5.1.10" level="project" />
     <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:2.0" level="project" />
     <orderEntry type="module" module-name="zqls-common-util" />
+    <orderEntry type="module" module-name="zqls-ucenter-api" />
     <orderEntry type="module" module-name="zqls-web-util" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:fluent-hc:4.5.10" level="project" />

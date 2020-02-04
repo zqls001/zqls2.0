@@ -1,7 +1,7 @@
 package com.duanxin.zqls.umps.api;
 
 import com.duanxin.zqls.umps.ao.UmsAclRoleAo;
-import com.duanxin.zqls.umps.dto.UmsAclDto;
+import com.duanxin.zqls.umps.model.UmsAcl;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface UmsAclRoleService {
      * @date 2020/1/28 8:53
      * @return java.util.List<com.duanxin.zqls.umps.dto.UmsAclDto>
      **/
-    List<UmsAclDto> selectRoleAcls(Integer rid);
+    List<UmsAcl> selectRoleAcls(Integer rid);
 
     /**
      * 更改角色权限集合

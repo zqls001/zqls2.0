@@ -24,7 +24,7 @@ public interface UmsAclRoleMapper extends Mapper<UmsAclRole> {
             @Result(column = "status" , property = "status", jdbcType = JdbcType.TINYINT),
             @Result(column = "remark" , property = "remark", jdbcType = JdbcType.VARCHAR),
             @Result(column = "operate_time" , property = "operateTime", jdbcType = JdbcType.TIMESTAMP),
-            @Result(column = "operate_ip" , property = "operateIp", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "operate_ip" , property = "operateIp", jdbcType = JdbcType.CHAR),
             @Result(column = "operator" , property = "operator", jdbcType = JdbcType.VARCHAR),
     })
     List<UmsAcl> selectAclInfosByRid(@Param("rid") Integer rid);

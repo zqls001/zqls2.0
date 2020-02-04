@@ -6,6 +6,7 @@ import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageInfo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 用户信息Service层服务降级
@@ -72,6 +73,11 @@ public class UmsUserInfoServiceMock implements UmsUserInfoService {
 
     @Override
     public UmsUserInfoVo settleAccounts(String uid, String place, BigDecimal pay) {
+        return null;
+    }
+
+    @Override
+    public List<UmsUserInfo> selectListByIds(List<Integer> uids) {
         return null;
     }
 }

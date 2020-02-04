@@ -217,6 +217,11 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     }
 
     @Override
+    public List<UmsUserInfo> selectListByIds(List<Integer> uids) {
+        return umsUserInfoMapper.selectListByIds(uids);
+    }
+
+    @Override
     public UmsUserInfoAo checkCode(String jobNumber, String phone, String code) {
         UmsUserInfo umsUserInfo = selectByJobNumber(jobNumber);
         UmsUserInfoAo umsUserInfoAo = new UmsUserInfoAo();

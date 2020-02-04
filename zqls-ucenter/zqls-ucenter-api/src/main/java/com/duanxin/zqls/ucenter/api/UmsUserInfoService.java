@@ -7,6 +7,7 @@ import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageInfo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 用户信息Service层接口
@@ -111,4 +112,12 @@ public interface UmsUserInfoService {
      * @return com.duanxin.zqls.ucenter.vo.UmsUserInfoVo
      **/
     UmsUserInfoVo settleAccounts(String uid, String place, BigDecimal pay);
+
+    /**
+     * 根据id集合查询用户信息
+     * @param uids 用户主键id集合
+     * @date 2020/2/4 9:11
+     * @return java.util.List<com.duanxin.zqls.ucenter.model.UmsUserInfo>
+     **/
+    List<UmsUserInfo> selectListByIds(List<Integer> uids);
 }
