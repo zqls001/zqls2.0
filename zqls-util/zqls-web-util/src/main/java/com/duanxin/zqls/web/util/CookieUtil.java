@@ -30,12 +30,12 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    public static void setCookie(HttpServletResponse response, String key, String name, int maxAge) {
-        setCookie(response, key, name, "/", maxAge);
+    public static void setCookie(HttpServletResponse response, String key, String value, int maxAge) {
+        setCookie(response, key, value, "/", maxAge);
     }
 
-    public static void setCookie(HttpServletResponse response, String key, String name) {
-        setCookie(response, key, name, "/", 3600);
+    public static void setCookie(HttpServletResponse response, String key, String value) {
+        setCookie(response, key, value, "/", 3600);
     }
 
     public static void setCookie(HttpServletResponse response, String key) {
@@ -52,10 +52,11 @@ public class CookieUtil {
     public static String getCookie(HttpServletRequest request, String key) {
         String value = null;
         Cookie[] cookies = request.getCookies();
-        if (null == cookies || 0 == cookies.length) {
+        if (null != cookies && 0 != cookies.length) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().toLowerCase().equals(key.toLowerCase())) {
                     value = cookie.getValue();
+                    break;
                 }
             }
         }

@@ -1,15 +1,16 @@
 package com.duanxin.zqls.ucenter.listenr;
-import java.util.Date;
-import java.util.Map;
-
 import com.duanxin.zqls.mail.api.MailService;
 import com.duanxin.zqls.ucenter.config.MQConfig;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * 发送邮件队列监听器
@@ -20,11 +21,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RabbitListener(queues = MQConfig.MAIL_QUEUE)
 @PropertySource("classpath:application.yml")
-@Slf4j
 public class MailListener {
 
     @Reference(version = "0.0.1", protocol = "dubbo", mock = "true", check = false)
     private MailService mailService;
+
+    private final static Logger log = LoggerFactory.getLogger(MailListener.class);
 
     @RabbitHandler
     public void executeMail(Map<String, String> map) {

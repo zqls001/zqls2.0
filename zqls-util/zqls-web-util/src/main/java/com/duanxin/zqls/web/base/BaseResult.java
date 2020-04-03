@@ -1,13 +1,10 @@
 package com.duanxin.zqls.web.base;
 import com.duanxin.zqls.web.code.IErrorCode;
 import com.duanxin.zqls.web.code.ResultCode;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -16,11 +13,16 @@ import java.util.Map;
  * @version 1.0
  * @date 2019/9/15 14:30
  */
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class BaseResult {
+
+    public BaseResult() {
+    }
+
+    public BaseResult(int code, String message, Object data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
 
     /**
      * 状态码：1成功，其他失败
@@ -125,5 +127,66 @@ public class BaseResult {
         map.put("data", data);
 
         return map;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        BaseResult that = (BaseResult) o;
+
+        if (code != that.code) {
+            return false;
+        }
+        if (!Objects.equals(message, that.message)) {
+            return false;
+        }
+        return Objects.equals(data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = code;
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (data != null ? data.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseResult{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

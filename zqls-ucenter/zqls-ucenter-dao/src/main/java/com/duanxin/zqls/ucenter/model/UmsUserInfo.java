@@ -2,10 +2,6 @@ package com.duanxin.zqls.ucenter.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -13,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 用户基本信息表
@@ -20,14 +17,14 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-03
  */
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @ApiModel(description = "用户信息实体类")
 public class UmsUserInfo implements Serializable {
 
     private static final long serialVersionUID = -1010671372296752624L;
+
+    public UmsUserInfo() {
+    }
+
     /**
      * 用户基本表id
      * id
@@ -171,4 +168,234 @@ public class UmsUserInfo implements Serializable {
     @ApiModelProperty(name = "operator", value = "操作管理员姓名",
             dataType = "String", required = true, example = "李四")
     private String operator;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAid() {
+        return aid;
+    }
+
+    public void setAid(Integer aid) {
+        this.aid = aid;
+    }
+
+    public String getJobNumber() {
+        return jobNumber;
+    }
+
+    public void setJobNumber(String jobNumber) {
+        this.jobNumber = jobNumber;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getOperateTime() {
+        return operateTime;
+    }
+
+    public void setOperateTime(Date operateTime) {
+        this.operateTime = operateTime;
+    }
+
+    public String getOperateIp() {
+        return operateIp;
+    }
+
+    public void setOperateIp(String operateIp) {
+        this.operateIp = operateIp;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        UmsUserInfo that = (UmsUserInfo) o;
+
+        if (!Objects.equals(id, that.id)) {
+            return false;
+        }
+        if (!Objects.equals(aid, that.aid)) {
+            return false;
+        }
+        if (!Objects.equals(jobNumber, that.jobNumber)) {
+            return false;
+        }
+        if (!Objects.equals(userName, that.userName)) {
+            return false;
+        }
+        if (!Objects.equals(password, that.password)) {
+            return false;
+        }
+        if (!Objects.equals(gender, that.gender)) {
+            return false;
+        }
+        if (!Objects.equals(headPic, that.headPic)) {
+            return false;
+        }
+        if (!Objects.equals(phone, that.phone)) {
+            return false;
+        }
+        if (!Objects.equals(email, that.email)) {
+            return false;
+        }
+        if (!Objects.equals(remark, that.remark)) {
+            return false;
+        }
+        if (!Objects.equals(status, that.status)) {
+            return false;
+        }
+        if (!Objects.equals(type, that.type)) {
+            return false;
+        }
+        if (!Objects.equals(createTime, that.createTime)) {
+            return false;
+        }
+        if (!Objects.equals(operateTime, that.operateTime)) {
+            return false;
+        }
+        if (!Objects.equals(operateIp, that.operateIp)) {
+            return false;
+        }
+        return Objects.equals(operator, that.operator);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (aid != null ? aid.hashCode() : 0);
+        result = 31 * result + (jobNumber != null ? jobNumber.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (headPic != null ? headPic.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (remark != null ? remark.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (operateTime != null ? operateTime.hashCode() : 0);
+        result = 31 * result + (operateIp != null ? operateIp.hashCode() : 0);
+        result = 31 * result + (operator != null ? operator.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UmsUserInfo{" +
+                "id=" + id +
+                ", aid=" + aid +
+                ", jobNumber='" + jobNumber + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", headPic='" + headPic + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", remark='" + remark + '\'' +
+                ", status=" + status +
+                ", type='" + type + '\'' +
+                ", createTime=" + createTime +
+                ", operateTime=" + operateTime +
+                ", operateIp='" + operateIp + '\'' +
+                ", operator='" + operator + '\'' +
+                '}';
+    }
 }

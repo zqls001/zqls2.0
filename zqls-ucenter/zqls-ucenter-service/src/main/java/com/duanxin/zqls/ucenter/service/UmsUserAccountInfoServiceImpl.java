@@ -1,5 +1,6 @@
 package com.duanxin.zqls.ucenter.service;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.mapper.UmsUserAccountConsumeMapper;
 import com.duanxin.zqls.ucenter.mapper.UmsUserAccountInfoMapper;
@@ -35,7 +36,10 @@ public class UmsUserAccountInfoServiceImpl implements UmsUserAccountInfoService 
     @Override
     public List<UmsUserAccountInfo> selectByAid(Integer aid) {
 
-        List<UmsUserAccountInfo> umsUserAccountInfos = umsUserAccountInfoMapper.select(UmsUserAccountInfo.builder().aid(aid).build());
+        List<UmsUserAccountInfo> umsUserAccountInfos = umsUserAccountInfoMapper.select(Builder.
+                of(UmsUserAccountInfo::new).
+                with(UmsUserAccountInfo::setAid, aid).
+                build());
         if (CollectionUtils.isEmpty(umsUserAccountInfos)) {
             return Lists.newArrayList();
         }
@@ -56,16 +60,21 @@ public class UmsUserAccountInfoServiceImpl implements UmsUserAccountInfoService 
     public UmsUserInfoVo deductionBalance(String uid, BigDecimal pay, Integer flowId) {
         UmsUserAccountInfo umsUserAccountInfo = selectByJobNumber(uid);
         BigDecimal subtract = umsUserAccountInfo.getBalance().subtract(pay);
-        UmsUserAccountInfo build = UmsUserAccountInfo.builder().
-                balance(subtract).
-                type("0").
-                aid(umsUserAccountInfo.getAid()).
-                flowId(flowId).
+        UmsUserAccountInfo build = Builder.
+                of(UmsUserAccountInfo::new).
+                with(UmsUserAccountInfo::setBalance, subtract).
+                with(UmsUserAccountInfo::setType, "0").
+                with(UmsUserAccountInfo::setAid, umsUserAccountInfo.getAid()).
+                with(UmsUserAccountInfo::setFlowId, flowId).
                 build();
         umsUserAccountInfoMapper.insertSelective(build);
-        return UmsUserInfoVo.builder().
-                umsUserInfo(umsUserInfoMapper.selectOne(UmsUserInfo.builder().jobNumber(uid).build())).
-                umsUserAccountInfoList(Lists.list(selectByJobNumber(uid))).
+        return Builder.
+                of(UmsUserInfoVo::new).
+                with(UmsUserInfoVo::setUmsUserInfo,
+                        umsUserInfoMapper.selectOne(Builder.of(UmsUserInfo::new).
+                with(UmsUserInfo::setJobNumber, uid).build())).
+                with(UmsUserInfoVo::setUmsUserAccountInfoList,
+                        Lists.list(selectByJobNumber(uid))).
                 build();
     }
 }

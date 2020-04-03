@@ -2,10 +2,6 @@ package com.duanxin.zqls.ucenter.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -14,6 +10,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 用户消费表
@@ -21,12 +18,11 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-03
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ApiModel(description = "用户消费信息实体类")
 public class UmsUserAccountConsume implements Serializable {
+
+    public UmsUserAccountConsume() {
+    }
 
     private static final long serialVersionUID = 8638259735043904769L;
     /**
@@ -65,4 +61,78 @@ public class UmsUserAccountConsume implements Serializable {
     @ApiModelProperty(name = "price", value = "用户消费金额",
             dataType = "BigDecimal", required = true, example = "1.00")
     private BigDecimal price;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        UmsUserAccountConsume that = (UmsUserAccountConsume) o;
+
+        if (!Objects.equals(id, that.id)) {
+            return false;
+        }
+        if (!Objects.equals(time, that.time)) {
+            return false;
+        }
+        if (!Objects.equals(place, that.place)) {
+            return false;
+        }
+        return Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (place != null ? place.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UmsUserAccountConsume{" +
+                "id=" + id +
+                ", time=" + time +
+                ", place='" + place + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.duanxin.zqls.ucenter.service;
 
 import com.duanxin.zqls.common.exception.CheckException;
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.common.util.MD5Util;
 import com.duanxin.zqls.common.util.RandomStringUtils;
@@ -14,10 +15,11 @@ import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -35,7 +37,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2019/10/14 15:42
  */
 @Service(version = "0.0.1")
-@Slf4j
 public class UmsUserInfoServiceImpl implements UmsUserInfoService {
 
     @Resource
@@ -47,6 +48,7 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     @Reference(version = "0.0.1", check = false, mock = "true", protocol = "dubbo")
     private UmsUserAccountInfoService umsUserAccountInfoService;
 
+    private final static Logger log = LoggerFactory.getLogger(UmsUserInfoServiceImpl.class);
 
     @Override
     public Integer selectAidByJobNumber(String jobNumber) {
@@ -82,7 +84,9 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         } else {
             // 3,if data is null, get data from db, and then pull data into redis cache
             umsUserInfo =
-                    umsUserInfoMapper.selectOne(UmsUserInfo.builder().jobNumber(jobNumber).build());
+                    umsUserInfoMapper.selectOne(Builder.of(UmsUserInfo::new).
+                            with(UmsUserInfo::setJobNumber, jobNumber).
+                            build());
             value = GsonUtil.objectToString(umsUserInfo);
             stringRedisTemplate.opsForValue().set(key, value, RandomStringUtils.random(7), TimeUnit.DAYS);
         }
@@ -209,7 +213,10 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     public UmsUserInfoVo settleAccounts(String uid, String place, BigDecimal pay) {
         // 存储交易信息
         UmsUserAccountConsume umsUserAccountConsume =
-                UmsUserAccountConsume.builder().place(place).price(pay).build();
+                Builder.of(UmsUserAccountConsume::new).
+                        with(UmsUserAccountConsume::setPlace, place).
+                        with(UmsUserAccountConsume::setPrice, pay).
+                        build();
         int id = umsUserAccountInfoService.insertUserAccountConsume(umsUserAccountConsume);
         // 账户余额扣减
         // 返回账户信息
@@ -219,6 +226,18 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     @Override
     public List<UmsUserInfo> selectListByIds(List<Integer> uids) {
         return umsUserInfoMapper.selectListByIds(uids);
+    }
+
+    @Override
+    public UmsUserInfoAo selectInfoForLogin(String jobNumber, String password) {
+        UmsUserInfo umsUserInfo = Builder.of(UmsUserInfo::new).
+                with(UmsUserInfo::setJobNumber, jobNumber).
+                with(UmsUserInfo::setPassword, password).
+                build();
+        UmsUserInfo umsUserInfo1 = umsUserInfoMapper.selectOne(umsUserInfo);
+        return Builder.of(UmsUserInfoAo::new).
+                with(UmsUserInfoAo::setUmsUserInfo, umsUserInfo1).
+                build();
     }
 
     @Override

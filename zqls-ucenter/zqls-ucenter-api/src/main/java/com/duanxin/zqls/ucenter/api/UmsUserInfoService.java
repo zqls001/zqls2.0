@@ -120,4 +120,13 @@ public interface UmsUserInfoService {
      * @return java.util.List<com.duanxin.zqls.ucenter.model.UmsUserInfo>
      **/
     List<UmsUserInfo> selectListByIds(List<Integer> uids);
+
+    /**
+     * 通过学工号和密码查询用户信息
+     * @param jobNumber 学工号
+     * @param password 加密后的密码
+     * @date 2020/3/31 10:11
+     * @return com.duanxin.zqls.ucenter.ao.UmsUserInfoAo
+     **/
+    UmsUserInfoAo selectInfoForLogin(String jobNumber, String password);
 }

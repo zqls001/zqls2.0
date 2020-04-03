@@ -15,8 +15,9 @@ import com.duanxin.zqls.web.validate.LengthValidator;
 import com.duanxin.zqls.web.validate.NotNullValidator;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,11 +33,12 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/FeedBack")
 @Api(value = "用户模块业务接口", tags = {"用户反馈信息Controller接口"})
-@Slf4j
 public class FeedbackInfoController {
 
     @Reference(version = "0.0.1", mock = "true", check = false, protocol = "dubbo")
     private FeedbackInfoService feedbackInfoService;
+
+    private final static Logger log = LoggerFactory.getLogger(FeedbackInfoController.class);
 
     @PostMapping("/save")
     @ApiOperation(value = "添加用户反馈信息", httpMethod = "POST",

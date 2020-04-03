@@ -21,4 +21,9 @@ public class UmsAclRoleServiceMock implements UmsAclRoleService {
     public UmsAclRoleAo changeRoleAcl(Integer rid, List<Integer> aids) {
         return null;
     }
+
+    @Override
+    public List<Integer> selectAidsByRids(List<Integer> rids) {
+        return null;
+    }
 }

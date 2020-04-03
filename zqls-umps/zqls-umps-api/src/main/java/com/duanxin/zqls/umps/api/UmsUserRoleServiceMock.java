@@ -22,4 +22,9 @@ public class UmsUserRoleServiceMock implements UmsUserRoleService {
     public UmsUserRoleAo changeRoleUsers(UmsUserRoleVo umsUserRoleVo) {
         return null;
     }
+
+    @Override
+    public List<Integer> selectRidsByUid(Integer uid) {
+        return null;
+    }
 }

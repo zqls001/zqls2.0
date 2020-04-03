@@ -1,14 +1,11 @@
 package com.duanxin.zqls.web.code;
 
-import lombok.AllArgsConstructor;
-
 /**
  * 结果状态码
  * @author duanxin
  * @version 1.0
  * @date 2019/9/15 14:34
  */
-@AllArgsConstructor
 public enum ResultCode implements IErrorCode {
 
     /** 操作成功状态码 */
@@ -22,6 +19,15 @@ public enum ResultCode implements IErrorCode {
     /** 无相关权限状态码 */
     FORBIDDEN(403, "没有相关权限");
 
+    ResultCode() {
+    }
+
+    ResultCode(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+
     private int code;
     private String message;
 
@@ -33,4 +39,13 @@ public enum ResultCode implements IErrorCode {
     @Override
     public String getMessage() {
         return message;
-    }}
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}

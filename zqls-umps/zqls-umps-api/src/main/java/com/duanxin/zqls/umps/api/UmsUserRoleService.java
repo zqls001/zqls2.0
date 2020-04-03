@@ -28,4 +28,12 @@ public interface UmsUserRoleService {
      * @return com.duanxin.zqls.umps.ao.UmsUserRoleAo
      **/
     UmsUserRoleAo changeRoleUsers(UmsUserRoleVo umsUserRoleVo);
+
+    /**
+     * 根据用户主键获取用户角色id集合
+     * @param uid 用户主键id
+     * @date 2020/3/6 17:06
+     * @return java.util.List<java.lang.Integer>
+     **/
+    List<Integer> selectRidsByUid(Integer uid);
 }

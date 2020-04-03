@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.controller;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.umps.ao.UmsAclRoleAo;
 import com.duanxin.zqls.umps.api.UmsAclRoleService;
 import com.duanxin.zqls.umps.dto.UmsAclDto;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.common.utils.CollectionUtils;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,29 +53,18 @@ public class UmsAclRoleController {
             return BaseResult.failed("用户信息不存在");
         }
         UmsRole umsRole = umsAclRoleAo.getUmsRole();
-        UmsRoleDto umsRoleDto = UmsRoleDto.builder().
-                id(umsRole.getId()).
-                name(umsRole.getName()).
-                type(umsRole.getType()).
-                remark(umsRole.getRemark()).
-                status(umsRole.getStatus()).
-                build();
+        UmsRoleDto umsRoleDto = new UmsRoleDto();
+        BeanUtils.copyProperties(umsRole, umsRoleDto);
         List<UmsAclDto> umsAclDtos = Lists.newArrayList();
         umsAclRoleAo.getUmsAcls().forEach(u -> {
-            umsAclDtos.add(UmsAclDto.builder().
-                    id(u.getId()).
-                    name(u.getName()).
-                    type(u.getType()).
-                    remark(u.getRemark()).
-                    status(u.getStatus()).
-                    code(u.getCode()).
-                    url(u.getUrl()).
-                    build()
-            );
+            UmsAclDto umsAclDto1 = new UmsAclDto();
+            BeanUtils.copyProperties(u, umsAclDto1);
+            umsAclDtos.add(umsAclDto1);
         });
-        UmsAclRoleDto umsAclRoleDto = UmsAclRoleDto.builder().
-                umsRoleDto(umsRoleDto).
-                umsAclDtos(umsAclDtos).
+        UmsAclRoleDto umsAclRoleDto = Builder.
+                of(UmsAclRoleDto::new).
+                with(UmsAclRoleDto::setUmsAclDtos, umsAclDtos).
+                with(UmsAclRoleDto::setUmsRoleDto, umsRoleDto).
                 build();
         return BaseResult.success("更新成功", umsAclRoleDto);
     }
@@ -90,15 +81,9 @@ public class UmsAclRoleController {
         }
         List<UmsAclDto> umsAclDtos = Lists.newArrayList();
         umsAcls.forEach(u -> {
-            umsAclDtos.add(UmsAclDto.builder().
-                    id(u.getId()).
-                    name(u.getName()).
-                    type(u.getType()).
-                    url(u.getUrl()).
-                    code(u.getCode()).
-                    status(u.getStatus()).
-                    build()
-            );
+            UmsAclDto umsAclDto1 = new UmsAclDto();
+            BeanUtils.copyProperties(u, umsAclDto1);
+            umsAclDtos.add(umsAclDto1);
         });
         return BaseResult.success("查询成功", umsAclDtos);
     }

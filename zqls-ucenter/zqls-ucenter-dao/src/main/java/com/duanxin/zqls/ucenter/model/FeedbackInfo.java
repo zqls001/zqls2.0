@@ -2,10 +2,6 @@ package com.duanxin.zqls.ucenter.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -13,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 反馈基本表
@@ -20,12 +17,11 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-08
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ApiModel(description = "用户反馈信息实体类")
 public class FeedbackInfo implements Serializable {
+
+    public FeedbackInfo() {
+    }
 
     private static final long serialVersionUID = -6280699464210391587L;
     /**
@@ -107,4 +103,143 @@ public class FeedbackInfo implements Serializable {
     @ApiModelProperty(name = "renewTime", value = "该记录只要更改，该字段就进行更新",
             dataType = "Date", example = "2019-12-06 08：53：01")
     private Date renewTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Byte getIsPic() {
+        return isPic;
+    }
+
+    public void setIsPic(Byte isPic) {
+        this.isPic = isPic;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getRenewTime() {
+        return renewTime;
+    }
+
+    public void setRenewTime(Date renewTime) {
+        this.renewTime = renewTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FeedbackInfo that = (FeedbackInfo) o;
+
+        if (!Objects.equals(id, that.id)) {
+            return false;
+        }
+        if (!Objects.equals(uid, that.uid)) {
+            return false;
+        }
+        if (!Objects.equals(type, that.type)) {
+            return false;
+        }
+        if (!Objects.equals(remark, that.remark)) {
+            return false;
+        }
+        if (!Objects.equals(status, that.status)) {
+            return false;
+        }
+        if (!Objects.equals(isPic, that.isPic)) {
+            return false;
+        }
+        if (!Objects.equals(picUrl, that.picUrl)) {
+            return false;
+        }
+        if (!Objects.equals(createTime, that.createTime)) {
+            return false;
+        }
+        return Objects.equals(renewTime, that.renewTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (uid != null ? uid.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (remark != null ? remark.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (isPic != null ? isPic.hashCode() : 0);
+        result = 31 * result + (picUrl != null ? picUrl.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (renewTime != null ? renewTime.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FeedbackInfo{" +
+                "id=" + id +
+                ", uid='" + uid + '\'' +
+                ", type=" + type +
+                ", remark='" + remark + '\'' +
+                ", status=" + status +
+                ", isPic=" + isPic +
+                ", picUrl='" + picUrl + '\'' +
+                ", createTime=" + createTime +
+                ", renewTime=" + renewTime +
+                '}';
+    }
 }

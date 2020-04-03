@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.service;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.umps.ao.UmsAclAo;
 import com.duanxin.zqls.umps.api.UmsAclService;
 import com.duanxin.zqls.umps.mapper.UmsAclMapper;
@@ -9,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import org.apache.dubbo.config.annotation.Service;
+import org.springframework.beans.BeanUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -28,17 +30,8 @@ public class UmsAclServiceImpl implements UmsAclService {
 
     @Override
     public int saveUmsAcl(UmsAclVo umsAclVo) {
-        UmsAcl umsAcl = UmsAcl.builder().
-                code(umsAclVo.getCode()).
-                name(umsAclVo.getName()).
-                remark(umsAclVo.getRemark()).
-                status(umsAclVo.getStatus()).
-                type(umsAclVo.getType()).
-                url(umsAclVo.getUrl()).
-                operateIp("0.0.0.0").
-                operateTime(new Date()).
-                operator("李四").
-                build();
+        UmsAcl umsAcl = new UmsAcl();
+        BeanUtils.copyProperties(umsAclVo, umsAcl);
         return umsAclMapper.insertSelective(umsAcl);
     }
 
@@ -71,13 +64,14 @@ public class UmsAclServiceImpl implements UmsAclService {
 
     @Override
     public int deleteUmsAclByPrimaryKey(Integer id) {
-        return umsAclMapper.updateByPrimaryKeySelective(UmsAcl.builder().
-                id(id).
-                status(Byte.parseByte("1")).
-                operateIp("0.0.0.0").
-                operateTime(new Date()).
-                operator("李四").
-                build()
+        return umsAclMapper.updateByPrimaryKeySelective(
+                Builder.of(UmsAcl::new).
+                        with(UmsAcl::setId, id).
+                        with(UmsAcl::setStatus, Byte.parseByte("1")).
+                        with(UmsAcl::setOperateIp, "0.0.0.0").
+                        with(UmsAcl::setOperateTime, new Date()).
+                        with(UmsAcl::setOperator, "李四").
+                        build()
         );
     }
 
@@ -94,5 +88,10 @@ public class UmsAclServiceImpl implements UmsAclService {
         }
         umsAclAo.setUmsAcl(umsAcl1);
         return umsAclAo;
+    }
+
+    @Override
+    public List<UmsAcl> selectAclsByIds(List<Integer> aids) {
+        return umsAclMapper.selectListByIds(aids);
     }
 }

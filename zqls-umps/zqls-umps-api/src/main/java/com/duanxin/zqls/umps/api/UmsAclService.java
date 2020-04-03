@@ -5,6 +5,8 @@ import com.duanxin.zqls.umps.model.UmsAcl;
 import com.duanxin.zqls.umps.vo.UmsAclVo;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * 权限Service层接口
  * @author duanxin
@@ -52,4 +54,12 @@ public interface UmsAclService {
      * @return com.duanxin.zqls.umps.ao.UmsAclAo
      **/
     UmsAclAo updateUmsAcl(UmsAcl umsAcl);
+
+    /**
+     * 根据权限id集合查询权限信息
+     * @param aids 权限id集合
+     * @date 2020/3/6 18:19
+     * @return java.util.List<com.duanxin.zqls.umps.model.UmsAcl>
+     **/
+    List<UmsAcl> selectAclsByIds(List<Integer> aids);
 }

@@ -7,8 +7,9 @@ import com.duanxin.zqls.service.util.JwtUtil;
 import com.duanxin.zqls.ucenter.api.JwtService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2019/12/15 10:12
  */
 @Service(version = "0.0.1", delay = -1)
-@Slf4j
 public class JwtServiceImpl implements JwtService {
 
     /**
@@ -37,6 +37,8 @@ public class JwtServiceImpl implements JwtService {
     private UmsUserInfoService umsUserInfoService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    private final static Logger log = LoggerFactory.getLogger(JwtServiceImpl.class);
 
     @Value("${jwt_expire_time}")
     public void setExpireTime(int expireTime) {
@@ -73,7 +75,8 @@ public class JwtServiceImpl implements JwtService {
     public String refreshJwt(String jwt) {
         String secret = stringRedisTemplate.opsForValue().get(jwt);
         Map<String, Claim> decode = JwtUtil.decode(jwt, secret);
-        if (decode.get("exp").asLong() - System.currentTimeMillis() / 1000 < 3 * 60 * 60 * 24) {
+        if ((decode.get("exp").asLong() - System.currentTimeMillis()) / 1000 < 3 * 60 * 60 * 24) {
+            inValid(jwt);
             Map<String, String> map = new HashMap<>();
             map.put("jobNumber", decode.get("jobNumber").asString());
             map.put("userName", decode.get("userName").asString());

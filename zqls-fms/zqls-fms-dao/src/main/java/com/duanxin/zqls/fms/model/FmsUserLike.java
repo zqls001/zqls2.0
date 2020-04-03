@@ -2,10 +2,6 @@ package com.duanxin.zqls.fms.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -20,14 +16,14 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-03
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ApiModel(description = "用户喜好实体类")
 public class FmsUserLike implements Serializable {
 
     private static final long serialVersionUID = -1716589456107620175L;
+
+    public FmsUserLike() {
+    }
+
     /**
      * 用户喜好表id
      * id
@@ -127,4 +123,169 @@ public class FmsUserLike implements Serializable {
     @ApiModelProperty(name = "renewTime", value = "用户喜好更新时间", notes = "当该条记录更改后，该字段将自动更新",
             dataType = "Date", required = true, example = "2019-12-06 08：53：01")
     private Date createTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Byte getNation() {
+        return nation;
+    }
+
+    public void setNation(Byte nation) {
+        this.nation = nation;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public Byte getTasteType1() {
+        return tasteType1;
+    }
+
+    public void setTasteType1(Byte tasteType1) {
+        this.tasteType1 = tasteType1;
+    }
+
+    public Byte getTasteType2() {
+        return tasteType2;
+    }
+
+    public void setTasteType2(Byte tasteType2) {
+        this.tasteType2 = tasteType2;
+    }
+
+    public Byte getFavoriteDishes1() {
+        return favoriteDishes1;
+    }
+
+    public void setFavoriteDishes1(Byte favoriteDishes1) {
+        this.favoriteDishes1 = favoriteDishes1;
+    }
+
+    public Byte getFavoriteDishes2() {
+        return favoriteDishes2;
+    }
+
+    public void setFavoriteDishes2(Byte favoriteDishes2) {
+        this.favoriteDishes2 = favoriteDishes2;
+    }
+
+    public Byte getDiet() {
+        return diet;
+    }
+
+    public void setDiet(Byte diet) {
+        this.diet = diet;
+    }
+
+    public Date getRenewTime() {
+        return renewTime;
+    }
+
+    public void setRenewTime(Date renewTime) {
+        this.renewTime = renewTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FmsUserLike that = (FmsUserLike) o;
+
+        if (!id.equals(that.id)) {
+            return false;
+        }
+        if (!uid.equals(that.uid)) {
+            return false;
+        }
+        if (!nation.equals(that.nation)) {
+            return false;
+        }
+        if (!area.equals(that.area)) {
+            return false;
+        }
+        if (!tasteType1.equals(that.tasteType1)) {
+            return false;
+        }
+        if (!tasteType2.equals(that.tasteType2)) {
+            return false;
+        }
+        if (!favoriteDishes1.equals(that.favoriteDishes1)) {
+            return false;
+        }
+        if (!favoriteDishes2.equals(that.favoriteDishes2)) {
+            return false;
+        }
+        if (!diet.equals(that.diet)) {
+            return false;
+        }
+        if (!renewTime.equals(that.renewTime)) {
+            return false;
+        }
+        return createTime.equals(that.createTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + uid.hashCode();
+        result = 31 * result + nation.hashCode();
+        result = 31 * result + area.hashCode();
+        result = 31 * result + tasteType1.hashCode();
+        result = 31 * result + tasteType2.hashCode();
+        result = 31 * result + favoriteDishes1.hashCode();
+        result = 31 * result + favoriteDishes2.hashCode();
+        result = 31 * result + diet.hashCode();
+        result = 31 * result + renewTime.hashCode();
+        result = 31 * result + createTime.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FmsUserLike{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", nation=" + nation +
+                ", area='" + area + '\'' +
+                ", tasteType1=" + tasteType1 +
+                ", tasteType2=" + tasteType2 +
+                ", favoriteDishes1=" + favoriteDishes1 +
+                ", favoriteDishes2=" + favoriteDishes2 +
+                ", diet=" + diet +
+                ", renewTime=" + renewTime +
+                ", createTime=" + createTime +
+                '}';
+    }
 }

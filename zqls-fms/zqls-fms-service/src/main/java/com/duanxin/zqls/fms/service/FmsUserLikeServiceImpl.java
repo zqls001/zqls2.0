@@ -1,5 +1,6 @@
 package com.duanxin.zqls.fms.service;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.fms.ao.FmsUserLikeAo;
 import com.duanxin.zqls.fms.api.FmsUserLikeService;
 import com.duanxin.zqls.fms.mapper.FmsUserLikeMapper;
@@ -35,7 +36,9 @@ public class FmsUserLikeServiceImpl implements FmsUserLikeService {
     @Override
     public FmsUserLikeAo getUserLikeByUid(Integer id) {
         UmsUserInfo umsUserInfo = umsUserInfoService.selectByPrimaryKey(id);
-        FmsUserLike fmsUserLike = fmsUserLikeMapper.selectOne(FmsUserLike.builder().uid(id).build());
+        FmsUserLike fmsUserLike1 = new FmsUserLike();
+        fmsUserLike1.setUid(id);
+        FmsUserLike fmsUserLike = fmsUserLikeMapper.selectOne(fmsUserLike1);
         FmsUserLikeAo fmsUserLikeAo = new FmsUserLikeAo();
         if (null == umsUserInfo || StringUtils.equals(umsUserInfo.getStatus() + "", String.valueOf(1))) {
             fmsUserLikeAo.setCheck(1);
@@ -62,7 +65,10 @@ public class FmsUserLikeServiceImpl implements FmsUserLikeService {
     @Override
     public int deleteByJobNumber(String jobNumber) {
         UmsUserInfo umsUserInfo = umsUserInfoService.selectByJobNumber(jobNumber);
-        int delete = fmsUserLikeMapper.delete(FmsUserLike.builder().uid(umsUserInfo.getId()).build());
-        return delete;
+        return fmsUserLikeMapper.delete(
+                Builder.of(FmsUserLike::new).
+                        with(FmsUserLike::setUid, umsUserInfo.getId()).
+                        build()
+        );
     }
 }

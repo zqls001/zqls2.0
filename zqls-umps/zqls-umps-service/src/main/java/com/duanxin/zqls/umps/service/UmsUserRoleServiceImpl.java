@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.service;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import com.duanxin.zqls.umps.ao.UmsUserRoleAo;
@@ -79,20 +80,27 @@ public class UmsUserRoleServiceImpl implements UmsUserRoleService {
         return umsUserRoleAo;
     }
 
+    @Override
+    public List<Integer> selectRidsByUid(Integer uid) {
+        return umsUserRoleMapper.selectRidsByUid(uid);
+    }
+
     private void updateRoleUsers(Integer rid, List<Integer> uids) {
         // 删除之前的记录
-        umsUserRoleMapper.delete(UmsUserRole.builder().rid(rid).build());
+        umsUserRoleMapper.delete(Builder.of(UmsUserRole::new).
+                with(UmsUserRole::setRid, rid).
+                build());
         if (CollectionUtils.isEmpty(uids)) {
             return ;
         }
         List<UmsUserRole> umsUserRoles = Lists.newArrayList();
         uids.forEach(u -> {
-            umsUserRoles.add(UmsUserRole.builder().
-                    uid(u).
-                    rid(rid).
-                    operateIp("0.0.0.0").
-                    operateTime(new Date()).
-                    operator("李四").
+            umsUserRoles.add(Builder.of(UmsUserRole::new).
+                    with(UmsUserRole::setUid, u).
+                    with(UmsUserRole::setRid, rid).
+                    with(UmsUserRole::setOperateIp, "0.0.0.0").
+                    with(UmsUserRole::setOperateTime, new Date()).
+                    with(UmsUserRole::setOperator, "李四").
                     build()
             );
         });

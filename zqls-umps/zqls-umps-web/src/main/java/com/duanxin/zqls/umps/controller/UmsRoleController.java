@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.controller;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.umps.ao.UmsRoleAo;
 import com.duanxin.zqls.umps.api.UmsRoleService;
 import com.duanxin.zqls.umps.dto.UmsRoleDto;
@@ -14,8 +15,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -32,8 +36,9 @@ public class UmsRoleController {
     private UmsRoleService umsRoleService;
 
     @GetMapping("/test")
-    public BaseResult test() {
-        return BaseResult.success("test success");
+    @ApiIgnore
+    public BaseResult test(HttpServletRequest request) {
+        return BaseResult.success(request.getRequestURL().toString() + ":::" + request.getRequestURI() + ":::" + request.getMethod());
     }
 
     @PostMapping("/save")
@@ -63,13 +68,8 @@ public class UmsRoleController {
             return BaseResult.failed("该角色信息不存在");
         }
         UmsRole umsRole = umsRoleAo.getUmsRole();
-        UmsRoleDto umsRoleDto = UmsRoleDto.builder().
-                id(umsRole.getId()).
-                name(umsRole.getName()).
-                type(umsRole.getType()).
-                remark(umsRole.getRemark()).
-                status(umsRole.getStatus()).
-                build();
+        UmsRoleDto umsRoleDto = new UmsRoleDto();
+        BeanUtils.copyProperties(umsRole, umsRoleDto);
         return BaseResult.success(umsRoleDto);
     }
 
@@ -91,29 +91,25 @@ public class UmsRoleController {
         List<UmsRoleDto> umsRoleDtos = Lists.newArrayList();
         umsRoleAos.getList().stream().filter(u -> u.getCheckCode() != 1).forEach(u -> {
             UmsRole umsRole = u.getUmsRole();
-            umsRoleDtos.add(UmsRoleDto.builder().
-                    id(umsRole.getId()).
-                    type(umsRole.getType()).
-                    name(umsRole.getName()).
-                    remark(umsRole.getRemark()).
-                    status(umsRole.getStatus()).
-                    build());
+            UmsRoleDto umsRoleDto = new UmsRoleDto();
+            BeanUtils.copyProperties(umsRole, umsRoleDto);
+            umsRoleDtos.add(umsRoleDto);
         });
         if (umsRoleDtos.size() == 0) {
             return BaseResult.failed("查询失败，不存在有效信息");
         }
-        com.duanxin.zqls.common.dto.PageInfo pageInfo =
-                com.duanxin.zqls.common.dto.PageInfo.builder().
-                        nextPage(umsRoleAos.getNextPage()).
-                        pageSize(umsRoleAos.getPageSize()).
-                        pageNo(umsRoleAos.getPageNum()).
-                        prePage(umsRoleAos.getPrePage()).
-                        totalCount(umsRoleAos.getTotal()).
-                        totalPage(umsRoleAos.getPages()).
-                        build();
-        UmsRolePageInfo umsRolePageInfo = UmsRolePageInfo.builder().
-                umsRoleDtos(umsRoleDtos).
-                pageInfo(pageInfo).
+        com.duanxin.zqls.common.dto.PageInfo pageInfo = new com.duanxin.zqls.common.dto.PageInfo();
+        pageInfo.setNextPage(umsRoleAos.getNextPage());
+        pageInfo.setPageSize(umsRoleAos.getPageSize());
+        pageInfo.setPageNo(umsRoleAos.getPageNum());
+        pageInfo.setPrePage(umsRoleAos.getPrePage());
+        pageInfo.setTotalCount(umsRoleAos.getTotal());
+        pageInfo.setTotalPage(umsRoleAos.getPages());
+
+        UmsRolePageInfo umsRolePageInfo = Builder.
+                of(UmsRolePageInfo::new).
+                with(UmsRolePageInfo::setPageInfo, pageInfo).
+                with(UmsRolePageInfo::setUmsRoleDtos, umsRoleDtos).
                 build();
         return BaseResult.success(umsRolePageInfo);
     }
@@ -145,12 +141,8 @@ public class UmsRoleController {
             return BaseResult.failed("角色不存在");
         }
         UmsRole umsRole1 = umsRoleAo.getUmsRole();
-        return BaseResult.success("更新成功", UmsRoleVo.builder().
-                status(umsRole1.getStatus()).
-                type(umsRole1.getType()).
-                name(umsRole1.getName()).
-                remark(umsRole1.getRemark()).
-                build()
-        );
+        UmsRoleVo umsRoleVo = new UmsRoleVo();
+        BeanUtils.copyProperties(umsRole1, umsRoleVo);
+        return BaseResult.success("更新成功", umsRoleVo);
     }
 }

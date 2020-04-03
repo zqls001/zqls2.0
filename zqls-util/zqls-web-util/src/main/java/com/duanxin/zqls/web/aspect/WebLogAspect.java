@@ -6,7 +6,6 @@ import com.duanxin.zqls.web.util.HttpUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.marker.Markers;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -14,6 +13,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +35,10 @@ import java.util.Map;
  */
 @Component
 @Aspect
-@Slf4j
 @Order(1)//多个切面的执行优先级，数值越小执行优先级越高
 public class WebLogAspect {
+
+    private final static Logger log = LoggerFactory.getLogger(WebLogAspect.class);
 
     @Pointcut("execution(public * com.duanxin.zqls.*.controller.*.*(..))")
     public void webLog(){}

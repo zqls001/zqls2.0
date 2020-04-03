@@ -1,9 +1,10 @@
 package com.duanxin.zqls.web.util;
 
-import lombok.extern.slf4j.Slf4j;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +16,6 @@ import java.io.IOException;
  * @version 1.0
  * @date 2019/12/8 14:55
  */
-@Slf4j
 public class FastdfsUtil {
 
     private static TrackerClient trackerClient = null;
@@ -23,6 +23,8 @@ public class FastdfsUtil {
     private static StorageClient storageClient = null;
     private static StorageServer storageServer = null;
     private final static String GROUP_NAME = "group1";
+
+    private final static Logger log = LoggerFactory.getLogger(FastdfsUtil.class);
 
     static {
         // 加载配置文件

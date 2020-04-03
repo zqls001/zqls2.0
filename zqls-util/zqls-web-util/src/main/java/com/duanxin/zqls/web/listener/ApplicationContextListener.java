@@ -1,6 +1,7 @@
 package com.duanxin.zqls.web.listener;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -11,9 +12,10 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @date 2019/9/16 16:14
  */
-@Slf4j
 @Component
 public class ApplicationContextListener implements ApplicationListener<ContextRefreshedEvent> {
+
+    private final static Logger log = LoggerFactory.getLogger(ApplicationContextListener.class);
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {

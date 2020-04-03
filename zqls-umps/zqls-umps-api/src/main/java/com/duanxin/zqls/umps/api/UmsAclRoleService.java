@@ -29,4 +29,12 @@ public interface UmsAclRoleService {
      * @return com.duanxin.zqls.umps.dto.UmsAclRoleDto
      **/
     UmsAclRoleAo changeRoleAcl(Integer rid, List<Integer> aids);
+
+    /**
+     * 根据角色id集合查询权限id集合
+     * @param rids 角色id集合
+     * @date 2020/3/6 17:58
+     * @return java.util.List<java.lang.Integer>
+     **/
+    List<Integer> selectAidsByRids(List<Integer> rids);
 }

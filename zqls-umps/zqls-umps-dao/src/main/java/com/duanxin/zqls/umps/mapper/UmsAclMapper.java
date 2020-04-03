@@ -14,7 +14,7 @@ public interface UmsAclMapper extends Mapper<UmsAcl> {
 
     @Select({
             "<script>",
-            "select `id`, `code`, `url`, `type`, `status`, `remark`, `operate_time`, `operate_ip`, `operator`",
+            "select `id`, `code`, `url`, `request_type`, `type`, `status`, `remark`, `operate_time`, `operate_ip`, `operator`",
             "from `ums_acl` " ,
             "where id in " ,
             "<foreach item = 'id' index = 'index' collection = 'aids' open = '(' separator = ',' close = ')'>" ,
@@ -27,6 +27,7 @@ public interface UmsAclMapper extends Mapper<UmsAcl> {
             @Result(column = "code", property = "code", jdbcType = JdbcType.VARCHAR),
             @Result(column = "name", property = "name", jdbcType = JdbcType.VARCHAR),
             @Result(column = "url", property = "url", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "request_type", property = "requestType", jdbcType = JdbcType.INTEGER),
             @Result(column = "type", property = "type", jdbcType = JdbcType.TINYINT),
             @Result(column = "status", property = "status", jdbcType = JdbcType.TINYINT),
             @Result(column = "remark", property = "remark", jdbcType = JdbcType.VARCHAR),

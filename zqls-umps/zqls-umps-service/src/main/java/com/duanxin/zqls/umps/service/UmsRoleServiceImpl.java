@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.service;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.umps.ao.UmsRoleAo;
 import com.duanxin.zqls.umps.api.UmsRoleService;
 import com.duanxin.zqls.umps.mapper.UmsRoleMapper;
@@ -9,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import org.apache.dubbo.config.annotation.Service;
+import org.springframework.beans.BeanUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -28,15 +30,8 @@ public class UmsRoleServiceImpl implements UmsRoleService{
 
     @Override
     public int saveUmsRole(UmsRoleVo umsRoleVo) {
-        UmsRole umsRole = UmsRole.builder().
-                name(umsRoleVo.getName()).
-                remark(umsRoleVo.getRemark()).
-                status(umsRoleVo.getStatus()).
-                type(umsRoleVo.getType()).
-                operateIp("0.0.0.0").
-                operateTime(new Date()).
-                operator("李四").
-                build();
+        UmsRole umsRole = new UmsRole();
+        BeanUtils.copyProperties(umsRoleVo, umsRole);
         return umsRoleMapper.insertSelective(umsRole);
     }
 
@@ -69,13 +64,14 @@ public class UmsRoleServiceImpl implements UmsRoleService{
 
     @Override
     public int deleteUmsRoleByPrimaryKey(Integer id) {
-        return umsRoleMapper.updateByPrimaryKeySelective(UmsRole.builder().
-                id(id).
-                status(Byte.parseByte("1")).
-                operateIp("0.0.0.0").
-                operateTime(new Date()).
-                operator("李四").
-                build()
+        return umsRoleMapper.updateByPrimaryKeySelective(
+                Builder.of(UmsRole::new).
+                        with(UmsRole::setId, id).
+                        with(UmsRole::setStatus, Byte.parseByte("1")).
+                        with(UmsRole::setOperateIp, "0.0.0.0").
+                        with(UmsRole::setOperateTime, new Date()).
+                        with(UmsRole::setOperator, "李四").
+                        build()
         );
     }
 

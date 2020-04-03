@@ -53,4 +53,11 @@ public interface UmsUserRoleMapper extends Mapper<UmsUserRole> {
             "</script>"
     })
     void insertBatch(@Param("umsUserRoles") List<UmsUserRole> umsUserRoles);
+
+    @Select(value = {
+            "select `rid`",
+            "from `ums_user_role`",
+            "where `uid` = #{uid}"
+    })
+    List<Integer> selectRidsByUid(@Param("uid") Integer uid);
 }

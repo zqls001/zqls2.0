@@ -4,10 +4,10 @@ import com.duanxin.zqls.ucenter.model.UmsUserAccountInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 用户信息显示层对象
@@ -15,13 +15,11 @@ import java.util.List;
  * @version 1.0
  * @date 2019/10/26 10:29
  */
-@Setter
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @ApiModel(description = "用户信息展示前端页面实体类")
 public class UmsUserInfoVo implements Serializable {
+
+    public UmsUserInfoVo() {
+    }
 
     private static final long serialVersionUID = -2834690137786115839L;
     /**
@@ -37,4 +35,52 @@ public class UmsUserInfoVo implements Serializable {
     @ApiModelProperty(name = "umsUserInfo", value = "用户基本信息实体类",
             dataType = "UmsUserInfo", required = true)
     private UmsUserInfo umsUserInfo;
+
+    public List<UmsUserAccountInfo> getUmsUserAccountInfoList() {
+        return umsUserAccountInfoList;
+    }
+
+    public void setUmsUserAccountInfoList(List<UmsUserAccountInfo> umsUserAccountInfoList) {
+        this.umsUserAccountInfoList = umsUserAccountInfoList;
+    }
+
+    public UmsUserInfo getUmsUserInfo() {
+        return umsUserInfo;
+    }
+
+    public void setUmsUserInfo(UmsUserInfo umsUserInfo) {
+        this.umsUserInfo = umsUserInfo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        UmsUserInfoVo that = (UmsUserInfoVo) o;
+
+        if (!Objects.equals(umsUserAccountInfoList, that.umsUserAccountInfoList)) {
+            return false;
+        }
+        return Objects.equals(umsUserInfo, that.umsUserInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = umsUserAccountInfoList != null ? umsUserAccountInfoList.hashCode() : 0;
+        result = 31 * result + (umsUserInfo != null ? umsUserInfo.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UmsUserInfoVo{" +
+                "umsUserAccountInfoList=" + umsUserAccountInfoList +
+                ", umsUserInfo=" + umsUserInfo +
+                '}';
+    }
 }

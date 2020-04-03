@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.controller;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.umps.ao.UmsAclAo;
 import com.duanxin.zqls.umps.api.UmsAclService;
 import com.duanxin.zqls.umps.dto.UmsAclDto;
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,6 +52,7 @@ public class UmsAclController {
             httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(name = "id", value = "权限主键id", required = true,
             dataType = "int", example = "1")
+    // @VerifyPermissions
     public BaseResult selectUmsAclByPrimaryKey(@PathVariable("id") Integer id) {
         UmsAclAo umsAclAo = umsAclService.selectUmsAclByPrimaryKey(id);
         if (null == umsAclAo) {
@@ -59,15 +62,8 @@ public class UmsAclController {
             return BaseResult.failed("查询失败，该权限信息不存在");
         }
         UmsAcl umsAcl = umsAclAo.getUmsAcl();
-        UmsAclDto umsAclDto = UmsAclDto.builder().
-                id(umsAcl.getId()).
-                code(umsAcl.getCode()).
-                name(umsAcl.getName()).
-                type(umsAcl.getType()).
-                url(umsAcl.getUrl()).
-                remark(umsAcl.getRemark()).
-                status(umsAcl.getStatus()).
-                build();
+        UmsAclDto umsAclDto = new UmsAclDto();
+        BeanUtils.copyProperties(umsAcl, umsAclDto);
         return BaseResult.success("查询成功", umsAclDto);
     }
 
@@ -86,31 +82,25 @@ public class UmsAclController {
         List<UmsAclDto> umsAclDtos = Lists.newArrayList();
         umsAclAos.getList().stream().filter(u -> u.getCheckCode() != 1).forEach(u -> {
             UmsAcl umsAcl = u.getUmsAcl();
-            umsAclDtos.add(UmsAclDto.builder().
-                    id(umsAcl.getId()).
-                    name(umsAcl.getName()).
-                    url(umsAcl.getUrl()).
-                    type(umsAcl.getType()).
-                    code(umsAcl.getCode()).
-                    remark(umsAcl.getRemark()).
-                    status(umsAcl.getStatus()).
-                    build()
-            );
+            UmsAclDto umsAclDto = new UmsAclDto();
+            BeanUtils.copyProperties(umsAcl, umsAclDto);
+            umsAclDtos.add(umsAclDto);
         });
         if (0 == umsAclDtos.size()) {
             return BaseResult.failed("查询结果不存在");
         }
-        com.duanxin.zqls.common.dto.PageInfo pageInfo = com.duanxin.zqls.common.dto.PageInfo.builder().
-                nextPage(umsAclAos.getNextPage()).
-                pageSize(umsAclAos.getPageSize()).
-                pageNo(umsAclAos.getPageNum()).
-                prePage(umsAclAos.getPrePage()).
-                totalCount(umsAclAos.getTotal()).
-                totalPage(umsAclAos.getPages()).
-                build();
-        UmsAclPageInfo aclPageInfo = UmsAclPageInfo.builder().
-                pageInfo(pageInfo).
-                umsAclDtos(umsAclDtos).
+        com.duanxin.zqls.common.dto.PageInfo pageInfo = new com.duanxin.zqls.common.dto.PageInfo();
+        pageInfo.setNextPage(umsAclAos.getNextPage());
+        pageInfo.setPageSize(umsAclAos.getPageSize());
+        pageInfo.setPageNo(umsAclAos.getPageNum());
+        pageInfo.setPrePage(umsAclAos.getPrePage());
+        pageInfo.setTotalCount(umsAclAos.getTotal());
+        pageInfo.setTotalPage(umsAclAos.getPages());
+
+        UmsAclPageInfo aclPageInfo = Builder.
+                of(UmsAclPageInfo::new).
+                with(UmsAclPageInfo::setPageInfo, pageInfo).
+                with(UmsAclPageInfo::setUmsAclDtos, umsAclDtos).
                 build();
         return BaseResult.success("查询成功", aclPageInfo);
     }
@@ -142,15 +132,8 @@ public class UmsAclController {
             return BaseResult.failed("该权限不存在");
         }
         UmsAcl umsAcl1 = umsAclAo.getUmsAcl();
-        UmsAclDto umsAclDto = UmsAclDto.builder().
-                id(umsAcl1.getId()).
-                name(umsAcl1.getName()).
-                type(umsAcl1.getType()).
-                url(umsAcl1.getUrl()).
-                status(umsAcl1.getStatus()).
-                remark(umsAcl1.getRemark()).
-                code(umsAcl1.getCode()).
-                build();
+        UmsAclDto umsAclDto = new UmsAclDto();
+        BeanUtils.copyProperties(umsAcl1, umsAclDto);
         return BaseResult.success("更新成功", umsAclDto);
     }
 }

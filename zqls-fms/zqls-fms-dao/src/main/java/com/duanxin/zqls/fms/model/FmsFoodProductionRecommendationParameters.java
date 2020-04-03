@@ -2,10 +2,6 @@ package com.duanxin.zqls.fms.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -20,14 +16,14 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-03
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ApiModel(description = "食物生产量推荐参数实体类")
 public class FmsFoodProductionRecommendationParameters implements Serializable {
 
     private static final long serialVersionUID = 2275227349701423051L;
+
+    public FmsFoodProductionRecommendationParameters() {
+    }
+
     /**
      * 食物生产量推荐参数表id
      * id
@@ -64,4 +60,78 @@ public class FmsFoodProductionRecommendationParameters implements Serializable {
     @ApiModelProperty(name = "renewTime", value = "食物生产量推荐参数更新时间", notes = "当该条记录更改后，该字段将自动更新",
             dataType = "Date", required = true, example = "2019-12-06 08：53：01")
     private Date renewTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getRenewTime() {
+        return renewTime;
+    }
+
+    public void setRenewTime(Date renewTime) {
+        this.renewTime = renewTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FmsFoodProductionRecommendationParameters that = (FmsFoodProductionRecommendationParameters) o;
+
+        if (!id.equals(that.id)) {
+            return false;
+        }
+        if (!cid.equals(that.cid)) {
+            return false;
+        }
+        if (!createTime.equals(that.createTime)) {
+            return false;
+        }
+        return renewTime.equals(that.renewTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + cid.hashCode();
+        result = 31 * result + createTime.hashCode();
+        result = 31 * result + renewTime.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FmsFoodProductionRecommendationParameters{" +
+                "id=" + id +
+                ", cid=" + cid +
+                ", createTime=" + createTime +
+                ", renewTime=" + renewTime +
+                '}';
+    }
 }

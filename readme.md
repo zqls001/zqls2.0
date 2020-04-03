@@ -10,4 +10,4 @@
 #### zqls-passport-web(port): 8072  
   
 #### zqls-umps-service(port): 8092  
-#### zqls-umps-web(port): 8072
+#### zqls-umps-web(port): 8073

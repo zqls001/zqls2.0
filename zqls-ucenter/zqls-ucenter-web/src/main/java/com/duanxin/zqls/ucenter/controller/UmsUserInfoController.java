@@ -4,23 +4,30 @@ import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.duanxin.zqls.common.base.BaseConstants;
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
+import com.duanxin.zqls.ucenter.dto.UmsUserInfoDto;
+import com.duanxin.zqls.ucenter.dto.UmsUserPageInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import com.duanxin.zqls.web.annotation.LoginRequired;
 import com.duanxin.zqls.web.base.BaseResult;
 import com.duanxin.zqls.web.validate.LengthValidator;
 import com.duanxin.zqls.web.validate.NotNullValidator;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 用户信息Controller层实现
@@ -48,7 +55,7 @@ public class UmsUserInfoController {
         if (null != umsUserInfo) {
             String status = String.valueOf(umsUserInfo.getStatus());
             if (StringUtils.isNotBlank(status) && StringUtils.equals(status, BaseConstants.STATUS_CONSTANT)) {
-                return BaseResult.success(umsUserInfo);
+                return BaseResult.success(convertUserInfo(umsUserInfo));
             }
         }
         return BaseResult.failed("该用户不存在");
@@ -68,7 +75,7 @@ public class UmsUserInfoController {
         if (StringUtils.isNotBlank(status) && !StringUtils.equals(status, BaseConstants.STATUS_CONSTANT)) {
             return BaseResult.failed("用户不存在");
         }
-        return BaseResult.success(umsUserInfo);
+        return BaseResult.success(convertUserInfo(umsUserInfo));
     }
 
     @DeleteMapping("/{id}")
@@ -250,7 +257,7 @@ public class UmsUserInfoController {
         if (0 == checkCode) {
             return BaseResult.failed("更新失败");
         }
-        return BaseResult.success("更新成功", umsUserInfoAo.getUmsUserInfo());
+        return BaseResult.success("更新成功", convertUserInfo(umsUserInfoAo.getUmsUserInfo()));
     }
 
     @GetMapping("/getAll")
@@ -270,6 +277,28 @@ public class UmsUserInfoController {
         if (null == umsUserInfos) {
             return BaseResult.failed("系统维护中，请耐性等待");
         }
-        return BaseResult.success(umsUserInfos.getList());
+        List<UmsUserInfoDto> umsUserInfoDtos = Lists.newArrayList();
+        com.duanxin.zqls.common.dto.PageInfo pageInfo =
+                new com.duanxin.zqls.common.dto.PageInfo();
+                pageInfo.setTotalPage(umsUserInfos.getPages());
+                pageInfo.setTotalCount(umsUserInfos.getTotal());
+                pageInfo.setPageSize(umsUserInfos.getPageSize());
+                pageInfo.setPrePage(umsUserInfos.getPrePage());
+                pageInfo.setNextPage(umsUserInfos.getNextPage());
+                pageInfo.setPageNo(umsUserInfos.getPageNum());
+        umsUserInfos.getList().forEach(u -> {
+            umsUserInfoDtos.add(convertUserInfo(u));
+        });
+        return BaseResult.success(Builder.
+                of(UmsUserPageInfo::new).
+                with(UmsUserPageInfo::setPageInfo, pageInfo).
+                with(UmsUserPageInfo::setUmsUserInfoDtos, umsUserInfoDtos).
+                build());
+    }
+
+    private UmsUserInfoDto convertUserInfo(UmsUserInfo umsUserInfo) {
+        UmsUserInfoDto umsUserInfoDto = new UmsUserInfoDto();
+        BeanUtils.copyProperties(umsUserInfo, umsUserInfoDto);
+        return umsUserInfoDto;
     }
 }

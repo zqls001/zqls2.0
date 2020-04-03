@@ -1,5 +1,6 @@
 package com.duanxin.zqls.fms.service;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.common.util.DateTimeUtil;
 import com.duanxin.zqls.fms.api.FmsFoodInfoService;
 import com.duanxin.zqls.fms.constants.TimeConstant;
@@ -17,7 +18,6 @@ import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
  * @date 2019/11/16 9:29
  */
 @Service(version = "0.0.1", delay = -1)
-@Slf4j
 public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
 
     @Resource
@@ -74,7 +73,8 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
             fmsFoodInfos.add(list);
         });
         // return data
-        return FmsFoodInfoVo.builder().fmsFoodInfos(fmsFoodInfos).build();
+        return Builder.of(FmsFoodInfoVo::new).with(FmsFoodInfoVo::setFmsFoodInfos,
+                                                    fmsFoodInfos).build();
     }
 
     // TODO：设置缓存
@@ -104,10 +104,10 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
         UmsUserInfo umsUserInfo = umsUserInfoService.selectByJobNumber(jobNumber);
         // data encapsulation
         FoodInfoAndUserInfoDto foodInfoAndUserInfoDto =
-                FoodInfoAndUserInfoDto.builder().
-                        fmsFoodInfo(fmsFoodInfo).
-                        umsUserAccountInfo(umsUserAccountInfo).
-                        umsUserInfo(umsUserInfo).
+                Builder.of(FoodInfoAndUserInfoDto::new).
+                        with(FoodInfoAndUserInfoDto::setFmsFoodInfo, fmsFoodInfo).
+                        with(FoodInfoAndUserInfoDto::setUmsUserAccountInfo, umsUserAccountInfo).
+                        with(FoodInfoAndUserInfoDto::setUmsUserInfo, umsUserInfo).
                         build();
         return foodInfoAndUserInfoDto;
     }
@@ -122,8 +122,10 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
         fmsFoodConsumeMapper.insertSelective(fmsFoodConsume);
         // 存入缓存中
         // 格式（ZSet类型）：hots::foodPlace fid1 quantity1 fid2 quantity2 ... fid5 quantity5
+        FmsFoodInfo fmsFoodInfo1 = new FmsFoodInfo();
+        fmsFoodInfo1.setId(fmsFoodConsume.getFid());
         FmsFoodInfo fmsFoodInfo =
-                fmsFoodInfoMapper.selectOne(FmsFoodInfo.builder().id(fmsFoodConsume.getFid()).build());
+                fmsFoodInfoMapper.selectOne(fmsFoodInfo1);
         String key = "hots::" + fmsFoodInfo.getPlace();
         Double score = fmsFoodConsume.getFoodQuality().doubleValue();
         Double nowScore = null;

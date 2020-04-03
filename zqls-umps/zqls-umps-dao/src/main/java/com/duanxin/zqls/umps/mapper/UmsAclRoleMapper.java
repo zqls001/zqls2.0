@@ -44,4 +44,16 @@ public interface UmsAclRoleMapper extends Mapper<UmsAclRole> {
             "</script>"
     })
     void insertBatch(@Param("umsAclRoles") List<UmsAclRole> umsAclRoles);
+
+    @Select(value = {
+            "<script>",
+            "select `aid`",
+            "from `ums_acl_role`",
+            "where `rid` in",
+            "<foreach item = 'rid' index = 'index' collection = 'rids' open = '(' separator = ',' close = ')'>",
+            "#{rid}",
+            "</foreach>",
+            "</script>"
+    })
+    List<Integer> selectAidsByRids(@Param("rids") List<Integer> rids);
 }

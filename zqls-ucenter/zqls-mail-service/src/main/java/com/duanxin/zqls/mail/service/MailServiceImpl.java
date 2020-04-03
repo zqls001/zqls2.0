@@ -1,8 +1,9 @@
 package com.duanxin.zqls.mail.service;
 
 import com.duanxin.zqls.mail.api.MailService;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,8 +22,9 @@ import java.util.Objects;
  * @date 2019/10/22 9:35
  */
 @Service(version = "0.0.1")
-@Slf4j
 public class MailServiceImpl implements MailService {
+
+    private final static Logger log = LoggerFactory.getLogger(MailServiceImpl.class);
 
     @Resource
     private JavaMailSender javaMailSender;

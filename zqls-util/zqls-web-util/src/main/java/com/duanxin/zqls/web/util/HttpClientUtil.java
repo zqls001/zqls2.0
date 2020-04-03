@@ -2,10 +2,11 @@ package com.duanxin.zqls.web.util;
 
 import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.web.base.BaseResult;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,8 +18,9 @@ import java.util.Map;
  * @version 1.0
  * @date 2019/12/13 10:20
  */
-@Slf4j
 public class HttpClientUtil {
+
+    private final static Logger log = LoggerFactory.getLogger(HttpClientUtil.class);
 
     /**
      * get请求

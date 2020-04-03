@@ -1,4 +1,5 @@
-package com.duanxin.zqls.umps.dto;
+package com.duanxin.zqls.ucenter.dto;
+
 
 import com.duanxin.zqls.common.dto.PageInfo;
 
@@ -9,31 +10,24 @@ import java.util.Objects;
 /**
  * @author duanxin
  * @version 1.0
- * @date 2020/1/16 8:53
+ * @date 2020/3/27 10:14
  */
-public class UmsRolePageInfo implements Serializable {
-
-    public UmsRolePageInfo() {
+public class UmsUserPageInfo implements Serializable {
+    public UmsUserPageInfo() {
     }
 
-    private static final long serialVersionUID = 5423340849480361982L;
+    private static final long serialVersionUID = 2931011518346106261L;
 
-    /**
-     * 数据集合
-     * */
-    private List<UmsRoleDto> umsRoleDtos;
+    private List<UmsUserInfoDto> umsUserInfoDtos;
 
-    /**
-     * 分页信息
-     * */
     private PageInfo pageInfo;
 
-    public List<UmsRoleDto> getUmsRoleDtos() {
-        return umsRoleDtos;
+    public List<UmsUserInfoDto> getUmsUserInfoDtos() {
+        return umsUserInfoDtos;
     }
 
-    public void setUmsRoleDtos(List<UmsRoleDto> umsRoleDtos) {
-        this.umsRoleDtos = umsRoleDtos;
+    public void setUmsUserInfoDtos(List<UmsUserInfoDto> umsUserInfoDtos) {
+        this.umsUserInfoDtos = umsUserInfoDtos;
     }
 
     public PageInfo getPageInfo() {
@@ -53,9 +47,9 @@ public class UmsRolePageInfo implements Serializable {
             return false;
         }
 
-        UmsRolePageInfo that = (UmsRolePageInfo) o;
+        UmsUserPageInfo that = (UmsUserPageInfo) o;
 
-        if (!Objects.equals(umsRoleDtos, that.umsRoleDtos)) {
+        if (!Objects.equals(umsUserInfoDtos, that.umsUserInfoDtos)) {
             return false;
         }
         return Objects.equals(pageInfo, that.pageInfo);
@@ -63,15 +57,15 @@ public class UmsRolePageInfo implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = umsRoleDtos != null ? umsRoleDtos.hashCode() : 0;
+        int result = umsUserInfoDtos != null ? umsUserInfoDtos.hashCode() : 0;
         result = 31 * result + (pageInfo != null ? pageInfo.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "UmsRolePageInfo{" +
-                "umsRoleDtos=" + umsRoleDtos +
+        return "UmsUserPageInfo{" +
+                "umsUserInfoDtos=" + umsUserInfoDtos +
                 ", pageInfo=" + pageInfo +
                 '}';
     }

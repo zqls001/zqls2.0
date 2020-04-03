@@ -2,10 +2,6 @@ package com.duanxin.zqls.fms.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -21,14 +17,14 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-03
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ApiModel(description = "食物基本信息实体类")
 public class FmsFoodInfo implements Serializable {
 
     private static final long serialVersionUID = 943459489691908864L;
+
+    public FmsFoodInfo() {
+    }
+
     /**
      * 食物基本表id
      * id
@@ -155,4 +151,208 @@ public class FmsFoodInfo implements Serializable {
     @ApiModelProperty(name = "operator", value = "操作管理员姓名",
             dataType = "String", required = true, example = "李四")
     private String operator;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Byte getTasteType() {
+        return tasteType;
+    }
+
+    public void setTasteType(Byte tasteType) {
+        this.tasteType = tasteType;
+    }
+
+    public Byte getBasicFeatures() {
+        return basicFeatures;
+    }
+
+    public void setBasicFeatures(Byte basicFeatures) {
+        this.basicFeatures = basicFeatures;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getOperateTime() {
+        return operateTime;
+    }
+
+    public void setOperateTime(Date operateTime) {
+        this.operateTime = operateTime;
+    }
+
+    public String getOperateIp() {
+        return operateIp;
+    }
+
+    public void setOperateIp(String operateIp) {
+        this.operateIp = operateIp;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FmsFoodInfo that = (FmsFoodInfo) o;
+
+        if (!id.equals(that.id)) {
+            return false;
+        }
+        if (!name.equals(that.name)) {
+            return false;
+        }
+        if (!price.equals(that.price)) {
+            return false;
+        }
+        if (!remark.equals(that.remark)) {
+            return false;
+        }
+        if (!tasteType.equals(that.tasteType)) {
+            return false;
+        }
+        if (!basicFeatures.equals(that.basicFeatures)) {
+            return false;
+        }
+        if (!status.equals(that.status)) {
+            return false;
+        }
+        if (!picUrl.equals(that.picUrl)) {
+            return false;
+        }
+        if (!place.equals(that.place)) {
+            return false;
+        }
+        if (!type.equals(that.type)) {
+            return false;
+        }
+        if (!createTime.equals(that.createTime)) {
+            return false;
+        }
+        if (!operateTime.equals(that.operateTime)) {
+            return false;
+        }
+        if (!operateIp.equals(that.operateIp)) {
+            return false;
+        }
+        return operator.equals(that.operator);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + remark.hashCode();
+        result = 31 * result + tasteType.hashCode();
+        result = 31 * result + basicFeatures.hashCode();
+        result = 31 * result + status.hashCode();
+        result = 31 * result + picUrl.hashCode();
+        result = 31 * result + place.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + createTime.hashCode();
+        result = 31 * result + operateTime.hashCode();
+        result = 31 * result + operateIp.hashCode();
+        result = 31 * result + operator.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FmsFoodInfo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", remark='" + remark + '\'' +
+                ", tasteType=" + tasteType +
+                ", basicFeatures=" + basicFeatures +
+                ", status=" + status +
+                ", picUrl='" + picUrl + '\'' +
+                ", place='" + place + '\'' +
+                ", type=" + type +
+                ", createTime=" + createTime +
+                ", operateTime=" + operateTime +
+                ", operateIp='" + operateIp + '\'' +
+                ", operator='" + operator + '\'' +
+                '}';
+    }
 }

@@ -17,3 +17,11 @@ logging:
       duanxin:
         zqls:
           passport: debug
+
+# redis
+spring:
+  redis:
+    host: 39.106.154.120
+    port: 6379
+    password: root
+    database: 0

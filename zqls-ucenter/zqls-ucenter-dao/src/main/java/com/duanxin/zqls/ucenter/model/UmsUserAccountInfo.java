@@ -2,10 +2,6 @@ package com.duanxin.zqls.ucenter.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -14,6 +10,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 用户账户表
@@ -21,12 +18,11 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-03
  */
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Builder
 @ApiModel(description = "用户账户基本信息实体类")
 public class UmsUserAccountInfo implements Serializable {
+
+    public UmsUserAccountInfo() {
+    }
 
     private static final long serialVersionUID = -4227749794197442690L;
     /**
@@ -92,4 +88,117 @@ public class UmsUserAccountInfo implements Serializable {
     @ApiModelProperty(name = "renewTime", value = "用户账户信息更新时间", notes = "当用户信息更改之后，该属性就进行更新",
             dataType = "Date", required = true, example = "2019-12-06 08：53：01")
     private Date renewTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAid() {
+        return aid;
+    }
+
+    public void setAid(Integer aid) {
+        this.aid = aid;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getFlowId() {
+        return flowId;
+    }
+
+    public void setFlowId(Integer flowId) {
+        this.flowId = flowId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getRenewTime() {
+        return renewTime;
+    }
+
+    public void setRenewTime(Date renewTime) {
+        this.renewTime = renewTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        UmsUserAccountInfo that = (UmsUserAccountInfo) o;
+
+        if (!Objects.equals(id, that.id)) {
+            return false;
+        }
+        if (!Objects.equals(aid, that.aid)) {
+            return false;
+        }
+        if (!Objects.equals(balance, that.balance)) {
+            return false;
+        }
+        if (!Objects.equals(type, that.type)) {
+            return false;
+        }
+        if (!Objects.equals(flowId, that.flowId)) {
+            return false;
+        }
+        if (!Objects.equals(createTime, that.createTime)) {
+            return false;
+        }
+        return Objects.equals(renewTime, that.renewTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (aid != null ? aid.hashCode() : 0);
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (flowId != null ? flowId.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (renewTime != null ? renewTime.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UmsUserAccountInfo{" +
+                "id=" + id +
+                ", aid=" + aid +
+                ", balance=" + balance +
+                ", type='" + type + '\'' +
+                ", flowId=" + flowId +
+                ", createTime=" + createTime +
+                ", renewTime=" + renewTime +
+                '}';
+    }
 }

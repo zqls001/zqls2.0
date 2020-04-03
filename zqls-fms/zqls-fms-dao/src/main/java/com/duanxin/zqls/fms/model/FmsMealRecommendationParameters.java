@@ -2,10 +2,6 @@ package com.duanxin.zqls.fms.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -20,14 +16,14 @@ import java.util.Date;
  * @author duanxin
  * @date 2019-12-03
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ApiModel(description = "膳食推荐参数实体类")
 public class FmsMealRecommendationParameters implements Serializable {
 
     private static final long serialVersionUID = 8728269161389460320L;
+
+    public FmsMealRecommendationParameters() {
+    }
+
     /**
      * 膳食推荐Id表id
      * id
@@ -82,4 +78,104 @@ public class FmsMealRecommendationParameters implements Serializable {
     @ApiModelProperty(name = "renewTime", value = "膳食推荐更新时间", notes = "当该条记录更改后，该字段将自动更新",
             dataType = "Date", required = true, example = "2019-12-06 08：53：01")
     private Date renewTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getRenewTime() {
+        return renewTime;
+    }
+
+    public void setRenewTime(Date renewTime) {
+        this.renewTime = renewTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FmsMealRecommendationParameters that = (FmsMealRecommendationParameters) o;
+
+        if (!id.equals(that.id)) {
+            return false;
+        }
+        if (!uid.equals(that.uid)) {
+            return false;
+        }
+        if (!height.equals(that.height)) {
+            return false;
+        }
+        if (!weight.equals(that.weight)) {
+            return false;
+        }
+        if (!createTime.equals(that.createTime)) {
+            return false;
+        }
+        return renewTime.equals(that.renewTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + uid.hashCode();
+        result = 31 * result + height.hashCode();
+        result = 31 * result + weight.hashCode();
+        result = 31 * result + createTime.hashCode();
+        result = 31 * result + renewTime.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FmsMealRecommendationParameters{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", createTime=" + createTime +
+                ", renewTime=" + renewTime +
+                '}';
+    }
 }

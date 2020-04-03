@@ -80,4 +80,9 @@ public class UmsUserInfoServiceMock implements UmsUserInfoService {
     public List<UmsUserInfo> selectListByIds(List<Integer> uids) {
         return null;
     }
+
+    @Override
+    public UmsUserInfoAo selectInfoForLogin(String jobNumber, String password) {
+        return null;
+    }
 }

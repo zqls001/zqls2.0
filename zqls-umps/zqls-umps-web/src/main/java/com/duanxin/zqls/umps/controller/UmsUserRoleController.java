@@ -1,5 +1,6 @@
 package com.duanxin.zqls.umps.controller;
 
+import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.ucenter.dto.UmsUserInfoDto;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
 import com.duanxin.zqls.umps.ao.UmsUserRoleAo;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.common.utils.CollectionUtils;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,20 +50,9 @@ public class UmsUserRoleController {
         }
         List<UmsUserInfoDto> umsUserInfoDtos = Lists.newArrayList();
         umsUserInfos.forEach(u -> {
-            umsUserInfoDtos.add(UmsUserInfoDto.builder().
-                    id(u.getId()).
-                    userName(u.getUserName()).
-                    type(u.getType()).
-                    remark(u.getRemark()).
-                    status(u.getStatus()).
-                    aid(u.getAid()).
-                    email(u.getEmail()).
-                    gender(u.getGender()).
-                    headPic(u.getHeadPic()).
-                    phone(u.getPhone()).
-                    jobNumber(u.getJobNumber()).
-                    build()
-            );
+            UmsUserInfoDto umsUserInfoDto = new UmsUserInfoDto();
+            BeanUtils.copyProperties(u, umsUserInfoDto);
+            umsUserInfoDtos.add(umsUserInfoDto);
         });
         return BaseResult.success("查询成功", umsUserInfoDtos);
     }
@@ -83,33 +74,19 @@ public class UmsUserRoleController {
             return BaseResult.failed("用户集合信息不存在");
         }
         UmsRole umsRole = umsUserRoleAo.getUmsRole();
-        UmsRoleDto umsRoleDto = UmsRoleDto.builder().
-                id(umsRole.getId()).
-                name(umsRole.getName()).
-                type(umsRole.getType()).
-                remark(umsRole.getRemark()).
-                status(umsRole.getStatus()).
-                build();
+        UmsRoleDto umsRoleDto = new UmsRoleDto();
+        BeanUtils.copyProperties(umsRole, umsRoleDto);
+
         List<UmsUserInfoDto> umsUserInfoDtos = Lists.newArrayList();
         umsUserRoleAo.getUmsUserInfos().forEach(u -> {
-            umsUserInfoDtos.add(UmsUserInfoDto.builder().
-                    userName(u.getUserName()).
-                    id(u.getId()).
-                    type(u.getType()).
-                    remark(u.getRemark()).
-                    status(u.getStatus()).
-                    aid(u.getAid()).
-                    email(u.getEmail()).
-                    gender(u.getGender()).
-                    headPic(u.getHeadPic()).
-                    phone(u.getPhone()).
-                    jobNumber(u.getJobNumber()).
-                    build()
-            );
+            UmsUserInfoDto umsUserInfoDto = new UmsUserInfoDto();
+            BeanUtils.copyProperties(u, umsUserInfoDto);
+            umsUserInfoDtos.add(umsUserInfoDto);
         });
-        UmsUserRoleDto umsUserRoleDto = UmsUserRoleDto.builder().
-                umsRoleDto(umsRoleDto).
-                umsUserInfoDtos(umsUserInfoDtos).
+        UmsUserRoleDto umsUserRoleDto = Builder.
+                of(UmsUserRoleDto::new).
+                with(UmsUserRoleDto::setUmsRoleDto, umsRoleDto).
+                with(UmsUserRoleDto::setUmsUserInfoDtos, umsUserInfoDtos).
                 build();
         return BaseResult.success("更新成功", umsUserRoleDto);
     }

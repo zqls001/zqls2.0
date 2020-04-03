@@ -5,6 +5,8 @@ import com.duanxin.zqls.umps.model.UmsAcl;
 import com.duanxin.zqls.umps.vo.UmsAclVo;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * 权限Service层服务降级
  * @author duanxin
@@ -34,6 +36,11 @@ public class UmsAclServiceMock implements UmsAclService {
 
     @Override
     public UmsAclAo updateUmsAcl(UmsAcl umsAcl) {
+        return null;
+    }
+
+    @Override
+    public List<UmsAcl> selectAclsByIds(List<Integer> aids) {
         return null;
     }
 }
