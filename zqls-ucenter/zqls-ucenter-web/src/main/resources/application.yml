@@ -5,8 +5,8 @@ server:
 # 配置阿里云短信服务
 aliyun:
   sms:
-    accessKeyId: LTAI4FkZJ7i8PzgzUpx54xrZ   #创建的accesskey中的AccessKey ID
-    accessKeySecret: fZuwZ3iRjNRiNgaiIFSTnW1shJ67hS      #创建的accesskey中的Access Key Secret
+    accessKeyId: ulUCzma01/6/Bs+xgI6Q8fuagKSbM4S5AJe3/t+j8Y8=   #创建的accesskey中的AccessKey ID
+    accessKeySecret: tLIGN9mfxXpleNJ4PxHdZVlfvUqI2cRFBBAkh3KVkLc=      #创建的accesskey中的Access Key Secret
     template_code: SMS_175571377      #模板管理中的模板CODE
     sign_name: 智取乐食       #签名管理中的签名
 
