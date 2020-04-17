@@ -1,5 +1,4 @@
 package com.duanxin.zqls.ucenter.service;
-
 import com.duanxin.zqls.common.exception.CheckException;
 import com.duanxin.zqls.common.util.Builder;
 import com.duanxin.zqls.common.util.GsonUtil;
@@ -8,27 +7,28 @@ import com.duanxin.zqls.common.util.RandomStringUtils;
 import com.duanxin.zqls.ucenter.ao.UmsUserInfoAo;
 import com.duanxin.zqls.ucenter.api.UmsUserAccountInfoService;
 import com.duanxin.zqls.ucenter.api.UmsUserInfoService;
-import com.duanxin.zqls.ucenter.config.MQConfig;
+import com.duanxin.zqls.ucenter.dto.MailDto;
+import com.duanxin.zqls.ucenter.mapper.MailInfoMapper;
 import com.duanxin.zqls.ucenter.mapper.UmsUserInfoMapper;
+import com.duanxin.zqls.ucenter.model.MailInfo;
 import com.duanxin.zqls.ucenter.model.UmsUserAccountConsume;
 import com.duanxin.zqls.ucenter.model.UmsUserInfo;
+import com.duanxin.zqls.ucenter.producer.MailSender;
 import com.duanxin.zqls.ucenter.vo.UmsUserInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
+import org.n3r.idworker.Sid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -42,11 +42,15 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
     @Resource
     private UmsUserInfoMapper umsUserInfoMapper;
     @Resource
-    private RabbitTemplate rabbitTemplate;
+    private MailInfoMapper mailInfoMapper;
+    @Resource
+    private MailSender mailSender;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Reference(version = "0.0.1", check = false, mock = "true", protocol = "dubbo")
     private UmsUserAccountInfoService umsUserAccountInfoService;
+
+    private final static String MAIL_FROM = "18870735026@163.com";
 
     private final static Logger log = LoggerFactory.getLogger(UmsUserInfoServiceImpl.class);
 
@@ -104,13 +108,10 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
         map.put("checkCode", checkCode);
-        rabbitTemplate.convertAndSend(MQConfig.SMS_QUEUE, map);
+        //rabbitTemplate.convertAndSend(MQConfig.SMS_QUEUE, map);
         return 1;
     }
 
-    /**
-     * todo: 发送成功，依然一次性发送三份邮件给用户
-     * */
     @Override
     public int sendMail(String to) {
         // 生成6位随机验证码
@@ -122,11 +123,20 @@ public class UmsUserInfoServiceImpl implements UmsUserInfoService {
         String content = "亲爱的智取乐食用户：" + to
                 + ",您好，您的邮箱验证码为：" + checkCode
                 +",请在客户端中填写，完成验证，有效期为10分钟";
-        Map<String, String> map = new HashMap<>();
-        map.put("to", to);
-        map.put("subject", subject);
-        map.put("content", content);
-        rabbitTemplate.convertAndSend(MQConfig.MAIL_QUEUE, map);
+        MailDto mailDto = new MailDto();
+        mailDto.setId(Sid.next());
+        mailDto.setmTo(to);
+        mailDto.setmSubject(subject);
+        mailDto.setContent(content);
+        mailDto.setMessageId(System.currentTimeMillis() + "$" + UUID.randomUUID().toString().trim());
+        mailDto.setmFrom(MAIL_FROM);
+        // 邮件持久化
+        MailInfo mailInfo = new MailInfo();
+        BeanUtils.copyProperties(mailDto, mailInfo);
+        mailInfoMapper.insert(mailInfo);
+
+        // 发送邮件
+        mailSender.send(mailDto);
         return 1;
     }
 

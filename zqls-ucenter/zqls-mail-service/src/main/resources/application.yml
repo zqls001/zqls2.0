@@ -15,6 +15,21 @@ spring:
           starttls:
             enable: true
             required: true
+  # 消息中间件RabbitMQ配置
+  rabbitmq:
+    host: 39.106.154.120
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 15000
+  # 消费端
+    listener:
+      simple:
+        concurrency: 5
+        max-concurrency: 15
+        acknowledge-mode: manual
+        prefetch: 1
 
 # 配置日志
 logging:
@@ -32,6 +47,6 @@ dubbo:
     address: zookeeper://39.106.154.120:2181
   protocol:
     name: dubbo
-    port: 20881
+    port: 20883
   scan:
     base-packages: com.duanxin.zqls.mail.service

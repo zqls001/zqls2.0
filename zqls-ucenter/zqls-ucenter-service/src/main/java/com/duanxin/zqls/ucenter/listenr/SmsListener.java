@@ -1,12 +1,10 @@
 package com.duanxin.zqls.ucenter.listenr;
 
 import com.aliyuncs.exceptions.ClientException;
-import com.duanxin.zqls.ucenter.config.MQConfig;
 import com.duanxin.zqls.ucenter.utils.SmsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -22,7 +20,7 @@ import java.util.Map;
  * @date 2019/10/17 10:55
  */
 @Component
-@RabbitListener(queues = MQConfig.SMS_QUEUE)
+// @RabbitListener(queues = MQConfig.SMS_QUEUE)
 @PropertySource("classpath:application.yml")
 public class SmsListener {
 

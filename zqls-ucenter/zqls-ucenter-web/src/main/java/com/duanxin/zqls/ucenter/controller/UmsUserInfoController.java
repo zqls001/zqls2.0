@@ -49,7 +49,7 @@ public class UmsUserInfoController {
     @ApiOperation(value = "获取用户基本信息", notes = "该接口根据用户的主键查询并获取用户的基本信息",
             httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(dataType = "int", name = "id", value = "用户主键id", required = true)
-    @LoginRequired
+    // @LoginRequired
     public BaseResult getUmsUserInfoByPrimaryKey(@PathVariable("id") Integer id) {
         UmsUserInfo umsUserInfo = umsUserInfoService.selectByPrimaryKey(id);
         if (null != umsUserInfo) {
@@ -97,7 +97,6 @@ public class UmsUserInfoController {
             httpMethod = "POST", response = BaseResult.class)
     @ApiImplicitParam(name = "phone", value = "用户手机号码",
             required = true, dataType = "String", example = "18820198888")
-    @LoginRequired
     public BaseResult sendSms(@PathVariable("phone") String phone) {
         int result = umsUserInfoService.sendSms(phone);
         if (1 == result) {
@@ -117,7 +116,6 @@ public class UmsUserInfoController {
             @ApiImplicitParam(name = "code", value = "验证码",
                     dataType = "String", required = true, example = "182374")
     })
-    @LoginRequired
     public BaseResult checkSmsCode(@RequestParam("jobNumber") String jobNumber,
                                 @RequestParam("phone") String phone,
                                 @RequestParam("code") String code) {
@@ -155,7 +153,6 @@ public class UmsUserInfoController {
             httpMethod = "POST", response = BaseResult.class)
     @ApiImplicitParam(name = "to", value = "用户邮箱地址",
             dataType = "String", required = true, example = "18820198888@163.com")
-    @LoginRequired
     public BaseResult sendMail(@RequestParam("to") String to) {
         if (StringUtils.isBlank(to)) {
             return BaseResult.failed("邮箱地址不存在");
@@ -175,7 +172,6 @@ public class UmsUserInfoController {
             @ApiImplicitParam(name = "code", value = "验证码",
                     dataType = "String", required = true, example = "182374")
     })
-    @LoginRequired
     public BaseResult checkMailCode(@RequestParam("jobNumber") String jobNumber,
                                     @RequestParam("mail") String mail,
                                     @RequestParam("code") String code) {

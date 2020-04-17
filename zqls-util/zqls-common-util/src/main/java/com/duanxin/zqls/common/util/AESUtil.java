@@ -106,7 +106,7 @@ public class AESUtil {
      * 进行测试，测试成功
      * */
     public static void main(String[] args) {
-        String key = "";
+        String key = "fZuwZ3iRjNRiNgaiIFSTnW1shJ67hS";
         System.out.println(key);
         System.out.println("---------加密开始---------");
         String encode = aesEncode(key);

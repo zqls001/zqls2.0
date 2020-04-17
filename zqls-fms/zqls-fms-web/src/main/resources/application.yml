@@ -7,6 +7,7 @@ dubbo:
     name: zqls-fms-web
   protocol:
     name: dubbo
+    port: 20883
   registry:
     address: zookeeper://39.106.154.120:2181
   consumer:

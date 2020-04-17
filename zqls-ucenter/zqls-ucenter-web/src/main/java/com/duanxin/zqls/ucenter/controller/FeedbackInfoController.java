@@ -3,26 +3,27 @@ package com.duanxin.zqls.ucenter.controller;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
+import com.duanxin.zqls.common.base.BaseConstants;
 import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.ucenter.ao.FeedbackInfoAo;
+import com.duanxin.zqls.ucenter.api.FdfsService;
 import com.duanxin.zqls.ucenter.api.FeedbackInfoService;
-import com.duanxin.zqls.ucenter.constants.CommonConstant;
 import com.duanxin.zqls.ucenter.model.FeedbackInfo;
+import com.duanxin.zqls.ucenter.resource.FileResource;
 import com.duanxin.zqls.web.annotation.LoginRequired;
 import com.duanxin.zqls.web.base.BaseResult;
-import com.duanxin.zqls.web.util.FastdfsUtil;
 import com.duanxin.zqls.web.validate.LengthValidator;
 import com.duanxin.zqls.web.validate.NotNullValidator;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Arrays;
+import javax.annotation.Resource;
 
 /**
  * 反馈信息Controller层接口
@@ -37,6 +38,10 @@ public class FeedbackInfoController {
 
     @Reference(version = "0.0.1", mock = "true", check = false, protocol = "dubbo")
     private FeedbackInfoService feedbackInfoService;
+    @Reference(version = "0.0.1", mock = "true", check = false, protocol = "dubbo")
+    private FdfsService fdfsService;
+    @Resource
+    private FileResource fileResource;
 
     private final static Logger log = LoggerFactory.getLogger(FeedbackInfoController.class);
 
@@ -65,17 +70,36 @@ public class FeedbackInfoController {
     }
 
     @PostMapping(value = "/uploadFile", headers = "content-type=multipart/form-data")
-    @ApiOperation(value = "上传文件", notes = "用户上传反馈信息图片接口",
+    @ApiOperation(value = "上传图片", notes = "用户上传反馈信息图片接口",
             httpMethod = "POST", response = BaseResult.class)
-    @LoginRequired
+    // @LoginRequired
     public BaseResult uploadFile(@ApiParam(name = "file", value = "文件实体") @RequestParam("file") MultipartFile file) {
-        StringBuilder sb = new StringBuilder(CommonConstant.PIC_URL_PRE);
+        StringBuilder sb = new StringBuilder(fileResource.getHost());
         try {
-            byte[] buffBytes = file.getBytes();
-            String fileName = file.getOriginalFilename();
-            String[] files = FastdfsUtil.uploadFile(buffBytes, fileName);
-            Arrays.stream(files).forEach(s -> sb.append("/").append(s));
-        } catch (IOException e) {
+            if (file != null) {
+                // 获取上传文件名称
+                String filename = file.getOriginalFilename();
+                if (StringUtils.isNotBlank(filename)) {
+                    // 文件重命名
+                    String[] filenameArr = filename.split("\\.");
+
+                    // 获取文件后缀名
+                    String suffix = filenameArr[filenameArr.length - 1];
+
+                    if (!suffix.equalsIgnoreCase(BaseConstants.PNG_STRING) &&
+                        !suffix.equalsIgnoreCase(BaseConstants.JPG_STRING) &&
+                        !suffix.equalsIgnoreCase(BaseConstants.JPEG_STRING)) {
+                        return BaseResult.failed("图片格式不正确");
+                    }
+
+                    String path = fdfsService.upload(file.getBytes(), file.getSize(), suffix);
+                    if (StringUtils.isBlank(path)) {
+                        return BaseResult.failed("文件上传失败");
+                    }
+                    sb.append(path);
+                }
+            }
+        } catch (Exception e) {
             log.error("上传失败", e);
             return BaseResult.failed("上传文件失败");
         }
@@ -87,7 +111,7 @@ public class FeedbackInfoController {
             httpMethod = "GET", response = BaseResult.class)
     @ApiImplicitParam(name = "id", value = "反馈主键id", dataType = "int",
             required = true, example = "1")
-    @LoginRequired
+     @LoginRequired
     public BaseResult getFeedbackById(@PathVariable("id") Integer id) {
         FeedbackInfoAo feedbackInfoAo = feedbackInfoService.getFeedbackById(id);
         if (feedbackInfoAo == null) {

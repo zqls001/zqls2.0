@@ -10,4 +10,13 @@ public class BaseConstants {
 
     /** 状态正常标识 */
     public final static String STATUS_CONSTANT = "0";
+
+    /** png常量 */
+    public final static String PNG_STRING = "png";
+
+    /** jpg常量 */
+    public final static String JPG_STRING = "jpg";
+
+    /** jpeg常量 */
+    public final static String JPEG_STRING = "jpeg";
 }

@@ -34,6 +34,25 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <!--<dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+        </dependency>
+        &lt;!&ndash; https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server &ndash;&gt;
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+        </dependency>
+        &lt;!&ndash; https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-util &ndash;&gt;
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+        </dependency>
+        &lt;!&ndash; https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet &ndash;&gt;
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+        </dependency>-->
     </dependencies>
     <build>
         <plugins>

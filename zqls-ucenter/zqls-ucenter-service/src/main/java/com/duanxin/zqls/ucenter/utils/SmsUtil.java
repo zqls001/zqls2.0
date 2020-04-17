@@ -1,7 +1,4 @@
 package com.duanxin.zqls.ucenter.utils;
-import	java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;
@@ -11,10 +8,13 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.duanxin.zqls.common.util.AESUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 短信服务工具类
@@ -49,8 +49,8 @@ public class SmsUtil {
     public SendSmsResponse sendSms(String phone, String templateCode,
                                    String signName, String param) throws ClientException {
         // 获取AccessKey ID和Access Key Secret
-        String accessKeyId = env.getProperty("aliyun.sms.accessKeyId");
-        String accessKeySecret = env.getProperty("aliyun.sms.accessKeySecret");
+        String accessKeyId = AESUtil.aesDecode(env.getProperty("aliyun.sms.accessKeyId"));
+        String accessKeySecret = AESUtil.aesDecode(env.getProperty("aliyun.sms.accessKeySecret"));
         // 设置超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");

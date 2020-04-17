@@ -37,10 +37,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.csource</groupId>
-            <artifactId>fastdfs-client-java</artifactId>
-        </dependency>
         <!-- jwt -->
         <dependency>
             <groupId>com.auth0</groupId>
