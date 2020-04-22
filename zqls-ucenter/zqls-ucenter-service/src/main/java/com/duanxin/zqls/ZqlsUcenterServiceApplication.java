@@ -13,6 +13,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class ZqlsUcenterServiceApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(ZqlsUcenterServiceApplication.class, args);
     }
 
