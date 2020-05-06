@@ -9,6 +9,7 @@ dubbo:
     address: zookeeper://39.106.154.120:2181
   protocol:
     name: dubbo
+    port: 20885
 
 # log
 logging:

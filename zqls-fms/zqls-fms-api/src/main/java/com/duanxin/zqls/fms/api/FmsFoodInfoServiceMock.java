@@ -37,4 +37,14 @@ public class FmsFoodInfoServiceMock implements FmsFoodInfoService {
     public com.duanxin.zqls.ucenter.vo.UmsUserInfoVo settleAccounts(FmsFoodConsume fmsFoodConsume) {
         return null;
     }
+
+    @Override
+    public int addFoodInfo(FmsFoodInfo fmsFoodInfo) {
+        return 0;
+    }
+
+    @Override
+    public int deleteFoodInfo(int fid) {
+        return 0;
+    }
 }

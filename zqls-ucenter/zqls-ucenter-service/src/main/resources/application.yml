@@ -2,19 +2,19 @@
 server:
   port: 8090
 
-publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
-#publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMC9HxSwFUW8jQdTjMJngZeKc0ivbR7fbvVvVqczOhFMDBxrD2qEArwz7bQDj4ruoejEgQBqoQGNOUMW+uI65zsCAwEAAQ==
+#publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALPtoRvWEhXDXaF/eZ0niHhIyyrQ85n7o2rsh0JIUu90KvrBVECCRgIfsKWD2U69rEcoJX0kX9PDwRCLIy/XabsCAwEAAQ==
+publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMC9HxSwFUW8jQdTjMJngZeKc0ivbR7fbvVvVqczOhFMDBxrD2qEArwz7bQDj4ruoejEgQBqoQGNOUMW+uI65zsCAwEAAQ==
 
 spring:
   # 配置数据库
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://localhost:3306/zqls
-#      url: jdbc:mysql://39.106.154.120:3306/zqls
+#      url: jdbc:mysql://localhost:3306/zqls
+      url: jdbc:mysql://39.106.154.120:3306/zqls
       username: root
-      password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
-#      password: bmm9Qmb659/MbIPSJ05TLkPpbu4U8s4QMXkZLf/egzIvAYs/+Y5rQuiLbBdrKGoA8oPj0GKqaAJNerdmOykWKg==
+#      password: XvzyYd6lUV/ht2UqjGjXAUYJGIcWrBLVCLrJdx6jpfv2aQRtwMw6Ewv5HFtlAuq1C8/L6X6ZxmOs3ua997vMdw==
+      password: bmm9Qmb659/MbIPSJ05TLkPpbu4U8s4QMXkZLf/egzIvAYs/+Y5rQuiLbBdrKGoA8oPj0GKqaAJNerdmOykWKg==
       filters: config,stat,wall
       connection-properties: config.decrypt=true;config.decrypt.key=${publickey}
       initial-size: 5
@@ -83,7 +83,7 @@ dubbo:
   protocols:
     protocol1:
       name: dubbo   # 声明提供者暴露协议
-      port: 20881
+      port: 20886
       id: dubbo
 #    protocol2:
 #      name: hessian   # 声明提供者暴露协议

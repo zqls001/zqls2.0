@@ -72,8 +72,8 @@ public class PassportController {
             @ApiImplicitParam(name = "password", value = "用户密码",
                     required = true, dataType = "String", example = "123456")
     })
-    public BaseResult login(@RequestParam("jobNumber") String jobNumber,
-                            @RequestParam("password") String password,
+    public BaseResult login(@RequestParam(value = "jobNumber") String jobNumber,
+                            @RequestParam(value = "password") String password,
                             HttpServletResponse response) {
         Result result = FluentValidator.checkAll()
                 .on(jobNumber, new NotNullValidator("学工号"))

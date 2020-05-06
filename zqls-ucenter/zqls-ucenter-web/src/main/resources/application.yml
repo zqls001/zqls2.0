@@ -22,7 +22,7 @@ logging:
 dubbo:
   protocol:
     name: dubbo   # 指定消费者端通信协议
-    port: 20880
+    port: 20887
   registry:
     address: zookeeper://39.106.154.120:2181    # 指明注册中心zookeeper
   consumer:

@@ -55,4 +55,20 @@ public interface FmsFoodInfoService {
      * @return UmsUserInfoVo
      **/
     UmsUserInfoVo settleAccounts(FmsFoodConsume fmsFoodConsume);
+
+    /**
+     * 添加食物信息
+     * @param fmsFoodInfo 食物实体类
+     * @date 2020/4/30 14:34
+     * @return int
+     */
+    int addFoodInfo(FmsFoodInfo fmsFoodInfo);
+
+    /**
+     * 删除食物信息
+     * @param fid 食物主键id
+     * @date 2020/4/30 14:38
+     * @return int
+     */
+    int deleteFoodInfo(int fid);
 }

@@ -25,6 +25,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -150,5 +151,21 @@ public class FmsFoodInfoServiceImpl implements FmsFoodInfoService {
         UmsUserInfoVo umsUserInfoVo = umsUserInfoService.settleAccounts(fmsFoodConsume.getUid(), fmsFoodInfo.getPlace(), pay);
         // 返回账户信息
         return umsUserInfoVo;
+    }
+
+    @Override
+    public int addFoodInfo(FmsFoodInfo fmsFoodInfo) {
+        fmsFoodInfoMapper.insertSelective(fmsFoodInfo);
+        return 1;
+    }
+
+    @Override
+    public int deleteFoodInfo(int fid) {
+        FmsFoodInfo fmsFoodInfo = new FmsFoodInfo();
+        fmsFoodInfo.setId(fid);
+        fmsFoodInfo.setStatus(Byte.parseByte("1"));
+        fmsFoodInfo.setOperateTime(new Date());
+        fmsFoodInfoMapper.updateByPrimaryKeySelective(fmsFoodInfo);
+        return 1;
     }
 }

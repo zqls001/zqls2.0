@@ -36,7 +36,7 @@ dubbo:
     address: zookeeper://39.106.154.120:2181
   protocol:
     name: dubbo
-    port: 20882
+    port: 20888
   scan:
     base-packages: com.duanxin.zqls.*.service
 

@@ -18,6 +18,7 @@
         <module>excle-demo</module>
         <module>swagger-demo</module>
         <module>rabbitmq-demo</module>
+        <module>seata-demo</module>
     </modules>
 
 

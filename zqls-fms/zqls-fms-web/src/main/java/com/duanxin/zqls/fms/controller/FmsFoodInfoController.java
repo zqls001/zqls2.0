@@ -5,6 +5,7 @@ import com.baidu.unbiz.fluentvalidator.Result;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.duanxin.zqls.common.util.GsonUtil;
 import com.duanxin.zqls.fms.api.FmsFoodInfoService;
+import com.duanxin.zqls.fms.dto.FmsFoodInfoDto;
 import com.duanxin.zqls.fms.dto.FoodInfoAndUserInfoDto;
 import com.duanxin.zqls.fms.model.FmsFoodConsume;
 import com.duanxin.zqls.fms.model.FmsFoodInfo;
@@ -19,7 +20,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.Date;
 
 /**
  * 食物信息Controller层实现
@@ -36,6 +41,7 @@ public class FmsFoodInfoController {
     private FmsFoodInfoService fmsFoodInfoService;
 
     @GetMapping("/test")
+    @ApiIgnore
     public BaseResult test() {
         return BaseResult.success("测试成功");
     }
@@ -137,5 +143,32 @@ public class FmsFoodInfoController {
             return BaseResult.failed("系统维护中，请耐性等待。。。。");
         }
         return BaseResult.success("交易成功", umsUserInfoVo);
+    }
+
+    @PostMapping("/addFoodInfo")
+    @ApiOperation(value = "添加菜品信息", notes = "添加菜品信息",
+            httpMethod = "POST", response = BaseResult.class)
+    public BaseResult addFoodInfo(@RequestBody FmsFoodInfoDto fmsFoodInfoDto) {
+        FmsFoodInfo fmsFoodInfo = new FmsFoodInfo();
+        BeanUtils.copyProperties(fmsFoodInfoDto, fmsFoodInfo);
+        fmsFoodInfo.setOperateIp("0.0.0.0");
+        fmsFoodInfo.setOperateTime(new Date());
+        fmsFoodInfo.setOperator("李四");
+        int result = fmsFoodInfoService.addFoodInfo(fmsFoodInfo);
+        if (result == 0) {
+            return BaseResult.failed("系统维护中，请耐心等待。。。。");
+        }
+        return BaseResult.success("OK");
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除菜品信息", notes = "删除菜品信息",
+            httpMethod = "DELETE", response = BaseResult.class)
+    public BaseResult deleteFoodInfo(@PathVariable("id") int fid) {
+        int result = fmsFoodInfoService.deleteFoodInfo(fid);
+        if (result == 0) {
+            return BaseResult.failed("系统维护中，请耐心等待。。。。");
+        }
+        return BaseResult.success("OK");
     }
 }
