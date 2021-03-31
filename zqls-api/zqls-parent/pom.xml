@@ -41,7 +41,7 @@
         <jna.version>5.3.1</jna.version>
         <beanUtils.version>1.9.3</beanUtils.version>
         <druid.version>1.1.18</druid.version>
-        <guava.version>28.0-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <redisson.version>3.11.1</redisson.version>
         <fastdfs.version>1.26.7</fastdfs.version>
         <pagehelper.version>1.2.12</pagehelper.version>
